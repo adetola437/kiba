@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:kiba/features/invest/presentation/controllers/investment_details_controller.dart';
+import 'package:kiba/features/invest/presentation/controllers/new_investment_controller.dart';
 
 import '../../../../core/models/investment_data.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -83,10 +85,11 @@ class _PortfolioScreenState extends State<PortfolioScreen>
 
   @override
   void onInvestmentTap(InvestmentData investment) =>
-      context.pushNamed('investment_detail', extra: investment);
+context.pushNamed(InvestmentDetailScreen.route,
+  extra: {'hasActiveInvestment': true});
 
   @override
-  void onNewInvestment() => context.goNamed('invest');
+  void onNewInvestment() => context.goNamed(NewInvestmentScreen.route);
 
   @override
   Widget build(BuildContext context) => view.build(context);

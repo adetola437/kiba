@@ -21,3 +21,11 @@ enum InvestCategory { all, savings, fixedIncome, government }
 enum TransactionFilter { all, fundings, investments, withdrawals }
 
 enum TransactionStatus { successful, locked, accrued, completed, pending, failed }
+
+enum ContributionMode { manual, autoDebit }
+
+enum ClubGroupStatus { open, active, completed }
+ 
+enum ClubMemberStatus { paid, pending, defaulted, upcoming }
+ 
+enum ContributionStatus { successful, pending, failed }

@@ -7,6 +7,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/contract.dart';
 import '../../../../core/utils/enums.dart';
+import '../../../auth/presentation/controllers/login.dart';
 import '../widgets/profile_menu_data.dart';
 
 part '../contracts/profile.dart';
@@ -72,10 +73,10 @@ class _ProfileScreenState extends State<ProfileScreen>
       context: context,
       builder: (_) => _LogoutDialog(
         onConfirm: () {
-          Navigator.of(context).pop();
-          context.goNamed('splash');
+          context.pop(); // Close the dialog
+          context.goNamed(LoginScreen.route);
         },
-        onCancel: () => Navigator.of(context).pop(),
+        onCancel: () => context.pop(),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:kiba/features/wallet/presentation/controllers/fund_wallet_controller.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -39,7 +40,7 @@ class _WalletScreenState extends State<WalletScreen>
   void onToggleBalance() => setState(() => balanceVisible = !balanceVisible);
 
   @override
-  void onFund() => context.pushNamed('fund_wallet');
+  void onFund() => context.pushNamed(FundWalletScreen.route);
 
   @override
   void onWithdraw() => context.pushNamed('withdraw');

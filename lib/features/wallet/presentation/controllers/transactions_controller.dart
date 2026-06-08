@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/consts.dart';
+import '../../../../core/utils/consts.dart';
 import '../../../../core/models/transaction_data.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -25,7 +25,6 @@ class TransactionsScreen extends StatefulWidget {
 class _TransactionsScreenState extends State<TransactionsScreen>
     implements TransactionsControllerContract {
   late final TransactionsViewContract view;
-  late final TextEditingController _searchController;
 
   @override
   TransactionFilter activeFilter = TransactionFilter.all;
@@ -80,7 +79,6 @@ class _TransactionsScreenState extends State<TransactionsScreen>
   void initState() {
     super.initState();
     view = TransactionsView(controller: this);
-    _searchController = TextEditingController();
   }
 
   @override
@@ -93,7 +91,7 @@ class _TransactionsScreenState extends State<TransactionsScreen>
       isSearching = !isSearching;
       if (!isSearching) {
         searchQuery = '';
-        _searchController.clear();
+        searchController?.clear();
       }
     });
   }
@@ -111,10 +109,13 @@ class _TransactionsScreenState extends State<TransactionsScreen>
 
   @override
   void dispose() {
-    _searchController.dispose();
+    searchController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) => view.build(context);
+
+  @override
+  TextEditingController? searchController = TextEditingController();
 }

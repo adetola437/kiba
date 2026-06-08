@@ -15,8 +15,6 @@ class TransactionsView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final s = context
-        .findAncestorStateOfType<_TransactionsScreenState>()!;
     final grouped = controller.groupedTransactions;
 
     return Scaffold(
@@ -32,7 +30,7 @@ class TransactionsView extends StatelessWidget
         ),
         title: controller.isSearching
             ? TextField(
-                controller: s._searchController,
+                controller: controller.searchController,
                 onChanged: controller.onSearchChanged,
                 autofocus: true,
                 style: AppTextStyles.bodyMedium

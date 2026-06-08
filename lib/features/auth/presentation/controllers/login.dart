@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kiba/core/shell/main_shell.dart';
+import 'package:kiba/features/auth/presentation/controllers/register_step1_controller.dart';
 import 'package:kiba/features/home/presentation/controllers/home_controller.dart';
 
 import '../../../../config/di/app_initializer.dart';
@@ -71,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   void onCreateAccount() {
-    context.pushNamed('register_step1');
+    context.pushNamed(RegisterStep1Screen.route);
   }
 
   @override

@@ -10,6 +10,8 @@ abstract class TransactionsControllerContract {
   bool get isSearching;
   Map<String, List<TransactionData>> get groupedTransactions;
 
+  TextEditingController? searchController;
+
   void onFilterChanged(TransactionFilter filter);
   void onSearchToggle();
   void onSearchChanged(String query);
