@@ -14,8 +14,9 @@ class RegisterStep3View extends StatelessWidget
  
   @override
   Widget build(BuildContext context) {
+        final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.background,
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -37,7 +38,7 @@ class RegisterStep3View extends StatelessWidget
                         child: Icon(
                           Icons.arrow_back_rounded,
                           size: 24.r,
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onTertiary,
                         ),
                       ),
                     ),
@@ -52,7 +53,7 @@ class RegisterStep3View extends StatelessWidget
                       'Verify your\nPhone',
                       style: AppTextStyles.headlineLarge.copyWith(
                         fontFamily: 'BWGradual',
-                        color: AppColors.primary,
+                        color: colorScheme.primary
                       ),
                     ),
  
@@ -61,7 +62,7 @@ class RegisterStep3View extends StatelessWidget
                     RichText(
                       text: TextSpan(
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                           height: 1.5,
                         ),
                         children: [
@@ -71,7 +72,7 @@ class RegisterStep3View extends StatelessWidget
                           TextSpan(
                             text: controller.maskedPhone,
                             style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.textPrimary,
+                              // color: colorScheme.s,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -94,11 +95,11 @@ class RegisterStep3View extends StatelessWidget
                         width: 46.r,
                         height: 56.r,
                         textStyle: AppTextStyles.titleLarge.copyWith(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceVariant,
+                          color: colorScheme.onSurfaceVariant,
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(color: Colors.transparent),
                         ),
@@ -107,14 +108,14 @@ class RegisterStep3View extends StatelessWidget
                         width: 46.r,
                         height: 56.r,
                         textStyle: AppTextStyles.titleLarge.copyWith(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.06),
+                          color: colorScheme.primary.withValues(alpha:0.06),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
-                            color: AppColors.primary.withOpacity(0.4),
+                            color: colorScheme.primary.withValues(alpha:0.4),
                             width: 1.5,
                           ),
                         ),
@@ -123,14 +124,14 @@ class RegisterStep3View extends StatelessWidget
                         width: 46.r,
                         height: 56.r,
                         textStyle: AppTextStyles.titleLarge.copyWith(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.06),
+                          color: colorScheme.primary.withValues(alpha: 0.06),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                             width: 2,
                           ),
                         ),
@@ -148,8 +149,8 @@ class RegisterStep3View extends StatelessWidget
                           Icons.access_time_rounded,
                           size: 16.r,
                           color: controller.canResend
-                              ? AppColors.primary
-                              : AppColors.textDisabled,
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
                         ),
                         SizedBox(width: 6.w),
                         GestureDetector(
@@ -160,8 +161,8 @@ class RegisterStep3View extends StatelessWidget
                             duration: const Duration(milliseconds: 200),
                             style: AppTextStyles.bodyMedium.copyWith(
                               color: controller.canResend
-                                  ? AppColors.primary
-                                  : AppColors.textDisabled,
+                                  ? colorScheme.primary
+                                  : colorScheme.onSurfaceVariant,
                               fontWeight: controller.canResend
                                   ? FontWeight.w600
                                   : FontWeight.w400,
@@ -186,9 +187,9 @@ class RegisterStep3View extends StatelessWidget
             Container(
               padding: REdgeInsets.fromLTRB(24, 16, 24, 32),
               decoration: BoxDecoration(
-                color: AppColors.background,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 border: Border(
-                  top: BorderSide(color: AppColors.divider),
+                  top: BorderSide(color: Theme.of(context).dividerColor),
                 ),
               ),
               child: Column(
@@ -204,7 +205,7 @@ class RegisterStep3View extends StatelessWidget
                         width: double.infinity,
                         height: 56.h,
                         decoration: BoxDecoration(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           borderRadius: BorderRadius.circular(14.r),
                         ),
                         alignment: Alignment.center,
@@ -214,14 +215,14 @@ class RegisterStep3View extends StatelessWidget
                             Text(
                               'Verify & Complete',
                               style: AppTextStyles.labelLarge.copyWith(
-                                color: AppColors.textOnDark,
+                                color: colorScheme.inverseSurface,
                               ),
                             ),
                             SizedBox(width: 8.w),
                             Icon(
                               Icons.arrow_forward_rounded,
                               size: 18.r,
-                              color: AppColors.textOnDark,
+                              color:  colorScheme.inverseSurface,
                             ),
                           ],
                         ),
@@ -236,7 +237,7 @@ class RegisterStep3View extends StatelessWidget
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       children: [
                         const TextSpan(
@@ -244,7 +245,7 @@ class RegisterStep3View extends StatelessWidget
                         TextSpan(
                           text: 'Terms of Service',
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
                           ),
@@ -279,20 +280,21 @@ class _OtpBox extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       width: 46.r,
       height: 56.r,
       decoration: BoxDecoration(
         color: isFilled
-            ? AppColors.primary.withOpacity(0.06)
-            : AppColors.surfaceVariant,
+            ? colorScheme.primary.withOpacity(0.06)
+            : colorScheme.onSurfaceVariant,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
           color: isFilled
-              ? AppColors.primary
+              ? colorScheme.primary
               : focusNode.hasFocus
-                  ? AppColors.primary.withOpacity(0.4)
+                  ? colorScheme.primary.withValues(alpha: 0.4)
                   : Colors.transparent,
           width: isFilled ? 2 : 1.5,
         ),
@@ -308,7 +310,7 @@ class _OtpBox extends StatelessWidget {
           FilteringTextInputFormatter.digitsOnly,
         ],
         style: AppTextStyles.titleLarge.copyWith(
-          color: AppColors.primary,
+          color: colorScheme.primary,
           fontWeight: FontWeight.w700,
         ),
         decoration: const InputDecoration(

@@ -1,11 +1,10 @@
 part of '../controllers/invest_controller.dart';
 
-
-
 abstract class InvestControllerContract {
   bool get isLoading;
   InvestCategory get activeCategory;
   List<InvestProductData> get filteredProducts;
+  TabController get tabController;
 
   void onCategoryChanged(InvestCategory category);
   void onProductTap(InvestProductData product);

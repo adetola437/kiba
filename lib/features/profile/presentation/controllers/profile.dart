@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/toggle.dart';
 import '../../../../core/utils/contract.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../auth/presentation/controllers/login.dart';
@@ -97,8 +98,9 @@ class _LogoutDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Dialog(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.r),
       ),
@@ -127,7 +129,7 @@ class _LogoutDialog extends StatelessWidget {
             Text(
               'Log Out',
               style: AppTextStyles.titleLarge.copyWith(
-                color: AppColors.textPrimary,
+                // color: colorScheme.secondary,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -138,7 +140,7 @@ class _LogoutDialog extends StatelessWidget {
               'Are you sure you want to log out\nof your KIBA account?',
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                // color: AppColors.textSecondary,
                 height: 1.5,
               ),
             ),

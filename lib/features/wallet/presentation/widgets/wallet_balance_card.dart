@@ -15,10 +15,13 @@ class _WalletBalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: colorScheme.primary,
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Stack(
@@ -32,7 +35,7 @@ class _WalletBalanceCard extends StatelessWidget {
               height: 160.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.04),
+                color: colorScheme.onPrimary.withValues(alpha: 0.04),
               ),
             ),
           ),
@@ -44,7 +47,7 @@ class _WalletBalanceCard extends StatelessWidget {
               height: 100.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.04),
+                color: colorScheme.onPrimary.withValues(alpha: 0.04),
               ),
             ),
           ),
@@ -60,8 +63,8 @@ class _WalletBalanceCard extends StatelessWidget {
                   children: [
                     Text(
                       'WALLET BALANCE',
-                      style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.white.withOpacity(0.55),
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.surface.withValues(alpha: 0.55),
                         letterSpacing: 1.2,
                       ),
                     ),
@@ -71,7 +74,7 @@ class _WalletBalanceCard extends StatelessWidget {
                         balanceVisible
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
-                        color: AppColors.white.withOpacity(0.55),
+                        color: colorScheme.onPrimary.withValues(alpha: 0.55),
                         size: 18.r,
                       ),
                     ),
@@ -86,11 +89,10 @@ class _WalletBalanceCard extends StatelessWidget {
                   child: Text(
                     balanceVisible ? '₦250,000.00' : '••••••••',
                     key: ValueKey(balanceVisible),
-                    style: TextStyle(
-                      fontFamily: 'EuclidCircularA',
+                    style: textTheme.titleLarge?.copyWith(
                       fontSize: balanceVisible ? 32.sp : 36.sp,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.white,
+                      color: colorScheme.surface,
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -102,7 +104,7 @@ class _WalletBalanceCard extends StatelessWidget {
                 Container(
                   padding: REdgeInsets.symmetric(vertical: 14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.08),
+                    color: colorScheme.onPrimary.withOpacity(0.08),
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: IntrinsicHeight(
@@ -113,7 +115,7 @@ class _WalletBalanceCard extends StatelessWidget {
                           label: 'Invested',
                         ),
                         VerticalDivider(
-                          color: AppColors.white.withOpacity(0.15),
+                          color: colorScheme.surface.withValues(alpha:0.15),
                           width: 1,
                           thickness: 1,
                         ),
@@ -122,7 +124,7 @@ class _WalletBalanceCard extends StatelessWidget {
                           label: 'Accrued',
                         ),
                         VerticalDivider(
-                          color: AppColors.white.withOpacity(0.15),
+                          color: colorScheme.onPrimary.withOpacity(0.15),
                           width: 1,
                           thickness: 1,
                         ),
@@ -144,8 +146,8 @@ class _WalletBalanceCard extends StatelessWidget {
                       child: _WalletActionButton(
                         label: '+ Fund Wallet',
                         onTap: onFund,
-                        backgroundColor: AppColors.beigePink,
-                        textColor: AppColors.primary,
+                        backgroundColor: colorScheme.secondary,
+                        textColor: colorScheme.onSecondary,
                       ),
                     ),
                     SizedBox(width: 12.w),
@@ -153,9 +155,11 @@ class _WalletBalanceCard extends StatelessWidget {
                       child: _WalletActionButton(
                         label: '↓ Withdraw',
                         onTap: onWithdraw,
-                        backgroundColor: Colors.white.withOpacity(0.12),
-                        textColor: AppColors.white,
-                        borderColor: AppColors.white.withOpacity(0.2),
+                        backgroundColor:
+                            colorScheme.surface.withValues(alpha: 0.12),
+                        textColor: colorScheme.onPrimary,
+                        borderColor:
+                            colorScheme.outline.withValues(alpha: 0.2),
                       ),
                     ),
                   ],
@@ -176,21 +180,24 @@ class _StatCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Expanded(
       child: Column(
         children: [
           Text(
             value,
-            style: AppTextStyles.titleMedium.copyWith(
-              color: AppColors.white,
+            style: textTheme.titleMedium?.copyWith(
+              color: colorScheme.surface,
               fontWeight: FontWeight.w700,
             ),
           ),
           SizedBox(height: 3.h),
           Text(
             label,
-            style: AppTextStyles.labelSmall.copyWith(
-              color: AppColors.white.withOpacity(0.55),
+            style: textTheme.labelSmall?.copyWith(
+              color: colorScheme.onPrimary.withOpacity(0.55),
             ),
           ),
         ],
@@ -216,6 +223,8 @@ class _WalletActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -230,7 +239,7 @@ class _WalletActionButton extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: AppTextStyles.labelLarge.copyWith(
+          style: textTheme.labelLarge?.copyWith(
             color: textColor,
           ),
         ),

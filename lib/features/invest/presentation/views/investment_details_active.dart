@@ -14,34 +14,43 @@ class InvestmentDetailActiveView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final inv = controller.activeInvestment!;
     final dateFormat = DateFormat('d MMM y');
     final isMatured = controller.isMatured;
     final isNear = controller.isNearMaturity;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: colorScheme.background,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: GestureDetector(
           onTap: controller.onBack,
-          child: Icon(Icons.arrow_back_rounded,
-              size: 22.r, color: AppColors.textPrimary),
+          child: Icon(
+            Icons.arrow_back_rounded,
+            size: 22.r,
+            color: colorScheme.onBackground,
+          ),
         ),
-        title: Text(controller.product.name,
-            style: AppTextStyles.titleLarge
-                .copyWith(color: AppColors.textPrimary)),
+        title: Text(
+          controller.product.name,
+          style: AppTextStyles.titleLarge.copyWith(
+            color: colorScheme.onBackground,
+          ),
+        ),
         centerTitle: true,
         actions: [
-          // Contact support
           GestureDetector(
             onTap: controller.onContactSupport,
             child: Padding(
               padding: REdgeInsets.only(right: 16),
-              child: Icon(Icons.headset_mic_outlined,
-                  size: 20.r, color: AppColors.textSecondary),
+              child: Icon(
+                Icons.headset_mic_outlined,
+                size: 20.r,
+                color: colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
         ],
@@ -51,20 +60,19 @@ class InvestmentDetailActiveView extends StatelessWidget
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // ── Maturity notice banner ────────────────────────────
             if (isMatured || isNear) ...[
               Container(
                 padding: REdgeInsets.all(14),
                 decoration: BoxDecoration(
                   color: isMatured
-                      ? AppColors.limeGreen.withOpacity(0.15)
-                      : AppColors.beigePink.withOpacity(0.2),
+                      ? colorScheme.primaryContainer.withValues(alpha: 0.15)
+                      : colorScheme.secondary.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12.r),
                   border: Border.all(
                     color: isMatured
-                        ? AppColors.limeGreen.withOpacity(0.3)
-                        : AppColors.beigePink.withOpacity(0.4),
+                        ? colorScheme.primaryContainer.withValues(alpha: 0.3)
+                        : colorScheme.secondary.withValues(alpha: 0.4),
                   ),
                 ),
                 child: Row(
@@ -75,8 +83,8 @@ class InvestmentDetailActiveView extends StatelessWidget
                           : Icons.timer_outlined,
                       size: 16.r,
                       color: isMatured
-                          ? AppColors.primary
-                          : AppColors.charcoalGrey,
+                          ? colorScheme.primary
+                          : colorScheme.onSecondary,
                     ),
                     SizedBox(width: 10.w),
                     Expanded(
@@ -86,8 +94,8 @@ class InvestmentDetailActiveView extends StatelessWidget
                             : 'Matures in ${inv.daysRemaining} days on ${dateFormat.format(inv.maturityDate)}.',
                         style: AppTextStyles.bodySmall.copyWith(
                           color: isMatured
-                              ? AppColors.primary
-                              : AppColors.charcoalGrey,
+                              ? colorScheme.primary
+                              : colorScheme.onSecondary,
                           fontWeight: FontWeight.w500,
                           height: 1.4,
                         ),
@@ -103,18 +111,20 @@ class InvestmentDetailActiveView extends StatelessWidget
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppColors.primary,
+                color: colorScheme.primary,
                 borderRadius: BorderRadius.circular(20.r),
               ),
               child: Stack(
                 children: [
                   Positioned(
-                    top: -30.r, right: -30.r,
+                    top: -30.r,
+                    right: -30.r,
                     child: Container(
-                      width: 120.r, height: 120.r,
+                      width: 120.r,
+                      height: 120.r,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.04),
+                        color: colorScheme.onPrimary.withValues(alpha: 0.04),
                       ),
                     ),
                   ),
@@ -124,13 +134,12 @@ class InvestmentDetailActiveView extends StatelessWidget
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               '${controller.product.name} PLAN',
                               style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.white.withOpacity(0.55),
+                                color: colorScheme.onPrimary.withValues(alpha: 0.55),
                                 letterSpacing: 0.8,
                                 fontSize: 9.sp,
                               ),
@@ -142,7 +151,7 @@ class InvestmentDetailActiveView extends StatelessWidget
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
                                 size: 18.r,
-                                color: AppColors.white.withOpacity(0.55),
+                                color: colorScheme.onPrimary.withValues(alpha: 0.55),
                               ),
                             ),
                           ],
@@ -157,7 +166,7 @@ class InvestmentDetailActiveView extends StatelessWidget
                               fontFamily: 'EuclidCircularA',
                               fontSize: 28.sp,
                               fontWeight: FontWeight.w700,
-                              color: AppColors.white,
+                              color: colorScheme.onPrimary,
                               letterSpacing: -0.5,
                             ),
                           ),
@@ -165,13 +174,16 @@ class InvestmentDetailActiveView extends StatelessWidget
                         SizedBox(height: 6.h),
                         Row(
                           children: [
-                            Icon(Icons.trending_up_rounded,
-                                size: 12.r, color: AppColors.limeGreen),
+                            Icon(
+                              Icons.trending_up_rounded,
+                              size: 12.r,
+                              color: colorScheme.primaryContainer,
+                            ),
                             SizedBox(width: 4.w),
                             Text(
                               _mask('+${_fmt(inv.accruedInterest)}'),
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.limeGreen,
+                                color: colorScheme.primaryContainer,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -179,7 +191,7 @@ class InvestmentDetailActiveView extends StatelessWidget
                             Text(
                               '(Accrued)',
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.limeGreen.withOpacity(0.7),
+                                color: colorScheme.primaryContainer.withValues(alpha: 0.7),
                               ),
                             ),
                           ],
@@ -197,9 +209,9 @@ class InvestmentDetailActiveView extends StatelessWidget
             Container(
               padding: REdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(16.r),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: colorScheme.outline),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,16 +219,18 @@ class InvestmentDetailActiveView extends StatelessWidget
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('MATURITY PROGRESS',
-                          style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.textDisabled,
-                            letterSpacing: 0.8,
-                            fontSize: 9.sp,
-                          )),
+                      Text(
+                        'MATURITY PROGRESS',
+                        style: AppTextStyles.labelSmall.copyWith(
+                          color: colorScheme.onSurface.withValues(alpha: 0.38),
+                          letterSpacing: 0.8,
+                          fontSize: 9.sp,
+                        ),
+                      ),
                       Text(
                         '${(inv.progressPercent * 100).toInt()}%',
                         style: AppTextStyles.titleSmall.copyWith(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -228,11 +242,11 @@ class InvestmentDetailActiveView extends StatelessWidget
                     child: LinearProgressIndicator(
                       value: inv.progressPercent,
                       minHeight: 8.h,
-                      backgroundColor: AppColors.surfaceVariant,
+                      backgroundColor: colorScheme.surfaceVariant,
                       valueColor: AlwaysStoppedAnimation<Color>(
                         isMatured
-                            ? AppColors.limeGreen
-                            : AppColors.primary,
+                            ? colorScheme.primaryContainer
+                            : colorScheme.primary,
                       ),
                     ),
                   ),
@@ -245,13 +259,13 @@ class InvestmentDetailActiveView extends StatelessWidget
                             ? 'Matured on ${dateFormat.format(inv.maturityDate)}'
                             : '${inv.daysRemaining} days remaining until completion',
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                       Text(
                         dateFormat.format(inv.maturityDate),
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textDisabled,
+                          color: colorScheme.onSurface.withValues(alpha: 0.38),
                         ),
                       ),
                     ],
@@ -276,7 +290,7 @@ class InvestmentDetailActiveView extends StatelessWidget
                   child: _StatBox(
                     label: 'ANNUAL RATE',
                     value: '${inv.annualRate}%',
-                    valueColor: AppColors.primary,
+                    valueColor: colorScheme.primary,
                   ),
                 ),
               ],
@@ -306,23 +320,29 @@ class InvestmentDetailActiveView extends StatelessWidget
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Recent Transactions',
-                    style: AppTextStyles.titleLarge
-                        .copyWith(color: AppColors.textPrimary)),
+                Text(
+                  'Recent Transactions',
+                  style: AppTextStyles.titleLarge.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
+                ),
                 GestureDetector(
                   onTap: controller.onSeeAllTransactions,
-                  child: Text('See All',
-                      style: AppTextStyles.labelMedium
-                          .copyWith(color: AppColors.primary)),
+                  child: Text(
+                    'See All',
+                    style: AppTextStyles.labelMedium.copyWith(
+                      color: colorScheme.primary,
+                    ),
+                  ),
                 ),
               ],
             ),
             SizedBox(height: 14.h),
             Container(
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(16.r),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: colorScheme.outline),
               ),
               child: Column(
                 children: inv.recentTransactions
@@ -330,8 +350,7 @@ class InvestmentDetailActiveView extends StatelessWidget
                     .entries
                     .map((e) => _TxRow(
                           tx: e.value,
-                          isLast: e.key ==
-                              inv.recentTransactions.length - 1,
+                          isLast: e.key == inv.recentTransactions.length - 1,
                         ))
                     .toList(),
               ),
@@ -341,7 +360,6 @@ class InvestmentDetailActiveView extends StatelessWidget
 
             // ── Actions ───────────────────────────────────────────
             if (!isMatured && !isNear) ...[
-              // Not near maturity — show Top Up only
               GestureDetector(
                 onTap: controller.onTopUp,
                 child: Container(
@@ -349,24 +367,29 @@ class InvestmentDetailActiveView extends StatelessWidget
                   height: 56.h,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(14.r),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.add_rounded,
-                          size: 18.r, color: AppColors.white),
+                      Icon(
+                        Icons.add_rounded,
+                        size: 18.r,
+                        color: colorScheme.onPrimary,
+                      ),
                       SizedBox(width: 6.w),
-                      Text('Top Up Investment',
-                          style: AppTextStyles.labelLarge
-                              .copyWith(color: AppColors.white)),
+                      Text(
+                        'Top Up Investment',
+                        style: AppTextStyles.labelLarge.copyWith(
+                          color: colorScheme.onPrimary,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ] else ...[
-              // Near maturity or matured — show Roll Over + Withdraw
               Row(
                 children: [
                   Expanded(
@@ -376,12 +399,15 @@ class InvestmentDetailActiveView extends StatelessWidget
                         height: 56.h,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           borderRadius: BorderRadius.circular(14.r),
                         ),
-                        child: Text('Roll Over',
-                            style: AppTextStyles.labelLarge
-                                .copyWith(color: AppColors.white)),
+                        child: Text(
+                          'Roll Over',
+                          style: AppTextStyles.labelLarge.copyWith(
+                            color: colorScheme.onPrimary,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -396,13 +422,16 @@ class InvestmentDetailActiveView extends StatelessWidget
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(14.r),
                           border: Border.all(
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                             width: 1.5,
                           ),
                         ),
-                        child: Text('Withdraw',
-                            style: AppTextStyles.labelLarge
-                                .copyWith(color: AppColors.primary)),
+                        child: Text(
+                          'Withdraw',
+                          style: AppTextStyles.labelLarge.copyWith(
+                            color: colorScheme.primary,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -418,14 +447,19 @@ class InvestmentDetailActiveView extends StatelessWidget
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.headset_mic_outlined,
-                        size: 14.r, color: AppColors.textDisabled),
+                    Icon(
+                      Icons.headset_mic_outlined,
+                      size: 14.r,
+                      color: colorScheme.onSurface.withValues(alpha: 0.38),
+                    ),
                     SizedBox(width: 5.w),
-                    Text('Need help with this investment?',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textDisabled,
-                          decoration: TextDecoration.underline,
-                        )),
+                    Text(
+                      'Need help with this investment?',
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.38),
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
                   ],
                 ),
               ),

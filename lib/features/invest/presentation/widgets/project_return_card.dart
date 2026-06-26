@@ -10,11 +10,12 @@ class _ProjectedReturnsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final dateFormat = DateFormat('MMM d, y');
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: colorScheme.primary,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Column(
@@ -28,13 +29,13 @@ class _ProjectedReturnsCard extends StatelessWidget {
                 Icon(
                   Icons.bar_chart_rounded,
                   size: 18.r,
-                  color: AppColors.limeGreen,
+                  color: colorScheme.primaryContainer,
                 ),
                 SizedBox(width: 8.w),
                 Text(
                   'Projected Returns',
                   style: AppTextStyles.titleSmall.copyWith(
-                    color: AppColors.white,
+                    color: colorScheme.onPrimary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -42,13 +43,16 @@ class _ProjectedReturnsCard extends StatelessWidget {
                 Icon(
                   Icons.trending_up_rounded,
                   size: 16.r,
-                  color: AppColors.limeGreen,
+                  color: colorScheme.primaryContainer,
                 ),
               ],
             ),
           ),
 
-          Divider(color: AppColors.white.withOpacity(0.1), height: 1),
+          Divider(
+            color: colorScheme.onPrimary.withValues(alpha: 0.1),
+            height: 1,
+          ),
 
           Padding(
             padding: REdgeInsets.all(18),
@@ -70,18 +74,21 @@ class _ProjectedReturnsCard extends StatelessWidget {
                   label: 'Annual Rate',
                   value: '+${controller.selectedTenor.rate}%',
                   isLight: true,
-                  valueColor: AppColors.limeGreen,
+                  valueColor: colorScheme.primaryContainer,
                 ),
                 SizedBox(height: 10.h),
                 _ReturnRow(
                   label: 'Projected Interest',
                   value: _fmt(controller.projectedInterest),
                   isLight: true,
-                  valueColor: AppColors.limeGreen,
+                  valueColor: colorScheme.primaryContainer,
                 ),
 
                 SizedBox(height: 14.h),
-                Divider(color: AppColors.white.withOpacity(0.15), height: 1),
+                Divider(
+                  color: colorScheme.onPrimary.withValues(alpha: 0.15),
+                  height: 1,
+                ),
                 SizedBox(height: 14.h),
 
                 // Total at maturity — highlighted
@@ -91,14 +98,14 @@ class _ProjectedReturnsCard extends StatelessWidget {
                     Text(
                       'Total at Maturity',
                       style: AppTextStyles.titleSmall.copyWith(
-                        color: AppColors.white,
+                        color: colorScheme.onPrimary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       _fmt(controller.totalAtMaturity),
                       style: AppTextStyles.titleMedium.copyWith(
-                        color: AppColors.white,
+                        color: colorScheme.onPrimary,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -139,20 +146,25 @@ class _ReturnRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 12.r,
-                  color: AppColors.white.withOpacity(0.5)),
+              Icon(
+                icon,
+                size: 12.r,
+                color: colorScheme.onPrimary.withValues(alpha: 0.5),
+              ),
               SizedBox(width: 4.w),
             ],
             Text(
               label,
               style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.white.withOpacity(0.55),
+                color: colorScheme.onPrimary.withValues(alpha: 0.55),
               ),
             ),
           ],
@@ -160,7 +172,7 @@ class _ReturnRow extends StatelessWidget {
         Text(
           value,
           style: AppTextStyles.bodySmall.copyWith(
-            color: valueColor ?? AppColors.white.withOpacity(0.85),
+            color: valueColor ?? colorScheme.onPrimary.withValues(alpha: 0.85),
             fontWeight: FontWeight.w600,
           ),
         ),

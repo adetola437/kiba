@@ -7,20 +7,24 @@ class FundWalletView extends StatelessWidget implements FundWalletViewContract {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
-        appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        scrolledUnderElevation: 0,
+      appBar: AppBar(
         leading: GestureDetector(
           onTap: () => context.pop(),
-          child: Icon(Icons.arrow_back_rounded,
-              size: 22.r, color: AppColors.textPrimary),
+          child: Icon(
+            Icons.arrow_back_rounded,
+            size: 22.r,
+            color: colorScheme.onSurface,
+          ),
         ),
-        title: Text('Fund Wallet',
-            style: AppTextStyles.titleLarge
-                .copyWith(color: AppColors.textPrimary)),
+        title: Text(
+          'Fund Wallet',
+          style: textTheme.titleLarge,
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -30,17 +34,14 @@ class FundWalletView extends StatelessWidget implements FundWalletViewContract {
           children: [
             Text(
               'Select Payment Method',
-              style: AppTextStyles.headlineSmall.copyWith(
+              style: textTheme.headlineSmall?.copyWith(
                 fontFamily: 'BWGradual',
-                color: AppColors.textPrimary,
               ),
             ),
             SizedBox(height: 6.h),
             Text(
               'Choose your preferred way to top up your Beige\nAfrica wallet instantly.',
-              style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textSecondary,
-              ),
+              style: textTheme.bodySmall,
             ),
             SizedBox(height: 24.h),
 
@@ -89,7 +90,7 @@ class FundWalletView extends StatelessWidget implements FundWalletViewContract {
               child: Container(
                 padding: REdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.charcoalGrey,
+                  color: colorScheme.onSurface,
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Row(
@@ -98,13 +99,13 @@ class FundWalletView extends StatelessWidget implements FundWalletViewContract {
                     Icon(
                       Icons.lock_rounded,
                       size: 12.r,
-                      color: AppColors.white,
+                      color: colorScheme.surface,
                     ),
                     SizedBox(width: 6.w),
                     Text(
                       'SECURE & ENCRYPTED',
-                      style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.white,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.surface,
                         letterSpacing: 1.1,
                       ),
                     ),
@@ -116,8 +117,8 @@ class FundWalletView extends StatelessWidget implements FundWalletViewContract {
             SizedBox(height: 16.h),
             Text(
               'Beige Africa uses industry-standard 256-bit encryption to protect your financial data and transactions.',
-              style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textDisabled,
+              style: textTheme.bodySmall?.copyWith(
+                color: colorScheme.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -127,3 +128,4 @@ class FundWalletView extends StatelessWidget implements FundWalletViewContract {
     );
   }
 }
+

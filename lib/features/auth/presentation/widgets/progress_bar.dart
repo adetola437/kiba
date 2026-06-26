@@ -18,6 +18,7 @@ class RegistrationProgressBar extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {
+      final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: List.generate(totalSteps, (i) {
         final isActive = i < currentStep;
@@ -29,8 +30,8 @@ class RegistrationProgressBar extends StatelessWidget {
             height: 4.h,
             decoration: BoxDecoration(
               color: isActive
-                  ? AppColors.primary
-                  : AppColors.primary.withOpacity(0.15),
+                  ? colorScheme.primary
+                  : colorScheme.primary.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(2.r),
             ),
           ),

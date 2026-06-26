@@ -1,3 +1,4 @@
+import 'package:flutter/src/material/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/flavor/app_constants.dart';
@@ -67,5 +68,18 @@ class LocalStorageImpl implements LocalStorage {
   Future<void> clearAll() async {
     await secureStorage.deleteAll();
     await prefs.clear();
+  }
+
+  @override
+  Future<void> saveTheme(ThemeMode mode) async =>
+      prefs.setString(AppConstants.themeModeKey, mode.name);
+
+  @override
+  Future<ThemeMode> getSavedTheme() async {
+    final raw = prefs.getString(AppConstants.themeModeKey);
+    return ThemeMode.values.firstWhere(
+      (m) => m.name == raw,
+      orElse: () => ThemeMode.light,
+    );
   }
 }

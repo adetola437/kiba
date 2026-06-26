@@ -29,15 +29,16 @@ class _InvestmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final dateFormat = DateFormat('d MMM yyyy');
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: colorScheme.outline),
         ),
         child: Material(
           color: Colors.transparent,
@@ -45,14 +46,13 @@ class _InvestmentCard extends StatelessWidget {
           child: InkWell(
             onTap: onTap,
             borderRadius: BorderRadius.circular(16.r),
-            splashColor: AppColors.primary.withOpacity(0.04),
-            highlightColor: AppColors.primary.withOpacity(0.02),
+            splashColor: colorScheme.primary.withValues(alpha: 0.04),
+            highlightColor: colorScheme.primary.withValues(alpha: 0.02),
             child: Padding(
               padding: REdgeInsets.all(18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   // ── Header row ──────────────────────────────────────
                   Row(
                     children: [
@@ -61,16 +61,16 @@ class _InvestmentCard extends StatelessWidget {
                         height: 34.r,
                         decoration: BoxDecoration(
                           color: data.isMatured
-                              ? AppColors.surfaceVariant
-                              : AppColors.limeGreen.withOpacity(0.25),
+                              ? colorScheme.surfaceVariant
+                              : colorScheme.primaryContainer.withValues(alpha: 0.25),
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                         child: Icon(
                           Icons.trending_up_rounded,
                           size: 16.r,
                           color: data.isMatured
-                              ? AppColors.textDisabled
-                              : AppColors.primary,
+                              ? colorScheme.onSurface.withValues(alpha: 0.38)
+                              : colorScheme.primary,
                         ),
                       ),
                       SizedBox(width: 12.w),
@@ -78,7 +78,7 @@ class _InvestmentCard extends StatelessWidget {
                         child: Text(
                           data.name,
                           style: AppTextStyles.titleSmall.copyWith(
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -89,16 +89,16 @@ class _InvestmentCard extends StatelessWidget {
                             horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           color: data.isMatured
-                              ? AppColors.beigePink.withOpacity(0.4)
-                              : AppColors.limeGreen.withOpacity(0.35),
+                              ? colorScheme.secondaryContainer.withValues(alpha: 0.4)
+                              : colorScheme.primaryContainer.withValues(alpha: 0.35),
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
                           data.isMatured ? 'MATURED' : 'ACTIVE',
                           style: AppTextStyles.labelSmall.copyWith(
                             color: data.isMatured
-                                ? AppColors.charcoalGrey
-                                : AppColors.primary,
+                                ? colorScheme.onSecondaryContainer
+                                : colorScheme.onPrimaryContainer,
                             letterSpacing: 0.4,
                           ),
                         ),
@@ -119,7 +119,7 @@ class _InvestmentCard extends StatelessWidget {
                             Text(
                               'PRINCIPAL',
                               style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.textDisabled,
+                                color: colorScheme.onSurface.withValues(alpha: 0.38),
                                 letterSpacing: 0.6,
                                 fontSize: 9.sp,
                               ),
@@ -129,8 +129,8 @@ class _InvestmentCard extends StatelessWidget {
                               _mask(_fmtFull(data.principal)),
                               style: AppTextStyles.titleMedium.copyWith(
                                 color: data.isMatured
-                                    ? AppColors.textDisabled
-                                    : AppColors.textPrimary,
+                                    ? colorScheme.onSurface.withValues(alpha: 0.38)
+                                    : colorScheme.onSurface,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 17.sp,
                               ),
@@ -144,7 +144,7 @@ class _InvestmentCard extends StatelessWidget {
                           Text(
                             'RETURNS',
                             style: AppTextStyles.labelSmall.copyWith(
-                              color: AppColors.textDisabled,
+                              color: colorScheme.onSurface.withValues(alpha: 0.38),
                               letterSpacing: 0.6,
                               fontSize: 9.sp,
                             ),
@@ -153,7 +153,7 @@ class _InvestmentCard extends StatelessWidget {
                           Text(
                             _mask('+${_fmtFull(data.returns)}'),
                             style: AppTextStyles.titleMedium.copyWith(
-                              color: AppColors.primary,
+                              color: colorScheme.primary,
                               fontWeight: FontWeight.w700,
                               fontSize: 17.sp,
                             ),
@@ -171,11 +171,11 @@ class _InvestmentCard extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: data.progressPercent,
                       minHeight: 6.h,
-                      backgroundColor: AppColors.surfaceVariant,
+                      backgroundColor: colorScheme.surfaceVariant,
                       valueColor: AlwaysStoppedAnimation<Color>(
                         data.isMatured
-                            ? AppColors.textDisabled
-                            : AppColors.primary,
+                            ? colorScheme.onSurface.withValues(alpha: 0.38)
+                            : colorScheme.primary,
                       ),
                     ),
                   ),
@@ -189,7 +189,7 @@ class _InvestmentCard extends StatelessWidget {
                       Text(
                         dateFormat.format(data.startDate),
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                       Container(
@@ -197,30 +197,30 @@ class _InvestmentCard extends StatelessWidget {
                             horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
                           color: data.isMatured
-                              ? AppColors.surfaceVariant
-                              : AppColors.primary,
+                              ? colorScheme.surfaceVariant
+                              : colorScheme.primary,
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                         child: Text(
                           '${(data.progressPercent * 100).toInt()}%',
                           style: AppTextStyles.labelSmall.copyWith(
                             color: data.isMatured
-                                ? AppColors.textDisabled
-                                : AppColors.white,
+                                ? colorScheme.onSurface.withValues(alpha: 0.38)
+                                : colorScheme.onPrimary,
                           ),
                         ),
                       ),
                       Text(
                         dateFormat.format(data.maturityDate),
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
                   ),
 
                   SizedBox(height: 14.h),
-                  Divider(color: AppColors.divider, height: 1),
+                  Divider(color: colorScheme.outline, height: 1),
                   SizedBox(height: 12.h),
 
                   // ── ROI + Tenor ─────────────────────────────────────
@@ -235,16 +235,16 @@ class _InvestmentCard extends StatelessWidget {
                                 : Icons.trending_up_rounded,
                             size: 14.r,
                             color: data.isMatured
-                                ? AppColors.textDisabled
-                                : AppColors.primary,
+                                ? colorScheme.onSurface.withValues(alpha: 0.38)
+                                : colorScheme.primary,
                           ),
                           SizedBox(width: 5.w),
                           Text(
                             '+${data.roiPercent}% p.a.',
                             style: AppTextStyles.bodySmall.copyWith(
                               color: data.isMatured
-                                  ? AppColors.textDisabled
-                                  : AppColors.primary,
+                                  ? colorScheme.onSurface.withValues(alpha: 0.38)
+                                  : colorScheme.primary,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -253,7 +253,7 @@ class _InvestmentCard extends StatelessWidget {
                       Text(
                         data.tenor,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],

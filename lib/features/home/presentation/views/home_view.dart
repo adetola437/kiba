@@ -7,13 +7,15 @@ class HomeView extends StatelessWidget implements HomeViewContract {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       body: CustomScrollView(
         slivers: [
           // ── App Bar ──────────────────────────────────────────────────
           SliverAppBar(
-            backgroundColor: AppColors.background,
+            backgroundColor: colorScheme.surface,
             floating: true,
             snap: true,
             elevation: 0,
@@ -27,15 +29,15 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                   Container(
                     width: 40.r,
                     height: 40.r,
-                    decoration:const BoxDecoration(
-                      color: AppColors.primary,
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary,
                       shape: BoxShape.circle,
                     ),
                     child: Center(
                       child: Text(
                         'I',
                         style: AppTextStyles.titleMedium.copyWith(
-                          color: AppColors.white,
+                          color: colorScheme.onPrimary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -49,13 +51,13 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                         Text(
                           controller.greeting,
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textSecondary,
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                         Text(
                           'Ismail',
                           style: AppTextStyles.titleMedium.copyWith(
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -71,13 +73,13 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                           width: 40.r,
                           height: 40.r,
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceVariant,
+                            color: colorScheme.surfaceVariant,
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             Icons.notifications_outlined,
                             size: 20.r,
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         Positioned(
@@ -106,36 +108,39 @@ class HomeView extends StatelessWidget implements HomeViewContract {
               delegate: SliverChildListDelegate([
 
                 // ── Upgrade tier banner ────────────────────────────────
-                Container(
-                  padding: REdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceVariant,
-                    borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(color: AppColors.border),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.verified_outlined,
-                        size: 18.r,
-                        color: AppColors.primary,
-                      ),
-                      SizedBox(width: 10.w),
-                      Expanded(
-                        child: Text(
-                          'Upgrade to Tier 2 for higher limits',
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textPrimary,
-                            fontWeight: FontWeight.w500,
+                GestureDetector(
+                  onTap: controller.onUpgradeTier,
+                  child: Container(
+                    padding: REdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceVariant,
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(color: colorScheme.outline),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.verified_outlined,
+                          size: 18.r,
+                          color: colorScheme.primary,
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: Text(
+                            'Upgrade to Tier 2 for higher limits',
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: colorScheme.onSurface,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      Icon(
-                        Icons.chevron_right_rounded,
-                        size: 18.r,
-                        color: AppColors.textDisabled,
-                      ),
-                    ],
+                        Icon(
+                          Icons.chevron_right_rounded,
+                          size: 18.r,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
@@ -152,11 +157,12 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                 SizedBox(height: 12.h),
 
                 // ── Mini info strip ────────────────────────────────────
+                // Pill backgrounds are intentional brand-tinted accents,
+                // not adaptive surfaces — kept as brand colours with opacity.
                 Row(
                   children: [
                     Container(
-                      padding: REdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
+                      padding: REdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
                         color: AppColors.limeGreen.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(20.r),
@@ -166,13 +172,13 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                           Icon(
                             Icons.arrow_upward_rounded,
                             size: 12.r,
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                           ),
                           SizedBox(width: 4.w),
                           Text(
                             '+₦1,920 today',
                             style: AppTextStyles.labelSmall.copyWith(
-                              color: AppColors.primary,
+                              color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -181,8 +187,7 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                     ),
                     SizedBox(width: 10.w),
                     Container(
-                      padding: REdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
+                      padding: REdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
                         color: AppColors.beigePink.withOpacity(0.25),
                         borderRadius: BorderRadius.circular(20.r),
@@ -192,13 +197,13 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                           Icon(
                             Icons.calendar_today_outlined,
                             size: 12.r,
-                            color: AppColors.charcoalGrey,
+                            color: colorScheme.onSurface,
                           ),
                           SizedBox(width: 4.w),
                           Text(
                             'Next Payout: 15 Oct',
                             style: AppTextStyles.labelSmall.copyWith(
-                              color: AppColors.charcoalGrey,
+                              color: colorScheme.onSurface,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -208,70 +213,13 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                   ],
                 ),
 
-                SizedBox(height: 12.h),
-
-                // ── Maturity banner ────────────────────────────────────
-                Container(
-                  padding: REdgeInsets.symmetric(
-                      horizontal: 16, vertical: 14),
-                  decoration: BoxDecoration(
-                    color: AppColors.moodyBlue.withOpacity(0.07),
-                    borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(
-                      color: AppColors.moodyBlue.withOpacity(0.15),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 32.r,
-                        height: 32.r,
-                        decoration: BoxDecoration(
-                          color: AppColors.moodyBlue.withOpacity(0.12),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Icon(
-                          Icons.hourglass_bottom_rounded,
-                          size: 16.r,
-                          color: AppColors.moodyBlue,
-                        ),
-                      ),
-                      SizedBox(width: 12.w),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Next Maturity in 12 Days',
-                              style: AppTextStyles.titleSmall.copyWith(
-                                color: AppColors.textPrimary,
-                              ),
-                            ),
-                            Text(
-                              'PMPS — 180 Days (₦1.0M)',
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Icon(
-                        Icons.chevron_right_rounded,
-                        size: 18.r,
-                        color: AppColors.textDisabled,
-                      ),
-                    ],
-                  ),
-                ),
-
                 SizedBox(height: 28.h),
 
                 // ── Quick Actions ──────────────────────────────────────
                 Text(
                   'Quick Actions',
                   style: AppTextStyles.titleLarge.copyWith(
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 SizedBox(height: 16.h),
@@ -286,7 +234,7 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                     Text(
                       'Active Investments',
                       style: AppTextStyles.titleLarge.copyWith(
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     GestureDetector(
@@ -294,7 +242,7 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                       child: Text(
                         'See all',
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                         ),
                       ),
                     ),
@@ -309,7 +257,7 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                 Text(
                   'Special Contribution',
                   style: AppTextStyles.titleLarge.copyWith(
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 SizedBox(height: 14.h),
@@ -324,7 +272,7 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                     Text(
                       'Recent Activities',
                       style: AppTextStyles.titleLarge.copyWith(
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     GestureDetector(
@@ -332,7 +280,7 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                       child: Text(
                         'View History',
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                         ),
                       ),
                     ),
@@ -347,7 +295,7 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                   amount: '+₦50,000',
                   isCredit: true,
                 ),
-              const  Divider(color: AppColors.divider, height: 1),
+                Divider(color: colorScheme.outline, height: 1),
                 const _RecentActivityItem(
                   icon: Icons.trending_up_rounded,
                   title: 'Interest Earned (PMPS)',
@@ -355,7 +303,7 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                   amount: '+₦1,920',
                   isCredit: true,
                 ),
-               const Divider(color: AppColors.divider, height: 1),
+                Divider(color: colorScheme.outline, height: 1),
                 const _RecentActivityItem(
                   icon: Icons.add_chart_rounded,
                   title: 'New Investment: PMPS',
@@ -370,16 +318,16 @@ class HomeView extends StatelessWidget implements HomeViewContract {
                 Text(
                   'Market Insights',
                   style: AppTextStyles.titleLarge.copyWith(
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 SizedBox(height: 14.h),
 
-               const SingleChildScrollView(
+                const SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   clipBehavior: Clip.none,
                   child: Row(
-                    children:  [
+                    children: [
                       _MarketInsightCard(
                         category: 'MARKET UPDATE',
                         headline:

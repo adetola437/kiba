@@ -1,3 +1,5 @@
+import 'package:flutter/src/material/app.dart';
+
 abstract class LocalStorage {
   // ── Token ──────────────────────────────────────────────────────────────────
   Future<void> saveAccessToken(String token);
@@ -19,4 +21,7 @@ abstract class LocalStorage {
 
   // ── Clear all ─────────────────────────────────────────────────────────────
   Future<void> clearAll();
+
+  Future<void> saveTheme(ThemeMode mode);
+  Future<ThemeMode> getSavedTheme();
 }

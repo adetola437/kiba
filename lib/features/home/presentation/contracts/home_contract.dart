@@ -3,6 +3,8 @@ part of '../controllers/home_controller.dart';
 abstract class HomeControllerContract {
   String get greeting;
   bool get balanceVisible;
+
+void onUpgradeTier();
   void onToggleBalance();
   void onNotificationTap();
   void onFundWallet();

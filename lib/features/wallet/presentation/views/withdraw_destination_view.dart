@@ -8,12 +8,12 @@ class WithdrawDestinationView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        scrolledUnderElevation: 0,
         centerTitle: true,
         leading: GestureDetector(
           onTap: () => context.pop(),
@@ -21,20 +21,18 @@ class WithdrawDestinationView extends StatelessWidget
             margin: REdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.border),
+              border: Border.all(color: colorScheme.outline),
             ),
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 16.r,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ),
         title: Text(
           'Withdraw Funds',
-          style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimary,
-          ),
+          style: textTheme.titleMedium,
         ),
       ),
       body: Column(
@@ -47,17 +45,14 @@ class WithdrawDestinationView extends StatelessWidget
                 children: [
                   Text(
                     'Where should we send\nyour funds?',
-                    style: AppTextStyles.headlineMedium.copyWith(
+                    style: textTheme.headlineMedium?.copyWith(
                       fontFamily: 'BWGradual',
-                      color: AppColors.textPrimary,
                     ),
                   ),
                   SizedBox(height: 6.h),
                   Text(
                     'Select a verified bank account for your withdrawal.',
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
+                    style: textTheme.bodySmall,
                   ),
 
                   SizedBox(height: 24.h),
@@ -96,11 +91,10 @@ class WithdrawDestinationView extends StatelessWidget
                         width: double.infinity,
                         padding: REdgeInsets.symmetric(vertical: 16),
                         decoration: BoxDecoration(
-                          color: AppColors.surface,
+                          color: colorScheme.surface,
                           borderRadius: BorderRadius.circular(14.r),
                           border: Border.all(
-                            color: AppColors.border,
-                            style: BorderStyle.solid,
+                            color: colorScheme.outline,
                             width: 1.5,
                           ),
                         ),
@@ -113,21 +107,21 @@ class WithdrawDestinationView extends StatelessWidget
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: AppColors.primary,
+                                  color: colorScheme.primary,
                                   width: 1.5,
                                 ),
                               ),
                               child: Icon(
                                 Icons.add_rounded,
                                 size: 14.r,
-                                color: AppColors.primary,
+                                color: colorScheme.primary,
                               ),
                             ),
                             SizedBox(width: 10.w),
                             Text(
                               'Add New Bank Account',
-                              style: AppTextStyles.labelLarge.copyWith(
-                                color: AppColors.primary,
+                              style: textTheme.labelLarge?.copyWith(
+                                color: colorScheme.primary,
                               ),
                             ),
                           ],
@@ -157,7 +151,7 @@ class WithdrawDestinationView extends StatelessWidget
                         Expanded(
                           child: Text(
                             'Withdrawals typically arrive within 2-5 minutes. Large sums may require additional manual verification.',
-                            style: AppTextStyles.bodySmall.copyWith(
+                            style: textTheme.bodySmall?.copyWith(
                               color: AppColors.moodyBlue,
                               height: 1.5,
                             ),
@@ -174,7 +168,7 @@ class WithdrawDestinationView extends StatelessWidget
                     width: double.infinity,
                     height: 120.h,
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceVariant,
+                      color: colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     child: Column(
@@ -183,14 +177,12 @@ class WithdrawDestinationView extends StatelessWidget
                         Icon(
                           Icons.lock_rounded,
                           size: 32.r,
-                          color: AppColors.primary.withOpacity(0.4),
+                          color: colorScheme.primary.withOpacity(0.4),
                         ),
                         SizedBox(height: 8.h),
                         Text(
                           'Bank-grade security on every transfer',
-                          style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
+                          style: textTheme.labelSmall,
                         ),
                       ],
                     ),
@@ -204,8 +196,12 @@ class WithdrawDestinationView extends StatelessWidget
           Container(
             padding: REdgeInsets.fromLTRB(20, 12, 20, 32),
             decoration: BoxDecoration(
-              color: AppColors.background,
-              border: Border(top: BorderSide(color: AppColors.divider)),
+              color: theme.scaffoldBackgroundColor,
+              border: Border(
+                top: BorderSide(
+                  color: colorScheme.outline.withOpacity(0.5),
+                ),
+              ),
             ),
             child: ValueListenableBuilder<String?>(
               valueListenable: controller.selectedAccountId,
@@ -215,34 +211,13 @@ class WithdrawDestinationView extends StatelessWidget
                 return AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
                   opacity: enabled ? 1.0 : 0.45,
-                  child: GestureDetector(
-                    onTap: enabled ? controller.onReviewWithdrawal : null,
-                    child: Container(
-                      width: double.infinity,
-                      height: 56.h,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(14.r),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Review Withdrawal',
-                            style: AppTextStyles.labelLarge.copyWith(
-                              color: AppColors.white,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            size: 18.r,
-                            color: AppColors.white,
-                          ),
-                        ],
-                      ),
+                  child: IgnorePointer(
+                    ignoring: !enabled,
+                    child: ElevatedButton.icon(
+                      onPressed:
+                          enabled ? controller.onReviewWithdrawal : null,
+                      icon: const Icon(Icons.arrow_forward_rounded),
+                      label: const Text('Review Withdrawal'),
                     ),
                   ),
                 );
@@ -262,34 +237,36 @@ class _EmptyAccountsState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: double.infinity,
       padding: REdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
+        color: colorScheme.surfaceVariant,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Column(
         children: [
           Container(
             width: 60.r,
             height: 60.r,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.beigePink,
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.account_balance_outlined,
               size: 28.r,
-              color: AppColors.primary,
+              color: colorScheme.primary,
             ),
           ),
           SizedBox(height: 16.h),
           Text(
             'No bank accounts linked',
-            style: AppTextStyles.titleSmall.copyWith(
-              color: AppColors.textPrimary,
+            style: textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -297,27 +274,14 @@ class _EmptyAccountsState extends StatelessWidget {
           Text(
             'Add a bank account to start\nmaking withdrawals.',
             textAlign: TextAlign.center,
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
+            style: textTheme.bodySmall?.copyWith(
               height: 1.5,
             ),
           ),
           SizedBox(height: 20.h),
-          GestureDetector(
-            onTap: onAdd,
-            child: Container(
-              padding: REdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              child: Text(
-                '+ Add Bank Account',
-                style: AppTextStyles.labelLarge.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
-            ),
+          ElevatedButton(
+            onPressed: onAdd,
+            child: const Text('+ Add Bank Account'),
           ),
         ],
       ),

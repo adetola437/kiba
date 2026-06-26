@@ -19,6 +19,7 @@ class AppConstants {
   static const String tokenExpiryKey     = 'token_expiry';
   static const String userKey            = 'user_data';
   static const String productCatalogueKey = 'product_catalogue';
+    static const String themeModeKey        = 'theme_mode';   
 
   // ── Timeouts ───────────────────────────────────────────────────────────────
   static const Duration connectTimeout = Duration(seconds: 30);

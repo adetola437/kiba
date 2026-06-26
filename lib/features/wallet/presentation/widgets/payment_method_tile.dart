@@ -7,8 +7,8 @@ class _PaymentMethodTile extends StatelessWidget {
     required this.iconColor,
     required this.title,
     required this.subtitle,
-    required this.onTap,
     this.badge,
+    required this.onTap,
   });
 
   final IconData icon;
@@ -21,78 +21,85 @@ class _PaymentMethodTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: REdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(14.r),
-          border: Border.all(color: AppColors.border),
-        ),
-        child: Row(
-          children: [
-            // Icon container
-            Container(
-              width: 44.r,
-              height: 44.r,
-              decoration: BoxDecoration(
-                color: iconBg,
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              child: Icon(icon, size: 20.r, color: iconColor),
-            ),
-            SizedBox(width: 14.w),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
-            // Title + subtitle
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.titleSmall.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 3.h),
-                  Text(
-                    subtitle,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Badge or chevron
-            if (badge != null) ...[
+    return Material(
+      color: colorScheme.surface,
+      borderRadius: BorderRadius.circular(12.r),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12.r),
+        child: Container(
+          padding: REdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(color: colorScheme.outline),
+          ),
+          child: Row(
+            children: [
               Container(
-                padding: REdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                width: 44.r,
+                height: 44.r,
                 decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(6.r),
+                  color: iconBg,
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
-                child: Text(
-                  badge!,
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.white,
-                    fontSize: 8.sp,
-                    letterSpacing: 0.5,
-                  ),
+                child: Icon(
+                  icon,
+                  color: iconColor,
+                  size: 22.r,
                 ),
               ),
-              SizedBox(width: 8.w),
+              SizedBox(width: 14.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          title,
+                          style: textTheme.titleMedium,
+                        ),
+                        if (badge != null) ...[
+                          SizedBox(width: 8.w),
+                          Container(
+                            padding: REdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorScheme.primaryContainer,
+                              borderRadius: BorderRadius.circular(4.r),
+                            ),
+                            child: Text(
+                              badge!,
+                              style: textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onPrimaryContainer,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      subtitle,
+                      style: textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: colorScheme.onSurfaceVariant,
+                size: 20.r,
+              ),
             ],
-
-            Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 14.r,
-              color: AppColors.textDisabled,
-            ),
-          ],
+          ),
         ),
       ),
     );

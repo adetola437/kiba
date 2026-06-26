@@ -7,13 +7,16 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       body: CustomScrollView(
         slivers: [
           // ── App Bar ──────────────────────────────────────────────────
           SliverAppBar(
-            backgroundColor: AppColors.background,
+            backgroundColor: colorScheme.surface,
             floating: true,
             snap: true,
             elevation: 0,
@@ -27,16 +30,13 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
                 children: [
                   Text(
                     'Profile',
-                    style: AppTextStyles.headlineMedium.copyWith(
+                    style: textTheme.headlineMedium?.copyWith(
                       fontFamily: 'BWGradual',
-                      color: AppColors.textPrimary,
                     ),
                   ),
                   Text(
                     DateFormat('MMMM d, y').format(DateTime.now()),
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
+                    style: textTheme.bodySmall,
                   ),
                 ],
               ),
@@ -47,7 +47,6 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
             padding: REdgeInsets.fromLTRB(20, 12, 20, 40),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-
                 // ── Avatar + user info ────────────────────────────────
                 Center(
                   child: Column(
@@ -61,8 +60,7 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
 
                       Text(
                         'Ismail Adamu',
-                        style: AppTextStyles.titleLarge.copyWith(
-                          color: AppColors.textPrimary,
+                        style: textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -71,9 +69,7 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
 
                       Text(
                         'ismail.adamu@example.com',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+                        style: textTheme.bodyMedium,
                       ),
 
                       SizedBox(height: 10.h),
@@ -96,8 +92,7 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
                                 children: [
                                   Text(
                                     'BASIC KYC',
-                                    style: AppTextStyles.labelSmall.copyWith(
-                                      color: AppColors.charcoalGrey,
+                                    style: textTheme.labelSmall?.copyWith(
                                       letterSpacing: 0.4,
                                     ),
                                   ),
@@ -105,7 +100,6 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
                                   Icon(
                                     Icons.arrow_forward_rounded,
                                     size: 10.r,
-                                    color: AppColors.charcoalGrey,
                                   ),
                                 ],
                               ),
@@ -116,9 +110,7 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
 
                           Text(
                             'Member since Jan 2026',
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
+                            style: textTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -137,6 +129,11 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
                   ),
                 )),
 
+                ListTile(
+                  title: const Text('Dark mode'),
+                  trailing: const ThemeToggle(),
+                ),
+
                 SizedBox(height: 8.h),
 
                 // ── Logout button ─────────────────────────────────────
@@ -146,10 +143,10 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
                     height: 52.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.06),
+                      color: colorScheme.error.withOpacity(0.06),
                       borderRadius: BorderRadius.circular(14.r),
                       border: Border.all(
-                        color: Colors.red.withOpacity(0.2),
+                        color: colorScheme.error.withOpacity(0.2),
                         width: 1,
                       ),
                     ),
@@ -159,13 +156,13 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
                         Icon(
                           Icons.logout_rounded,
                           size: 18.r,
-                          color: Colors.red,
+                          color: colorScheme.error,
                         ),
                         SizedBox(width: 8.w),
                         Text(
                           'Log Out',
-                          style: AppTextStyles.labelLarge.copyWith(
-                            color: Colors.red,
+                          style: textTheme.labelLarge?.copyWith(
+                            color: colorScheme.error,
                           ),
                         ),
                       ],
@@ -179,8 +176,7 @@ class ProfileView extends StatelessWidget implements ProfileViewContract {
                 Center(
                   child: Text(
                     'KIBA v1.0.0 · By Beige Africa',
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.textDisabled,
+                    style: textTheme.labelSmall?.copyWith(
                       letterSpacing: 0.5,
                     ),
                   ),

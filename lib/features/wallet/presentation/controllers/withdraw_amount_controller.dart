@@ -7,11 +7,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/contract.dart';
 import '../../../../core/widgets/general_app_bar.dart';
+import '../widgets/amount_quick_chip.dart';
 import 'withdraw_destination_controller.dart';
 
 part '../contracts/withdraw_amount_contract.dart';
 part '../views/withdraw_amount_view.dart';
-part '../widgets/amount_quick_chip.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Screen

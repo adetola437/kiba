@@ -13,13 +13,15 @@ class _InvestProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: colorScheme.outline),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16.r),
@@ -31,7 +33,6 @@ class _InvestProductCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     // ── Header ──────────────────────────────────────
                     Row(
                       children: [
@@ -40,13 +41,13 @@ class _InvestProductCard extends StatelessWidget {
                           width: 42.r,
                           height: 42.r,
                           decoration: BoxDecoration(
-                            color: product.iconBg.withOpacity(0.35),
+                            color: product.iconBg.withValues(alpha: 0.35),
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Icon(
                             product.icon,
                             size: 20.r,
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                           ),
                         ),
                         SizedBox(width: 12.w),
@@ -57,14 +58,14 @@ class _InvestProductCard extends StatelessWidget {
                               Text(
                                 product.name,
                                 style: AppTextStyles.titleMedium.copyWith(
-                                  color: AppColors.textPrimary,
+                                  color: colorScheme.onSurface,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
                               Text(
                                 product.subtitle,
                                 style: AppTextStyles.bodySmall.copyWith(
-                                  color: AppColors.textSecondary,
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ],
@@ -75,13 +76,14 @@ class _InvestProductCard extends StatelessWidget {
                             padding: REdgeInsets.symmetric(
                                 horizontal: 10, vertical: 4),
                             decoration: BoxDecoration(
-                              color: AppColors.limeGreen.withOpacity(0.3),
+                              color: colorScheme.primaryContainer
+                                  .withValues(alpha: 0.3),
                               borderRadius: BorderRadius.circular(20.r),
                             ),
                             child: Text(
                               'MOST POPULAR',
                               style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.primary,
+                                color: colorScheme.onPrimaryContainer,
                                 letterSpacing: 0.4,
                                 fontSize: 9.sp,
                               ),
@@ -123,8 +125,8 @@ class _InvestProductCard extends StatelessWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: product.isLocked
-                              ? AppColors.surfaceVariant
-                              : AppColors.primary,
+                              ? colorScheme.surfaceVariant
+                              : colorScheme.primary,
                           borderRadius: BorderRadius.circular(12.r),
                         ),
                         child: Row(
@@ -134,27 +136,29 @@ class _InvestProductCard extends StatelessWidget {
                               Icon(
                                 Icons.lock_outline_rounded,
                                 size: 16.r,
-                                color: AppColors.textDisabled,
+                                color: colorScheme.onSurface
+                                    .withValues(alpha: 0.38),
                               ),
                               SizedBox(width: 6.w),
                               Text(
                                 'Upgrade to Access',
                                 style: AppTextStyles.labelLarge.copyWith(
-                                  color: AppColors.textDisabled,
+                                  color: colorScheme.onSurface
+                                      .withValues(alpha: 0.38),
                                 ),
                               ),
                             ] else ...[
                               Text(
                                 product.ctaLabel,
                                 style: AppTextStyles.labelLarge.copyWith(
-                                  color: AppColors.white,
+                                  color: colorScheme.onPrimary,
                                 ),
                               ),
                               SizedBox(width: 6.w),
                               Icon(
                                 Icons.arrow_forward_rounded,
                                 size: 16.r,
-                                color: AppColors.white,
+                                color: colorScheme.onPrimary,
                               ),
                             ],
                           ],
@@ -174,19 +178,20 @@ class _InvestProductCard extends StatelessWidget {
                   child: Container(
                     padding: REdgeInsets.symmetric(
                         horizontal: 16, vertical: 8),
-                    color: AppColors.beigePink.withOpacity(0.15),
+                    color: colorScheme.secondaryContainer
+                        .withValues(alpha: 0.15),
                     child: Row(
                       children: [
                         Icon(
                           Icons.info_outline_rounded,
                           size: 13.r,
-                          color: AppColors.charcoalGrey,
+                          color: colorScheme.onSecondaryContainer,
                         ),
                         SizedBox(width: 5.w),
                         Text(
                           product.lockReason ?? 'Upgrade to access',
                           style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.charcoalGrey,
+                            color: colorScheme.onSecondaryContainer,
                             fontSize: 10.sp,
                           ),
                         ),
@@ -204,18 +209,21 @@ class _InvestProductCard extends StatelessWidget {
 
 class _StatCell extends StatelessWidget {
   const _StatCell({required this.value, required this.label});
+
   final String value;
   final String label;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           value,
           style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimary,
+            color: colorScheme.onSurface,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -223,7 +231,7 @@ class _StatCell extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
       ],
@@ -265,35 +273,40 @@ class _InvestProductSkeletonState extends State<_InvestProductSkeleton>
   Widget _bone({required double width, required double height, double? radius}) {
     return AnimatedBuilder(
       animation: _shimmer,
-      builder: (_, __) => Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius ?? 6.r),
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            stops: const [0.0, 0.5, 1.0],
-            colors: [
-              AppColors.shimmerBase,
-              AppColors.shimmerHighlight,
-              AppColors.shimmerBase,
-            ],
-            transform: GradientRotation(_shimmer.value),
+      builder: (_, __) {
+        final colorScheme = Theme.of(context).colorScheme;
+        return Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(radius ?? 6.r),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              stops: const [0.0, 0.5, 1.0],
+              colors: [
+                colorScheme.surfaceVariant.withValues(alpha: 0.5),
+                colorScheme.surface.withValues(alpha: 0.8),
+                colorScheme.surfaceVariant.withValues(alpha: 0.5),
+              ],
+              transform: GradientRotation(_shimmer.value),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: REdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

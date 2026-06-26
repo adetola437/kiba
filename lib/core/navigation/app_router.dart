@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kiba/features/kyc/data/kyc_data.dart';
+import 'package:kiba/features/kyc/presentation/controllers/kyc_hub_controller.dart';
+import 'package:kiba/features/stocks/presentation/controllers/stocks_controller.dart';
 import 'package:kiba/features/wallet/presentation/controllers/fund_wallet_controller.dart';
 
 import '../../features/auth/presentation/controllers/login.dart';
@@ -14,11 +17,16 @@ import '../../features/auth/presentation/controllers/register_step3_controller.d
 import '../../features/auth/presentation/controllers/register_success_controller.dart';
 import '../../features/auth/presentation/controllers/reset_password_controller.dart';
 import '../../features/auth/presentation/controllers/splash.dart';
-import '../../features/beige_club/presentation/controllers/beige_club_dashboard_controller.dart';
-import '../../features/beige_club/presentation/controllers/beige_club_intro_controller.dart';
-import '../../features/beige_club/presentation/controllers/beige_club_review_controller.dart';
-import '../../features/beige_club/presentation/controllers/beige_club_setup_controller.dart';
-import '../../features/beige_club/presentation/controllers/beige_club_success_controller.dart';
+// import '../../features/beige_club/presentation/controllers/beige_club_dashboard_controller.dart';
+// import '../../features/beige_club/presentation/controllers/beige_club_intro_controller.dart';
+// import '../../features/beige_club/presentation/controllers/beige_club_review_controller.dart';
+// import '../../features/beige_club/presentation/controllers/beige_club_setup_controller.dart';
+// import '../../features/beige_club/presentation/controllers/beige_club_success_controller.dart';
+import '../../features/club/presentation/views/beige_contribute.dart';
+import '../../features/club/presentation/views/beige_payment.dart';
+// import '../../features/club/presentation/views/beige_pending.dart' hide BeigeClubDashboardScreen;
+import '../../features/club/presentation/views/beige_pending.dart';
+import '../../features/club/presentation/views/intro_beige.dart';
 import '../../features/home/presentation/controllers/home_controller.dart';
 import '../../features/invest/presentation/controllers/confirm_investment_controller.dart';
 import '../../features/invest/presentation/controllers/invest_controller.dart';
@@ -26,11 +34,21 @@ import '../../features/invest/presentation/controllers/investment_details_contro
 import '../../features/invest/presentation/controllers/investment_success_controller.dart';
 import '../../features/invest/presentation/controllers/new_investment_controller.dart';
 import '../../features/invest/presentation/controllers/topup_investment_controller.dart';
+import '../../features/kyc/presentation/controllers/kyc_tier2_controller.dart';
+import '../../features/kyc/presentation/views/kyc_pending.dart';
+import '../../features/notifications/presentation/controllers/notifications_controller.dart';
 import '../../features/portfolio/presentation/controllers/portfolio_controller.dart';
 import '../../features/profile/presentation/controllers/profile.dart';
+import '../../features/profile/presentation/views/biometrics_security_screen.dart';
+import '../../features/profile/presentation/views/notification_settings_screen.dart';
+import '../../features/profile/presentation/views/personal_information_screen.dart';
 
-import '../../features/beige_club/presentation/controllers/beige_club_group.dart';
-import '../../features/beige_club/presentation/controllers/beige_club_subscirbed_screen.dart';
+// import '../../features/beige_club/presentation/controllers/beige_club_group.dart';
+// import '../../features/beige_club/presentation/controllers/beige_club_subscirbed_screen.dart' hide BeigeClubContributeScreen, BeigeClubHistoryScreen;
+import '../../features/stocks/data/stocks_data.dart';
+import '../../features/stocks/presentation/controllers/stock_detail_controller.dart';
+import '../../features/stocks/presentation/controllers/stock_order_controller.dart';
+import '../../features/stocks/presentation/controllers/stock_order_success_controller.dart';
 import '../../features/wallet/presentation/controllers/add_bank_account_controller.dart';
 import '../../features/wallet/presentation/controllers/fund_bank_transfer_controller.dart';
 import '../../features/wallet/presentation/controllers/fund_ussd_controller.dart';
@@ -155,6 +173,71 @@ class AppRouter {
         },
       ),
 
+      // KYC pending screen shown after successful submission
+      GoRoute(
+        path: '/kyc/pending',
+        name: KycPendingScreen.route,
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, state) {
+          final data = state.extra as Map<String, dynamic>? ?? {};
+          return KycPendingScreen(tier: data['tier'] as int? ?? 2);
+        },
+      ),
+
+      GoRoute(
+          name: 'beige_clubs',
+          path: '/beige-club',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (_, __) => const BeigeClubIntroScreen()),
+
+      GoRoute(
+          name: 'beige_club_contribute',
+          path: '/beige-club/contribute',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (_, __) => const BeigeClubContributeScreen()),
+
+      GoRoute(
+          name: 'beige_club_payment',
+          path: '/beige-club/payment',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (_, state) {
+            final d = state.extra as Map<String, dynamic>;
+            return BeigeClubPaymentScreen(
+              amount: d['amount'],
+              projectedInterest: d['projectedInterest'],
+              yearEndValue: d['yearEndValue'],
+              daysToYearEnd: d['daysToYearEnd'],
+            );
+          }),
+
+      GoRoute(
+          name: 'beige_club_pending',
+          path: '/beige-club/pending',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (_, state) {
+            final d = state.extra as Map<String, dynamic>;
+            return BeigeClubPendingScreen(
+                amount: d['amount'], yearEndValue: d['yearEndValue']);
+          }),
+
+      GoRoute(
+          name: 'beige_club_dashboard',
+          path: '/beige-club/dashboard',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (_, __) => const BeigeClubDashboardScreen()),
+
+      GoRoute(
+          name: 'beige_club_maturity',
+          path: '/beige-club/maturity',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (_, __) => const BeigeClubMaturityScreen()),
+
+      GoRoute(
+          name: 'beige_club_history',
+          path: '/beige-club/history',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (_, __) => const BeigeClubHistoryScreen()),
+
       // ── Full-screen routes above the shell ─────────────────────────────────
 
       // ── Shell — bottom nav tabs ───────────────────────────────────────────
@@ -178,78 +261,16 @@ class AppRouter {
                       builder: (_, __) => const TransactionsScreen(),
                     ),
                     GoRoute(
-                        name: BeigeClubDashboardScreen.route,
-                        path: 'beige-club/dashboard',
-                        parentNavigatorKey: rootNavigatorKey,
-                        builder: (_, __) => const BeigeClubDashboardScreen(),
-                        routes: [
-                          GoRoute(
-                              name: 'beige_club_groups',
-                              path: 'beige-club/groups',
-                              parentNavigatorKey: rootNavigatorKey,
-                              builder: (_, __) =>
-                                  const BeigeClubGroupsScreen()),
-                          GoRoute(
-                              name: BeigeClubGroupProgressScreen.route,
-                              path: 'beige-club/progress',
-                              parentNavigatorKey: rootNavigatorKey,
-                              builder: (_, __) =>
-                                  const BeigeClubGroupProgressScreen()),
-                          GoRoute(
-                              name: BeigeClubContributeScreen.route,
-                              path: 'beige-club/contribute',
-                              parentNavigatorKey: rootNavigatorKey,
-                              builder: (_, __) =>
-                                  const BeigeClubContributeScreen()),
-                          GoRoute(
-                              name: 'beige_club_history',
-                              path: 'beige-club/history',
-                              parentNavigatorKey: rootNavigatorKey,
-                              builder: (_, __) =>
-                                  const BeigeClubHistoryScreen()),
-                        ]),
+                      name: NotificationsScreen.route,
+                      path: 'notifications',
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (_, __) => const NotificationsScreen(),
+                    ),
                     GoRoute(
                       name: BeigeClubIntroScreen.route,
                       path: 'beige-club',
                       parentNavigatorKey: rootNavigatorKey,
                       builder: (_, __) => const BeigeClubIntroScreen(),
-                      routes: [
-                        GoRoute(
-                            name: BeigeClubSetupScreen.route,
-                            path: 'beige-club/setup',
-                            parentNavigatorKey: rootNavigatorKey,
-                            builder: (_, __) => const BeigeClubSetupScreen()),
-                        GoRoute(
-                            name: BeigeClubReviewScreen.route,
-                            path: 'beige-club/review',
-                            parentNavigatorKey: rootNavigatorKey,
-                            builder: (_, state) {
-                              final d = state.extra as Map<String, dynamic>;
-                              return BeigeClubReviewScreen(
-                                amount: d['amount'],
-                                startMonth: d['startMonth'],
-                                contributionMode: d['mode'],
-                                totalContributed: d['totalContributed'],
-                                projectedInterest: d['projectedInterest'],
-                                yearEndPayout: d['yearEndPayout'],
-                                dailyAccrual: d['dailyAccrual'],
-                              );
-                            }),
-                        GoRoute(
-                            name: BeigeClubSuccessScreen.route,
-                            path: 'beige-club/success',
-                            parentNavigatorKey: rootNavigatorKey,
-                            builder: (_, state) {
-                              final d = state.extra as Map<String, dynamic>;
-                              return BeigeClubSuccessScreen(
-                                amount: d['amount'],
-                                startMonth: d['startMonth'],
-                                positionInRotation: d['positionInRotation'],
-                                yearEndPayout: d['yearEndPayout'],
-                                dailyAccrual: d['dailyAccrual'],
-                              );
-                            }),
-                      ],
                     ),
                   ]),
             ],
@@ -286,6 +307,53 @@ class AppRouter {
                             productName: data['productName']);
                       },
                     ),
+                    GoRoute(
+                        name: StocksScreen.route,
+                        path: 'stocks',
+                        parentNavigatorKey: rootNavigatorKey,
+                        builder: (_, state) {
+                     
+                          return const StocksScreen();
+                        },
+                        routes: [
+                          GoRoute(
+                            name: StockDetailScreen.route,
+                            path: 'stock_detail',
+                            parentNavigatorKey: rootNavigatorKey,
+                            builder: (_, state) {
+                              final stock = state.extra as StockData;
+                              return StockDetailScreen(stock: stock);
+                            },
+                          ),
+                                        GoRoute(
+                name: StockOrderScreen.route,
+                path: 'stock_order',
+                parentNavigatorKey: rootNavigatorKey,
+                builder: (_, state) {
+                  final d = state.extra as Map<String, dynamic>;
+                  return StockOrderScreen(
+                    stock: d['stock'] as StockData,
+                    orderType: d['orderType'] as StockOrderType,
+                  );
+                },
+                    ),
+                     GoRoute(
+                    name: StockOrderSuccessScreen.route,
+                    path: 'stock_success',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (_, state) {
+                      final d = state.extra as Map<String, dynamic>;
+                      return StockOrderSuccessScreen(
+                        stock: d['stock'] as StockData,
+                        orderType: d['orderType'] as StockOrderType,
+                        shares: d['shares'] as double,
+                        pricePerShare: d['pricePerShare'] as double,
+                        total: d['total'] as double,
+                        orderMode: d['orderMode'] as StockOrderMode,
+                      );
+                    },
+                  ),
+                        ]),
                     GoRoute(
                       name: ConfirmInvestmentScreen.route,
                       path: 'invest/confirm',
@@ -485,10 +553,55 @@ class AppRouter {
             navigatorKey: _profileKey,
             routes: [
               GoRoute(
-                path: '/profile',
-                name: ProfileScreen.route,
-                builder: (_, __) => const ProfileScreen(),
-              ),
+                  path: '/profile',
+                  name: ProfileScreen.route,
+                  builder: (_, __) => const ProfileScreen(),
+                  routes: [
+                    GoRoute(
+                      name: PersonalInformationScreen.route,
+                      path: 'personal-info',
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (_, __) => const PersonalInformationScreen(),
+                    ),
+                    GoRoute(
+                      name: LinkedBankAccountsScreen.route,
+                      path: 'linked-banks',
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (_, __) => const LinkedBankAccountsScreen(),
+                    ),
+                    GoRoute(
+                      name: 'profile_add_bank_account',
+                      path: 'linked-banks/add-bank',
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (_, __) => const AddBankAccountScreen(),
+                    ),
+                    GoRoute(
+                      name: KycHubScreen.route, // 'add_bank_account'
+                      path: 'kyc-hub',
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (_, __) => const KycHubScreen(),
+                    ),
+                    GoRoute(
+                      name: KycTier2Screen.route, // 'add_bank_account'
+                      path: 'kyc-tier2',
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (_, __) => const KycTier2Screen(
+                        accountType: AccountType.individual,
+                      ),
+                    ),
+                    GoRoute(
+                      name: NotificationSettingsScreen.route,
+                      path: 'notification-settings',
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (_, __) => const NotificationSettingsScreen(),
+                    ),
+                    GoRoute(
+                      name: BiometricsSecurityScreen.route,
+                      path: 'biometrics-security',
+                      parentNavigatorKey: rootNavigatorKey,
+                      builder: (_, __) => const BiometricsSecurityScreen(),
+                    ),
+                  ]),
             ],
           ),
         ],

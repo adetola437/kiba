@@ -7,12 +7,15 @@ class _VirtualAccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: REdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,13 +26,12 @@ class _VirtualAccountCard extends StatelessWidget {
               Icon(
                 Icons.account_balance_outlined,
                 size: 16.r,
-                color: AppColors.primary,
+                color: colorScheme.primary,
               ),
               SizedBox(width: 6.w),
               Text(
                 'YOUR VIRTUAL ACCOUNT',
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary,
+                style: textTheme.labelSmall?.copyWith(
                   letterSpacing: 1.0,
                 ),
               ),
@@ -45,8 +47,7 @@ class _VirtualAccountCard extends StatelessWidget {
             children: [
               Text(
                 'Providus Bank',
-                style: AppTextStyles.titleLarge.copyWith(
-                  color: AppColors.textPrimary,
+                style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -56,7 +57,7 @@ class _VirtualAccountCard extends StatelessWidget {
                   padding:
                       REdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceVariant,
+                    color: colorScheme.surfaceVariant,
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Row(
@@ -64,13 +65,13 @@ class _VirtualAccountCard extends StatelessWidget {
                       Icon(
                         Icons.copy_rounded,
                         size: 14.r,
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       SizedBox(width: 5.w),
                       Text(
                         'Copy',
-                        style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.textSecondary,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -81,21 +82,18 @@ class _VirtualAccountCard extends StatelessWidget {
           ),
 
           SizedBox(height: 16.h),
-          Divider(color: AppColors.divider, height: 1),
+          const Divider(height: 1),
           SizedBox(height: 14.h),
 
           // Account Number
           Text(
             'Account Number',
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
-            ),
+            style: textTheme.bodySmall,
           ),
           SizedBox(height: 4.h),
           Text(
             '9901234567',
-            style: AppTextStyles.titleLarge.copyWith(
-              color: AppColors.textPrimary,
+            style: textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
               letterSpacing: 1.0,
             ),
@@ -106,15 +104,12 @@ class _VirtualAccountCard extends StatelessWidget {
           // Account Name
           Text(
             'Account Name',
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
-            ),
+            style: textTheme.bodySmall,
           ),
           SizedBox(height: 4.h),
           Text(
             'Beige Africa / Ismail Adamu',
-            style: AppTextStyles.titleSmall.copyWith(
-              color: AppColors.textPrimary,
+            style: textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.w600,
               height: 1.4,
             ),

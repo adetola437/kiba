@@ -8,12 +8,12 @@ class AddBankAccountView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        scrolledUnderElevation: 0,
         centerTitle: true,
         leading: GestureDetector(
           onTap: () => context.pop(),
@@ -21,20 +21,18 @@ class AddBankAccountView extends StatelessWidget
             margin: REdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.border),
+              border: Border.all(color: colorScheme.outline),
             ),
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 16.r,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ),
         title: Text(
           'Add Bank Account',
-          style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimary,
-          ),
+          style: textTheme.titleMedium,
         ),
       ),
       body: Column(
@@ -49,17 +47,14 @@ class AddBankAccountView extends StatelessWidget
                   children: [
                     Text(
                       'Link a bank account',
-                      style: AppTextStyles.headlineSmall.copyWith(
+                      style: textTheme.headlineSmall?.copyWith(
                         fontFamily: 'BWGradual',
-                        color: AppColors.textPrimary,
                       ),
                     ),
                     SizedBox(height: 6.h),
                     Text(
                       'Your account will be verified instantly via NIBSS.',
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+                      style: textTheme.bodySmall,
                     ),
 
                     SizedBox(height: 28.h),
@@ -72,18 +67,15 @@ class AddBankAccountView extends StatelessWidget
                       builder: (context, selected, _) {
                         return DropdownButtonFormField<String>(
                           value: selected,
-                          decoration: _inputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Select your bank',
-                            prefixIcon: Icons.account_balance_outlined,
+                            prefixIcon: Icon(Icons.account_balance_outlined),
                           ),
                           items: controller.banks
                               .map(
                                 (b) => DropdownMenuItem(
                                   value: b,
-                                  child: Text(
-                                    b,
-                                    style: AppTextStyles.bodyMedium,
-                                  ),
+                                  child: Text(b),
                                 ),
                               )
                               .toList(),
@@ -92,10 +84,11 @@ class AddBankAccountView extends StatelessWidget
                               v == null ? 'Please select a bank' : null,
                           icon: Icon(
                             Icons.keyboard_arrow_down_rounded,
-                            color: AppColors.textSecondary,
+                            color: colorScheme.onSurfaceVariant,
                           ),
-                          dropdownColor: AppColors.surface,
+                          dropdownColor: colorScheme.surface,
                           borderRadius: BorderRadius.circular(12.r),
+                          style: textTheme.bodyMedium,
                         );
                       },
                     ),
@@ -109,13 +102,13 @@ class AddBankAccountView extends StatelessWidget
                       controller: controller.accountNumberCtrl,
                       keyboardType: TextInputType.number,
                       maxLength: 10,
-                      style: AppTextStyles.bodyMedium.copyWith(
+                      style: textTheme.bodyMedium?.copyWith(
                         fontFamily: 'EuclidCircularA',
                         letterSpacing: 1.5,
                       ),
-                      decoration: _inputDecoration(
+                      decoration: const InputDecoration(
                         hintText: '0000000000',
-                        prefixIcon: Icons.pin_outlined,
+                        prefixIcon: Icon(Icons.pin_outlined),
                         counterText: '',
                       ),
                       validator: (v) => (v == null || v.length < 10)
@@ -136,7 +129,7 @@ class AddBankAccountView extends StatelessWidget
                               return Container(
                                 padding: REdgeInsets.all(14),
                                 decoration: BoxDecoration(
-                                  color: AppColors.surfaceVariant,
+                                  color: colorScheme.surfaceVariant,
                                   borderRadius: BorderRadius.circular(12.r),
                                 ),
                                 child: Row(
@@ -146,15 +139,13 @@ class AddBankAccountView extends StatelessWidget
                                       height: 16.r,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
-                                        color: AppColors.primary,
+                                        color: colorScheme.primary,
                                       ),
                                     ),
                                     SizedBox(width: 12.w),
                                     Text(
                                       'Verifying account...',
-                                      style: AppTextStyles.bodySmall.copyWith(
-                                        color: AppColors.textSecondary,
-                                      ),
+                                      style: textTheme.bodySmall,
                                     ),
                                   ],
                                 ),
@@ -185,17 +176,14 @@ class AddBankAccountView extends StatelessWidget
                                       children: [
                                         Text(
                                           'Account verified',
-                                          style:
-                                              AppTextStyles.labelSmall.copyWith(
+                                          style: textTheme.labelSmall?.copyWith(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                         Text(
                                           name,
-                                          style:
-                                              AppTextStyles.bodyMedium.copyWith(
-                                            color: AppColors.textPrimary,
+                                          style: textTheme.bodyMedium?.copyWith(
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
@@ -233,7 +221,7 @@ class AddBankAccountView extends StatelessWidget
                           Expanded(
                             child: Text(
                               'We use NIBSS to instantly verify your account details. Only accounts in your name can be linked.',
-                              style: AppTextStyles.bodySmall.copyWith(
+                              style: textTheme.bodySmall?.copyWith(
                                 color: AppColors.moodyBlue,
                                 height: 1.5,
                               ),
@@ -252,8 +240,10 @@ class AddBankAccountView extends StatelessWidget
           Container(
             padding: REdgeInsets.fromLTRB(20, 12, 20, 32),
             decoration: BoxDecoration(
-              color: AppColors.background,
-              border: Border(top: BorderSide(color: AppColors.divider)),
+              color: theme.scaffoldBackgroundColor,
+              border: Border(
+                top: BorderSide(color: colorScheme.outline.withOpacity(0.5)),
+              ),
             ),
             child: ValueListenableBuilder<String?>(
               valueListenable: controller.resolvedAccountName,
@@ -265,32 +255,20 @@ class AddBankAccountView extends StatelessWidget
                     return AnimatedOpacity(
                       duration: const Duration(milliseconds: 200),
                       opacity: enabled ? 1.0 : 0.45,
-                      child: GestureDetector(
-                        onTap: enabled ? controller.onSave : null,
-                        child: Container(
-                          width: double.infinity,
-                          height: 56.h,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(14.r),
-                          ),
+                      child: IgnorePointer(
+                        ignoring: !enabled,
+                        child: ElevatedButton(
+                          onPressed: enabled ? controller.onSave : null,
                           child: saving
                               ? SizedBox(
                                   width: 22.r,
                                   height: 22.r,
-                                  child: CircularProgressIndicator(
+                                  child: const CircularProgressIndicator(
                                     strokeWidth: 2.5,
-                                    color: AppColors.white,
+                                    color: Colors.white,
                                   ),
                                 )
-                              : Text(
-                                  'Save Bank Account',
-                                  style: AppTextStyles.labelLarge.copyWith(
-                                    color: AppColors.white,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
+                              : const Text('Save Bank Account'),
                         ),
                       ),
                     );
@@ -303,48 +281,6 @@ class AddBankAccountView extends StatelessWidget
       ),
     );
   }
-
-  InputDecoration _inputDecoration({
-    required String hintText,
-    required IconData prefixIcon,
-    String? counterText,
-  }) {
-    return InputDecoration(
-      hintText: hintText,
-      hintStyle: AppTextStyles.bodyMedium.copyWith(
-        color: AppColors.textDisabled,
-      ),
-      prefixIcon: Icon(
-        prefixIcon,
-        size: 18.r,
-        color: AppColors.textSecondary,
-      ),
-      filled: true,
-      fillColor: AppColors.surfaceVariant,
-      counterText: counterText,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide.none,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(color: AppColors.border),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(color: AppColors.primary, width: 1.5),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(color: AppColors.error),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(color: AppColors.error, width: 1.5),
-      ),
-      contentPadding: REdgeInsets.symmetric(horizontal: 16, vertical: 16),
-    );
-  }
 }
 
 class _FieldLabel extends StatelessWidget {
@@ -355,7 +291,7 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: AppTextStyles.labelLarge.copyWith(color: AppColors.textPrimary),
+      style: Theme.of(context).textTheme.labelLarge,
     );
   }
 }

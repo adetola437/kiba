@@ -17,11 +17,15 @@ class _PortfolioEmptyState extends StatelessWidget {
         return 'No matured investments yet.\nYour completed investments will appear here.';
       case PortfolioFilter.all:
         return 'Your portfolio is empty.\nMake your first investment today.';
+      default:
+        return 'An error occured';
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: REdgeInsets.symmetric(horizontal: 32, vertical: 48),
@@ -32,13 +36,13 @@ class _PortfolioEmptyState extends StatelessWidget {
               width: 72.r,
               height: 72.r,
               decoration: BoxDecoration(
-                color: AppColors.limeGreen.withOpacity(0.2),
+                color: colorScheme.primaryContainer.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.pie_chart_outline_rounded,
                 size: 32.r,
-                color: AppColors.primary.withOpacity(0.4),
+                color: colorScheme.primary.withValues(alpha: 0.4),
               ),
             ),
             SizedBox(height: 16.h),
@@ -46,7 +50,7 @@ class _PortfolioEmptyState extends StatelessWidget {
               _message,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
                 height: 1.6,
               ),
             ),
@@ -58,13 +62,13 @@ class _PortfolioEmptyState extends StatelessWidget {
                   padding: REdgeInsets.symmetric(
                       horizontal: 28, vertical: 14),
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Text(
                     'Start Investing',
                     style: AppTextStyles.labelLarge.copyWith(
-                      color: AppColors.white,
+                      color: colorScheme.onPrimary,
                     ),
                   ),
                 ),

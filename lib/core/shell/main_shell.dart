@@ -6,9 +6,10 @@ import 'package:go_router/go_router.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
-/// The persistent shell that wraps every tab screen.
-/// Each branch keeps its own navigator stack alive independently via
-/// StatefulShellRoute.indexedStack.
+// ───────────────────────────────────────────────────────────────────────────────
+// MainShell
+// ───────────────────────────────────────────────────────────────────────────────
+
 class MainShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
@@ -16,10 +17,16 @@ class MainShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value: brightness == Brightness.dark
+          ? SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: Colors.transparent,
+            )
+          : SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: Colors.transparent,
+            ),
       child: Scaffold(
         body: navigationShell,
         bottomNavigationBar: _KibaBottomNav(
@@ -33,13 +40,33 @@ class MainShell extends StatelessWidget {
   void _onTap(int index) {
     navigationShell.goBranch(
       index,
-      // Tapping the active tab scrolls back to its root
       initialLocation: index == navigationShell.currentIndex,
     );
   }
 }
 
-// ── Custom bottom nav ──────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────────────────────────────
+// NavItem data class
+// ───────────────────────────────────────────────────────────────────────────────
+
+class _NavItem {
+  final IconData icon;
+  final IconData activeIcon;
+  final String label;
+  final bool isCentre;
+
+  const _NavItem({
+    required this.icon,
+    required this.activeIcon,
+    required this.label,
+    this.isCentre = false,
+  });
+}
+
+// ───────────────────────────────────────────────────────────────────────────────
+// Custom bottom nav
+// ───────────────────────────────────────────────────────────────────────────────
+
 class _KibaBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -50,24 +77,26 @@ class _KibaBottomNav extends StatelessWidget {
   });
 
   static const _items = [
-    _NavItem(icon: Icons.home_outlined,      activeIcon: Icons.home_rounded,              label: 'Home'),
-    _NavItem(icon: Icons.pie_chart_outline,  activeIcon: Icons.pie_chart_rounded,          label: 'Portfolio'),
-    _NavItem(icon: Icons.trending_up_rounded,activeIcon: Icons.trending_up_rounded,        label: 'Invest',   isCentre: true),
+    _NavItem(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: 'Home'),
+    _NavItem(icon: Icons.pie_chart_outline, activeIcon: Icons.pie_chart_rounded, label: 'Portfolio'),
+    _NavItem(icon: Icons.trending_up_rounded, activeIcon: Icons.trending_up_rounded, label: 'Invest', isCentre: true),
     _NavItem(icon: Icons.account_balance_wallet_outlined, activeIcon: Icons.account_balance_wallet_rounded, label: 'Wallet'),
-    _NavItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded,         label: 'Profile'),
+    _NavItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: 'Profile'),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: colorScheme.surface,
         border: Border(
-          top: BorderSide(color: AppColors.divider, width: 1),
+          top: BorderSide(color: colorScheme.outline, width: 1),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 16,
             offset: const Offset(0, -4),
           ),
@@ -82,7 +111,7 @@ class _KibaBottomNav extends StatelessWidget {
               final item = _items[i];
               final isActive = i == currentIndex;
 
-              // Centre invest button — elevated pill style
+              // ── Centre invest button (elevated pill) ─────────────
               if (item.isCentre) {
                 return Expanded(
                   child: GestureDetector(
@@ -95,11 +124,11 @@ class _KibaBottomNav extends StatelessWidget {
                           width: 48.r,
                           height: 48.r,
                           decoration: BoxDecoration(
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withOpacity(0.35),
+                                color: colorScheme.primary.withValues(alpha: 0.35),
                                 blurRadius: 12,
                                 offset: const Offset(0, 4),
                               ),
@@ -107,7 +136,7 @@ class _KibaBottomNav extends StatelessWidget {
                           ),
                           child: Icon(
                             item.activeIcon,
-                            color: AppColors.white,
+                            color: colorScheme.onPrimary,
                             size: 22.r,
                           ),
                         ),
@@ -117,7 +146,7 @@ class _KibaBottomNav extends StatelessWidget {
                 );
               }
 
-              // Regular tab items
+              // ── Regular tab items ────────────────────────────────
               return Expanded(
                 child: GestureDetector(
                   onTap: () => onTap(i),
@@ -132,8 +161,8 @@ class _KibaBottomNav extends StatelessWidget {
                           key: ValueKey(isActive),
                           size: 22.r,
                           color: isActive
-                              ? AppColors.primary
-                              : AppColors.textDisabled,
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
                         ),
                       ),
                       SizedBox(height: 4.h),
@@ -141,8 +170,8 @@ class _KibaBottomNav extends StatelessWidget {
                         duration: const Duration(milliseconds: 200),
                         style: AppTextStyles.labelSmall.copyWith(
                           color: isActive
-                              ? AppColors.primary
-                              : AppColors.textDisabled,
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
                           fontWeight: isActive
                               ? FontWeight.w600
                               : FontWeight.w400,
@@ -159,18 +188,4 @@ class _KibaBottomNav extends StatelessWidget {
       ),
     );
   }
-}
-
-class _NavItem {
-  final IconData icon;
-  final IconData activeIcon;
-  final String label;
-  final bool isCentre;
-
-  const _NavItem({
-    required this.icon,
-    required this.activeIcon,
-    required this.label,
-    this.isCentre = false,
-  });
 }

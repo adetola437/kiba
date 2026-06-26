@@ -8,8 +8,9 @@ class ResetPasswordView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -28,7 +29,7 @@ class ResetPasswordView extends StatelessWidget
                         child: Icon(
                           Icons.arrow_back_rounded,
                           size: 24.r,
-                          color: AppColors.textPrimary,
+                          // color: AppColors.textPrimary,
                         ),
                       ),
                     ),
@@ -37,14 +38,14 @@ class ResetPasswordView extends StatelessWidget
                       'Create New\nPassword',
                       style: AppTextStyles.headlineLarge.copyWith(
                         fontFamily: 'BWGradual',
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                       ),
                     ),
                     SizedBox(height: 10.h),
                     Text(
                       'Choose a strong password to keep your KIBA account secure.',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                         height: 1.5,
                       ),
                     ),
@@ -71,7 +72,7 @@ class ResetPasswordView extends StatelessWidget
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
                                 size: 20.r,
-                                color: AppColors.textSecondary,
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ),
@@ -101,7 +102,7 @@ class ResetPasswordView extends StatelessWidget
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
                                 size: 20.r,
-                                color: AppColors.textSecondary,
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ),
@@ -115,9 +116,9 @@ class ResetPasswordView extends StatelessWidget
             Container(
               padding: REdgeInsets.fromLTRB(24, 16, 24, 32),
               decoration: BoxDecoration(
-                color: AppColors.background,
+                color: colorScheme.surface,
                 border: Border(
-                  top: BorderSide(color: AppColors.divider),
+                  top: BorderSide(color: colorScheme.outline),
                 ),
               ),
               child: AnimatedOpacity(
@@ -129,7 +130,7 @@ class ResetPasswordView extends StatelessWidget
                     width: double.infinity,
                     height: 56.h,
                     decoration: BoxDecoration(
-                      color: AppColors.primary,
+                      color: colorScheme.primary,
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     alignment: Alignment.center,
@@ -139,14 +140,14 @@ class ResetPasswordView extends StatelessWidget
                         Text(
                           'Reset Password',
                           style: AppTextStyles.labelLarge.copyWith(
-                            color: AppColors.textOnDark,
+                            color: colorScheme.tertiary,
                           ),
                         ),
                         SizedBox(width: 8.w),
                         Icon(
                           Icons.check_rounded,
                           size: 18.r,
-                          color: AppColors.textOnDark,
+                          color: colorScheme.tertiary,
                         ),
                       ],
                     ),

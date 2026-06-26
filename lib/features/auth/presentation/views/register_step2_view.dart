@@ -10,8 +10,10 @@ class RegisterStep2View extends StatelessWidget
  
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+ 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.background,
       body: SafeArea(
         child: Form(
           key: controller.formKey,
@@ -25,7 +27,7 @@ class RegisterStep2View extends StatelessWidget
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 16.h),
-           
+ 
                       // Back
                       GestureDetector(
                         onTap: controller.onBack,
@@ -35,38 +37,39 @@ class RegisterStep2View extends StatelessWidget
                           child: Icon(
                             Icons.arrow_back_rounded,
                             size: 24.r,
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                       ),
-           
+ 
                       SizedBox(height: 24.h),
-           
+ 
                       RegistrationProgressBar(currentStep: 2),
-           
+ 
                       SizedBox(height: 28.h),
-           
+ 
                       Text(
                         _isIndividual
                             ? 'Create your Individual\nAccount'
                             : 'Create your Corporate\nAccount',
                         style: AppTextStyles.headlineLarge.copyWith(
                           fontFamily: 'BWGradual',
-                          color: AppColors.primary,
+                          // Always African Green — brand headline, not adaptive
+                          color: colorScheme.primary,
                         ),
                       ),
-           
+ 
                       SizedBox(height: 8.h),
-           
+ 
                       Text(
                         'Step 2 of 3: Personal Details',
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
-           
+ 
                       SizedBox(height: 32.h),
-           
+ 
                       // ── Individual fields ─────────────────────────────
                       if (_isIndividual) ...[
                         RegistrationInputField(
@@ -94,7 +97,7 @@ class RegisterStep2View extends StatelessWidget
                           validatorType: ValidatorType.name,
                         ),
                       ],
-           
+ 
                       // ── Corporate fields ──────────────────────────────
                       if (!_isIndividual) ...[
                         RegistrationInputField(
@@ -113,12 +116,11 @@ class RegisterStep2View extends StatelessWidget
                           validatorType: ValidatorType.name,
                         ),
                       ],
-           
+ 
                       SizedBox(height: 20.h),
-           
+ 
                       // ── Phone ─────────────────────────────────────────
-
-                        RegistrationInputField(
+                      RegistrationInputField(
                         label: 'Phone',
                         hint: '800 000 000',
                         controller: controller.phoneController,
@@ -126,82 +128,9 @@ class RegisterStep2View extends StatelessWidget
                         textInputAction: TextInputAction.next,
                         validatorType: ValidatorType.phone,
                       ),
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Text(
-                      //       'Phone number',
-                      //       style: AppTextStyles.labelMedium.copyWith(
-                      //         color: AppColors.textSecondary,
-                      //         letterSpacing: 0.4,
-          
-                      //       ),
-                      //     ),
-                      //     SizedBox(height: 8.h),
-                      //     Container(
-                      //       decoration: BoxDecoration(
-                      //         color: AppColors.surfaceVariant,
-                      //         borderRadius: BorderRadius.circular(12.r),
-                      //         border: Border.all(
-                      //           color: controller.phoneController.text.isNotEmpty
-                      //               ? AppColors.primary.withOpacity(0.35)
-                      //               : Colors.transparent,
-                      //           width: 1.5,
-                      //         ),
-                      //       ),
-                      //       child: Row(
-                      //         children: [
-                      //           // Country code prefix
-                      //           Container(
-                      //             padding: REdgeInsets.symmetric(
-                      //                 horizontal: 14, vertical: 14),
-                      //             decoration: BoxDecoration(
-                      //               border: Border(
-                      //                 right: BorderSide(
-                      //                   color: AppColors.divider,
-                      //                   width: 1,
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             child: Text(
-                      //               '+234',
-                      //               style: AppTextStyles.bodyMedium.copyWith(
-                      //                 color: AppColors.textPrimary,
-                      //                 fontWeight: FontWeight.w500,
-                      //               ),
-                      //             ),
-                      //           ),
-                      //           Expanded(
-                      //             child: TextFormField(
-                      //               validator: ValidationBuilder()
-                      //                   .phone('Enter a valid phone number')
-                      //                   .build(),
-                      //               controller: controller.phoneController,
-                      //               keyboardType: TextInputType.phone,
-                      //               textInputAction: TextInputAction.next,
-                      //               style: AppTextStyles.bodyMedium.copyWith(
-                      //                 color: AppColors.textPrimary,
-                      //               ),
-                      //               decoration: InputDecoration(
-                                      
-                      //                 hintText: '800 000 0000',
-                      //                 hintStyle: AppTextStyles.bodyMedium
-                      //                     .copyWith(color: AppColors.textDisabled),
-                      //                 border: InputBorder.none,
-                      //                 contentPadding: REdgeInsets.symmetric(
-                      //                     horizontal: 16, vertical: 14),
-                                          
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-           
+ 
                       SizedBox(height: 20.h),
-           
+ 
                       RegistrationInputField(
                         label: 'Email address',
                         hint: 'name@example.com',
@@ -210,15 +139,16 @@ class RegisterStep2View extends StatelessWidget
                         textInputAction: TextInputAction.next,
                         validatorType: ValidatorType.email,
                       ),
-           
+ 
                       SizedBox(height: 20.h),
-           
+ 
                       RegistrationInputField(
                         label: 'Password',
                         hint: '••••••••',
                         controller: controller.passwordController,
                         obscureText: controller.obscurePassword,
-                        helperText: 'Must be at least 8 characters with a symbol.',
+                        helperText:
+                            'Must be at least 8 characters with a symbol.',
                         textInputAction: TextInputAction.done,
                         suffixIcon: GestureDetector(
                           onTap: controller.onTogglePassword,
@@ -227,14 +157,14 @@ class RegisterStep2View extends StatelessWidget
                                 ? Icons.visibility_off_outlined
                                 : Icons.visibility_outlined,
                             size: 20.r,
-                            color: AppColors.textDisabled,
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                         validatorType: ValidatorType.password,
                       ),
-           
+ 
                       SizedBox(height: 24.h),
-           
+ 
                       // ── Referral code (collapsible) ───────────────────
                       GestureDetector(
                         onTap: controller.onToggleReferral,
@@ -246,26 +176,26 @@ class RegisterStep2View extends StatelessWidget
                                   ? Icons.remove
                                   : Icons.add,
                               size: 18.r,
-                              color: AppColors.primary,
+                              color: colorScheme.primary,
                             ),
                             SizedBox(width: 6.w),
                             Text(
                               'Have a referral code?',
                               style: AppTextStyles.labelMedium.copyWith(
-                                color: AppColors.primary,
+                                color: colorScheme.primary,
                               ),
                             ),
                             SizedBox(width: 4.w),
                             Text(
                               '(optional)',
                               style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.textDisabled,
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ],
                         ),
                       ),
-           
+ 
                       AnimatedCrossFade(
                         duration: const Duration(milliseconds: 250),
                         crossFadeState: controller.referralExpanded
@@ -284,28 +214,26 @@ class RegisterStep2View extends StatelessWidget
                           ],
                         ),
                       ),
-           
+ 
                       SizedBox(height: 32.h),
                     ],
                   ),
                 ),
               ),
-
-              
-           
+ 
               // ── Bottom actions ──────────────────────────────────────────
               Container(
                 padding: REdgeInsets.fromLTRB(24, 16, 24, 10),
-                decoration:const BoxDecoration(
-                  color: AppColors.background,
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
                   border: Border(
-                    top: BorderSide(color: AppColors.divider),
+                    top: BorderSide(color: colorScheme.outline),
                   ),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Continue
+                    // Continue — always African Green, same as ElevatedButton
                     AnimatedOpacity(
                       duration: const Duration(milliseconds: 220),
                       opacity: controller.canContinue ? 1.0 : 0.45,
@@ -317,7 +245,7 @@ class RegisterStep2View extends StatelessWidget
                           width: double.infinity,
                           height: 56.h,
                           decoration: BoxDecoration(
-                            color: AppColors.primary,
+                            color: AppColors.africanGreen,
                             borderRadius: BorderRadius.circular(14.r),
                           ),
                           alignment: Alignment.center,
@@ -327,29 +255,29 @@ class RegisterStep2View extends StatelessWidget
                               Text(
                                 'Continue',
                                 style: AppTextStyles.labelLarge.copyWith(
-                                  color: AppColors.textOnDark,
+                                  color: AppColors.beigePink,
                                 ),
                               ),
                               SizedBox(width: 8.w),
                               Icon(
                                 Icons.arrow_forward_rounded,
                                 size: 18.r,
-                                color: AppColors.textOnDark,
+                                color: AppColors.beigePink,
                               ),
                             ],
                           ),
                         ),
                       ),
                     ),
-           
+ 
                     SizedBox(height: 16.h),
-           
+ 
                     // Terms
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         children: [
                           const TextSpan(
@@ -357,7 +285,7 @@ class RegisterStep2View extends StatelessWidget
                           TextSpan(
                             text: 'Terms of Service',
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.primary,
+                              color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.underline,
                             ),
@@ -366,7 +294,7 @@ class RegisterStep2View extends StatelessWidget
                           TextSpan(
                             text: 'Privacy Policy',
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.primary,
+                              color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.underline,
                             ),

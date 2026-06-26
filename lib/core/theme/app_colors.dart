@@ -68,4 +68,15 @@ abstract class AppColors {
 
   static const Color shimmerBase = Color(0xFFEEEEEE);
   static const Color shimmerHighlight = Color(0xFFF5F5F5);
+
+  // ── Dark Theme Surface Colours ───────────────────────────────────────────
+static const Color darkBackground   = Color(0xFF121A19);
+static const Color darkSurface      = Color(0xFF1C2928);
+static const Color darkSurfaceVar   = Color(0xFF243230);
+static const Color darkBorder       = Color(0xFF2E3A38);
+static const Color darkTextPrimary  = Color(0xFFF0EDEE);
+static const Color darkTextSecondary= Color(0xFFA8A6A7);
+static const Color darkPrimary      = Color(0xFF4DB89E); // lightened africanGreen
+static const Color shimmerBaseDark  = Color(0xFF243230);
+static const Color shimmerHighDark  = Color(0xFF2E3A38);
 }

@@ -5,12 +5,14 @@ class _ActiveInvestmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: REdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,13 +24,13 @@ class _ActiveInvestmentCard extends StatelessWidget {
                 width: 36.r,
                 height: 36.r,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
+                  color: colorScheme.surfaceVariant,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Icon(
                   Icons.trending_up_rounded,
                   size: 18.r,
-                  color: AppColors.primary,
+                  color: colorScheme.primary,
                 ),
               ),
               SizedBox(width: 12.w),
@@ -39,13 +41,13 @@ class _ActiveInvestmentCard extends StatelessWidget {
                     Text(
                       'PMPS — 180 Days',
                       style: AppTextStyles.titleSmall.copyWith(
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     Text(
                       'Fixed Income',
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -54,13 +56,13 @@ class _ActiveInvestmentCard extends StatelessWidget {
               Container(
                 padding: REdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.limeGreen,
+                  color: colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
                   'ACTIVE',
                   style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.primary,
+                    color: colorScheme.onPrimaryContainer,
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -78,7 +80,7 @@ class _ActiveInvestmentCard extends StatelessWidget {
               _InvestStat(
                 label: 'ACCRUED',
                 value: '+₦9,650',
-                valueColor: AppColors.primary,
+                valueColor: colorScheme.primary,
               ),
             ],
           ),
@@ -91,9 +93,8 @@ class _ActiveInvestmentCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: 0.31,
               minHeight: 6.h,
-              backgroundColor: AppColors.surfaceVariant,
-              valueColor:
-                  const AlwaysStoppedAnimation<Color>(AppColors.primary),
+              backgroundColor: colorScheme.surfaceVariant,
+              valueColor: AlwaysStoppedAnimation<Color>(colorScheme.primary),
             ),
           ),
 
@@ -107,23 +108,25 @@ class _ActiveInvestmentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('START',
-                      style: AppTextStyles.labelSmall
-                          .copyWith(color: AppColors.textDisabled)),
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.38),
+                      )),
                   Text('1 Jan 2026',
-                      style: AppTextStyles.bodySmall
-                          .copyWith(color: AppColors.textSecondary)),
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      )),
                 ],
               ),
               Container(
                 padding: REdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: AppColors.primary,
+                  color: colorScheme.primary,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Text(
                   '31%',
                   style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.white,
+                    color: colorScheme.onPrimary,
                   ),
                 ),
               ),
@@ -131,11 +134,13 @@ class _ActiveInvestmentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text('MATURITY',
-                      style: AppTextStyles.labelSmall
-                          .copyWith(color: AppColors.textDisabled)),
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.38),
+                      )),
                   Text('25 Sept 2026',
-                      style: AppTextStyles.bodySmall
-                          .copyWith(color: AppColors.textSecondary)),
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      )),
                 ],
               ),
             ],
@@ -159,16 +164,20 @@ class _InvestStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label,
-            style: AppTextStyles.labelSmall
-                .copyWith(color: AppColors.textDisabled, fontSize: 9.sp)),
+            style: AppTextStyles.labelSmall.copyWith(
+              color: colorScheme.onSurface.withValues(alpha: 0.38),
+              fontSize: 9.sp,
+            )),
         SizedBox(height: 2.h),
         Text(value,
             style: AppTextStyles.titleSmall.copyWith(
-              color: valueColor ?? AppColors.textPrimary,
+              color: valueColor ?? colorScheme.onSurface,
               fontWeight: FontWeight.w600,
             )),
       ],

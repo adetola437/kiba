@@ -8,8 +8,11 @@ class ForgotPasswordView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -28,7 +31,7 @@ class ForgotPasswordView extends StatelessWidget
                         child: Icon(
                           Icons.arrow_back_rounded,
                           size: 24.r,
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -37,28 +40,27 @@ class ForgotPasswordView extends StatelessWidget
                       width: 56.r,
                       height: 56.r,
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.08),
+                        color: colorScheme.primary.withOpacity(0.08),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.lock_reset_rounded,
                         size: 28.r,
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                       ),
                     ),
                     SizedBox(height: 28.h),
                     Text(
                       'Forgot\nPassword?',
-                      style: AppTextStyles.headlineLarge.copyWith(
+                      style: textTheme.headlineLarge?.copyWith(
                         fontFamily: 'BWGradual',
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                       ),
                     ),
                     SizedBox(height: 10.h),
                     Text(
                       'Enter the email connected to your KIBA account. We will send you a verification code.',
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                      style: textTheme.bodyMedium?.copyWith(
                         height: 1.5,
                       ),
                     ),
@@ -75,7 +77,7 @@ class ForgotPasswordView extends StatelessWidget
                         child: Icon(
                           Icons.mail_outline_rounded,
                           size: 20.r,
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ),
@@ -86,41 +88,24 @@ class ForgotPasswordView extends StatelessWidget
             Container(
               padding: REdgeInsets.fromLTRB(24, 16, 24, 32),
               decoration: BoxDecoration(
-                color: AppColors.background,
+                color: colorScheme.surface,
                 border: Border(
-                  top: BorderSide(color: AppColors.divider),
+                  top: BorderSide(
+                    color: colorScheme.outline.withOpacity(0.5),
+                  ),
                 ),
               ),
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 200),
                 opacity: controller.canContinue ? 1 : 0.45,
-                child: GestureDetector(
-                  onTap: controller.canContinue ? controller.onContinue : null,
-                  child: Container(
-                    width: double.infinity,
-                    height: 56.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Send Code',
-                          style: AppTextStyles.labelLarge.copyWith(
-                            color: AppColors.textOnDark,
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Icon(
-                          Icons.arrow_forward_rounded,
-                          size: 18.r,
-                          color: AppColors.textOnDark,
-                        ),
-                      ],
-                    ),
+                child: IgnorePointer(
+                  ignoring: !controller.canContinue,
+                  child: ElevatedButton.icon(
+                    onPressed: controller.canContinue
+                        ? controller.onContinue
+                        : null,
+                    icon: const Icon(Icons.arrow_forward_rounded),
+                    label: const Text('Send Code'),
                   ),
                 ),
               ),

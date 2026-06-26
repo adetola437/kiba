@@ -18,6 +18,8 @@ class _RecentActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: REdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -26,10 +28,10 @@ class _RecentActivityItem extends StatelessWidget {
             width: 40.r,
             height: 40.r,
             decoration: BoxDecoration(
-              color: AppColors.surfaceVariant,
+              color: colorScheme.surfaceVariant,
               borderRadius: BorderRadius.circular(10.r),
             ),
-            child: Icon(icon, size: 18.r, color: AppColors.primary),
+            child: Icon(icon, size: 18.r, color: colorScheme.primary),
           ),
           SizedBox(width: 12.w),
           Expanded(
@@ -39,14 +41,14 @@ class _RecentActivityItem extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.titleSmall.copyWith(
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 SizedBox(height: 2.h),
                 Text(
                   subtitle,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textDisabled,
+                    color: colorScheme.onSurface.withValues(alpha: 0.38),
                   ),
                 ),
               ],
@@ -55,7 +57,7 @@ class _RecentActivityItem extends StatelessWidget {
           Text(
             amount,
             style: AppTextStyles.titleSmall.copyWith(
-              color: isCredit ? AppColors.primary : AppColors.charcoalGrey,
+              color: isCredit ? colorScheme.primary : colorScheme.onSurface,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -81,13 +83,15 @@ class _MarketInsightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       width: 220.w,
       margin: REdgeInsets.only(right: 14),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +100,7 @@ class _MarketInsightCard extends StatelessWidget {
           Container(
             height: 110.h,
             decoration: BoxDecoration(
-              color: AppColors.limeGreen.withOpacity(0.3),
+              color: colorScheme.primaryContainer.withValues(alpha: 0.3),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(14.r),
                 topRight: Radius.circular(14.r),
@@ -106,7 +110,7 @@ class _MarketInsightCard extends StatelessWidget {
               child: Icon(
                 Icons.bar_chart_rounded,
                 size: 36.r,
-                color: AppColors.primary.withOpacity(0.3),
+                color: colorScheme.primary.withValues(alpha: 0.3),
               ),
             ),
           ),
@@ -119,7 +123,7 @@ class _MarketInsightCard extends StatelessWidget {
                 Text(
                   category,
                   style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -129,7 +133,7 @@ class _MarketInsightCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.titleSmall.copyWith(
-                    color: AppColors.textPrimary,
+                    color: colorScheme.onSurface,
                     height: 1.4,
                   ),
                 ),
@@ -137,7 +141,7 @@ class _MarketInsightCard extends StatelessWidget {
                 Text(
                   '$timeAgo · $readTime read',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textDisabled,
+                    color: colorScheme.onSurface.withValues(alpha: 0.38),
                   ),
                 ),
               ],

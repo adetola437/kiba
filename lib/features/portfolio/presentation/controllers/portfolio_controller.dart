@@ -9,6 +9,10 @@ import '../../../../core/models/investment_data.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/contract.dart';
+import '../../../stocks/data/stock_order.dart';
+import '../../../stocks/data/stocks_data.dart';
+import '../../../stocks/presentation/controllers/stock_detail_controller.dart';
+import '../../../stocks/presentation/widgets/pending_orders_section.dart';
 
 part '../contracts/portfolio_contract.dart';
 part '../views/portfolio_view.dart';
@@ -16,6 +20,7 @@ part '../widgets/portfolio_stats_card.dart';
 part '../widgets/portfolio_filter_tabs.dart';
 part '../widgets/investment_card.dart';
 part '../widgets/portfolio_empty_state.dart';
+part '../widgets/stock_holdings_section.dart'; // new
 
 class PortfolioScreen extends StatefulWidget {
   static const String route = 'portfolio';
@@ -38,11 +43,19 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   @override
   PortfolioSort activeSort = PortfolioSort.maturityDate;
 
+  // ── Stock holdings (replace with real data source when ready) ─────────────
+  @override
+  List<StockHolding> get stockHoldings => kMyStockHoldings;
+
+  @override
+  bool get hasStocks => stockHoldings.isNotEmpty;
+
   @override
   List<InvestmentData> get filteredInvestments {
     List<InvestmentData> list;
     switch (activeFilter) {
       case PortfolioFilter.all:
+      case PortfolioFilter.stocks: // stocks tab shows its own widget, not this list
         list = List.from(kInvestments);
       case PortfolioFilter.active:
         list = kInvestments.where((i) => !i.isMatured).toList();
@@ -80,17 +93,45 @@ class _PortfolioScreenState extends State<PortfolioScreen>
   @override
   void onSortChanged(PortfolioSort sort) {
     setState(() => activeSort = sort);
-    Navigator.of(context).pop(); // close bottom sheet
+    Navigator.of(context).pop();
   }
 
   @override
   void onInvestmentTap(InvestmentData investment) =>
-context.pushNamed(InvestmentDetailScreen.route,
-  extra: {'hasActiveInvestment': true});
+      context.pushNamed(InvestmentDetailScreen.route,
+          extra: {'hasActiveInvestment': true});
+
+  @override
+  void onStockHoldingTap(StockHolding holding) =>
+      context.pushNamed(StockDetailScreen.route, extra: holding.stock);
 
   @override
   void onNewInvestment() => context.goNamed(NewInvestmentScreen.route);
 
+  final _pendingOrders = ValueNotifier<List<StockOrder>>(List.from(kPendingOrders));
+ 
+@override
+List<StockOrder> get pendingOrders => _pendingOrders.value;
+ 
+@override
+void onCancelOrder(StockOrder order) {
+  // Mark as cancelled then remove from the list
+  _pendingOrders.value = _pendingOrders.value
+      .where((o) => o.id != order.id)
+      .toList();
+  setState(() {}); // trigger rebuild
+ 
+  // TODO: call your API to cancel the order on the backend
+}
+
+
+
   @override
   Widget build(BuildContext context) => view.build(context);
+
+  @override
+void dispose() {
+  _pendingOrders.dispose();
+  super.dispose();
+}
 }

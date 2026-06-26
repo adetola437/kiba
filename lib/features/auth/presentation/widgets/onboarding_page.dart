@@ -40,6 +40,7 @@ class _OnboardingPageWidget extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -66,14 +67,14 @@ class _OnboardingPageWidget extends StatelessWidget {
                 Text(
                   data.headline,
                   style: AppTextStyles.displaySmall.copyWith(
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                   ),
                 ),
                 SizedBox(height: 8.h),
                 Text(
                   data.body,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
+                    color: colorScheme.onSurfaceVariant,
                     height: 1.6,
                   ),
                 ),

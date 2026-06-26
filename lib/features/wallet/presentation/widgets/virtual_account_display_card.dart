@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
 
 class VirtualAccountDisplayCard extends StatelessWidget {
   const VirtualAccountDisplayCard({super.key, required this.onCopy});
@@ -11,10 +10,13 @@ class VirtualAccountDisplayCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: colorScheme.primary,
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Stack(
@@ -59,21 +61,21 @@ class VirtualAccountDisplayCard extends StatelessWidget {
                         Container(
                           width: 28.r,
                           height: 28.r,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.beigePink,
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             Icons.account_balance_rounded,
                             size: 14.r,
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                           ),
                         ),
                         SizedBox(width: 8.w),
                         Text(
                           'MY NAME',
-                          style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.white.withOpacity(0.6),
+                          style: textTheme.labelSmall?.copyWith(
+                            color: Colors.white.withOpacity(0.6),
                             letterSpacing: 1.0,
                           ),
                         ),
@@ -82,7 +84,7 @@ class VirtualAccountDisplayCard extends StatelessWidget {
                     Icon(
                       Icons.account_balance_outlined,
                       size: 20.r,
-                      color: AppColors.white.withOpacity(0.4),
+                      color: Colors.white.withOpacity(0.4),
                     ),
                   ],
                 ),
@@ -91,8 +93,8 @@ class VirtualAccountDisplayCard extends StatelessWidget {
 
                 Text(
                   'Providus Bank',
-                  style: AppTextStyles.titleLarge.copyWith(
-                    color: AppColors.white,
+                  style: textTheme.titleLarge?.copyWith(
+                    color: Colors.white,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -102,8 +104,8 @@ class VirtualAccountDisplayCard extends StatelessWidget {
                 // Account Number label
                 Text(
                   'ACCOUNT NUMBER',
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.white.withOpacity(0.55),
+                  style: textTheme.labelSmall?.copyWith(
+                    color: Colors.white.withOpacity(0.55),
                     letterSpacing: 1.0,
                   ),
                 ),
@@ -114,7 +116,7 @@ class VirtualAccountDisplayCard extends StatelessWidget {
                     fontFamily: 'EuclidCircularA',
                     fontSize: 28.sp,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.white,
+                    color: Colors.white,
                     letterSpacing: 2,
                   ),
                 ),
@@ -124,16 +126,16 @@ class VirtualAccountDisplayCard extends StatelessWidget {
                 // Account Name label
                 Text(
                   'ACCOUNT NAME',
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.white.withOpacity(0.55),
+                  style: textTheme.labelSmall?.copyWith(
+                    color: Colors.white.withOpacity(0.55),
                     letterSpacing: 1.0,
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   'Beige Africa / Ismail Adamu',
-                  style: AppTextStyles.titleSmall.copyWith(
-                    color: AppColors.white,
+                  style: textTheme.titleSmall?.copyWith(
+                    color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -147,7 +149,7 @@ class VirtualAccountDisplayCard extends StatelessWidget {
                     width: double.infinity,
                     height: 48.h,
                     decoration: BoxDecoration(
-                      color: AppColors.white,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Row(
@@ -156,13 +158,13 @@ class VirtualAccountDisplayCard extends StatelessWidget {
                         Icon(
                           Icons.copy_rounded,
                           size: 16.r,
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                         ),
                         SizedBox(width: 8.w),
                         Text(
                           'Copy Account Number',
-                          style: AppTextStyles.labelLarge.copyWith(
-                            color: AppColors.primary,
+                          style: textTheme.labelLarge?.copyWith(
+                            color: colorScheme.primary,
                           ),
                         ),
                       ],

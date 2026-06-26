@@ -7,13 +7,15 @@ class WalletView extends StatelessWidget implements WalletViewContract {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       body: CustomScrollView(
         slivers: [
           // ── App Bar ──────────────────────────────────────────────────
           SliverAppBar(
-            backgroundColor: AppColors.background,
+            backgroundColor: colorScheme.surface,
             floating: true,
             snap: true,
             elevation: 0,
@@ -28,14 +30,13 @@ class WalletView extends StatelessWidget implements WalletViewContract {
                   Text(
                     'My Wallet',
                     style: AppTextStyles.headlineMedium.copyWith(
-                      fontFamily: 'BWGradual',
-                      color: AppColors.textPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   Text(
                     DateFormat('MMMM d, y').format(DateTime.now()),
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
@@ -70,7 +71,7 @@ class WalletView extends StatelessWidget implements WalletViewContract {
                     Text(
                       'Recent Transactions',
                       style: AppTextStyles.titleLarge.copyWith(
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     GestureDetector(
@@ -78,7 +79,7 @@ class WalletView extends StatelessWidget implements WalletViewContract {
                       child: Text(
                         'See all',
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                         ),
                       ),
                     ),
@@ -89,9 +90,9 @@ class WalletView extends StatelessWidget implements WalletViewContract {
 
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.surface,
+                    color: colorScheme.surface,
                     borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(color: AppColors.border),
+                    border: Border.all(color: colorScheme.outline),
                   ),
                   padding: REdgeInsets.symmetric(horizontal: 16),
                   child: Column(
@@ -102,14 +103,14 @@ class WalletView extends StatelessWidget implements WalletViewContract {
                         amount: '+₦500K',
                         type: _TxType.credit,
                       ),
-                      Divider(color: AppColors.divider, height: 1),
+                      Divider(color: colorScheme.outline, height: 1),
                       const _WalletTransactionItem(
                         title: 'Investment Created',
                         subtitle: 'Today, 09:15 AM',
                         amount: '-₦1M',
                         type: _TxType.debit,
                       ),
-                      Divider(color: AppColors.divider, height: 1),
+                      Divider(color: colorScheme.outline, height: 1),
                       const _WalletTransactionItem(
                         title: 'Interest Earned',
                         subtitle: 'Yesterday, 10:00 AM',
@@ -129,13 +130,13 @@ class WalletView extends StatelessWidget implements WalletViewContract {
                     Icon(
                       Icons.security_outlined,
                       size: 14.r,
-                      color: AppColors.textDisabled,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                     SizedBox(width: 6.w),
                     Text(
                       'SECURE & NDIC INSURED',
                       style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.textDisabled,
+                        color: colorScheme.onSurfaceVariant,
                         letterSpacing: 1.2,
                       ),
                     ),

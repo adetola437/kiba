@@ -3,34 +3,41 @@ part of '../controllers/investment_details_controller.dart';
 // ── Stat box ───────────────────────────────────────────────────────────────────
 class _StatBox extends StatelessWidget {
   const _StatBox({required this.label, required this.value, this.valueColor});
+
   final String label;
   final String value;
   final Color? valueColor;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: REdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: colorScheme.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.textDisabled,
-                letterSpacing: 0.5,
-                fontSize: 9.sp,
-              )),
+          Text(
+            label,
+            style: AppTextStyles.labelSmall.copyWith(
+              color: colorScheme.onSurface.withValues(alpha: 0.38),
+              letterSpacing: 0.5,
+              fontSize: 9.sp,
+            ),
+          ),
           SizedBox(height: 6.h),
-          Text(value,
-              style: AppTextStyles.titleMedium.copyWith(
-                color: valueColor ?? AppColors.textPrimary,
-                fontWeight: FontWeight.w700,
-              )),
+          Text(
+            value,
+            style: AppTextStyles.titleMedium.copyWith(
+              color: valueColor ?? colorScheme.onSurface,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
     );
@@ -40,39 +47,51 @@ class _StatBox extends StatelessWidget {
 // ── Feature row ────────────────────────────────────────────────────────────────
 class _FeatureRow extends StatelessWidget {
   const _FeatureRow({required this.feature});
+
   final ProductFeature feature;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: REdgeInsets.only(bottom: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 36.r, height: 36.r,
+            width: 36.r,
+            height: 36.r,
             decoration: BoxDecoration(
-              color: AppColors.limeGreen.withOpacity(0.2),
+              color: colorScheme.primaryContainer.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(10.r),
             ),
-            child: Icon(feature.icon, size: 16.r, color: AppColors.primary),
+            child: Icon(
+              feature.icon,
+              size: 16.r,
+              color: colorScheme.primary,
+            ),
           ),
           SizedBox(width: 14.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(feature.title,
-                    style: AppTextStyles.titleSmall.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w600,
-                    )),
+                Text(
+                  feature.title,
+                  style: AppTextStyles.titleSmall.copyWith(
+                    color: colorScheme.onSurface,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 SizedBox(height: 3.h),
-                Text(feature.body,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
-                      height: 1.5,
-                    )),
+                Text(
+                  feature.body,
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    height: 1.5,
+                  ),
+                ),
               ],
             ),
           ),
@@ -85,6 +104,7 @@ class _FeatureRow extends StatelessWidget {
 // ── Transaction row ────────────────────────────────────────────────────────────
 class _TxRow extends StatelessWidget {
   const _TxRow({required this.tx, required this.isLast});
+
   final InvestmentTx tx;
   final bool isLast;
 
@@ -97,6 +117,8 @@ class _TxRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
         Padding(
@@ -104,50 +126,66 @@ class _TxRow extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 38.r, height: 38.r,
+                width: 38.r,
+                height: 38.r,
                 decoration: BoxDecoration(
                   color: tx.isCredit
-                      ? AppColors.limeGreen.withOpacity(0.2)
-                      : AppColors.surfaceVariant,
+                      ? colorScheme.primaryContainer.withValues(alpha: 0.2)
+                      : colorScheme.surfaceVariant,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(tx.icon, size: 16.r,
-                    color: tx.isCredit
-                        ? AppColors.primary
-                        : AppColors.textSecondary),
+                child: Icon(
+                  tx.icon,
+                  size: 16.r,
+                  color: tx.isCredit
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+                ),
               ),
               SizedBox(width: 12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(tx.title,
-                        style: AppTextStyles.titleSmall
-                            .copyWith(color: AppColors.textPrimary)),
-                    Text(tx.subtitle,
-                        style: AppTextStyles.bodySmall
-                            .copyWith(color: AppColors.textDisabled)),
+                    Text(
+                      tx.title,
+                      style: AppTextStyles.titleSmall.copyWith(
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      tx.subtitle,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.38),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              Text(_fmt(tx.amount),
-                  style: AppTextStyles.titleSmall.copyWith(
-                    color: tx.isCredit
-                        ? AppColors.primary
-                        : AppColors.charcoalGrey,
-                    fontWeight: FontWeight.w700,
-                  )),
+              Text(
+                _fmt(tx.amount),
+                style: AppTextStyles.titleSmall.copyWith(
+                  color: tx.isCredit
+                      ? colorScheme.primary
+                      : colorScheme.onSurface,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ],
           ),
         ),
         if (!isLast)
-          Divider(height: 1, color: AppColors.divider, indent: 66.w),
+          Divider(
+            height: 1,
+            color: colorScheme.outline,
+            indent: 66.w,
+          ),
       ],
     );
   }
 }
 
-// ── Summary row ────────────────────────────────────────────────────────────────
+// ── Summary row (for dark/primary surfaces) ───────────────────────────────────
 class _SummaryRow extends StatelessWidget {
   const _SummaryRow({
     required this.label,
@@ -156,6 +194,7 @@ class _SummaryRow extends StatelessWidget {
     this.isBold = false,
     this.icon,
   });
+
   final String label;
   final String value;
   final Color? valueColor;
@@ -164,24 +203,34 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label,
-            style: AppTextStyles.bodySmall
-                .copyWith(color: AppColors.white.withOpacity(0.55))),
+        Text(
+          label,
+          style: AppTextStyles.bodySmall.copyWith(
+            color: colorScheme.onPrimary.withValues(alpha: 0.55),
+          ),
+        ),
         Row(
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 11.r,
-                  color: AppColors.white.withOpacity(0.5)),
+              Icon(
+                icon,
+                size: 11.r,
+                color: colorScheme.onPrimary.withValues(alpha: 0.5),
+              ),
               SizedBox(width: 4.w),
             ],
-            Text(value,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: valueColor ?? AppColors.white.withOpacity(0.85),
-                  fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
-                )),
+            Text(
+              value,
+              style: AppTextStyles.bodySmall.copyWith(
+                color: valueColor ?? colorScheme.onPrimary.withValues(alpha: 0.85),
+                fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
+              ),
+            ),
           ],
         ),
       ],

@@ -7,12 +7,12 @@ class FundUssdView extends StatelessWidget implements FundUssdViewContract {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        scrolledUnderElevation: 0,
         centerTitle: true,
         leading: GestureDetector(
           onTap: () => context.pop(),
@@ -20,20 +20,18 @@ class FundUssdView extends StatelessWidget implements FundUssdViewContract {
             margin: REdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.border),
+              border: Border.all(color: colorScheme.outline),
             ),
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 16.r,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ),
         title: Text(
           'Fund via USSD',
-          style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimary,
-          ),
+          style: textTheme.titleMedium,
         ),
       ),
       body: Column(
@@ -46,17 +44,12 @@ class FundUssdView extends StatelessWidget implements FundUssdViewContract {
               children: [
                 Text(
                   'Select your bank',
-                  style: AppTextStyles.headlineSmall.copyWith(
-                    fontFamily: 'BWGradual',
-                    color: AppColors.textPrimary,
-                  ),
+                  style: textTheme.headlineSmall,
                 ),
                 SizedBox(height: 6.h),
                 Text(
                   'Select a bank to generate a USSD code for your wallet funding.',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+                  style: textTheme.bodySmall,
                 ),
                 SizedBox(height: 16.h),
 
@@ -64,21 +57,21 @@ class FundUssdView extends StatelessWidget implements FundUssdViewContract {
                 Container(
                   height: 48.h,
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceVariant,
+                    color: colorScheme.surfaceVariant,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: TextField(
                     controller: controller.searchCtrl,
-                    style: AppTextStyles.bodyMedium,
+                    style: textTheme.bodyMedium,
                     decoration: InputDecoration(
                       hintText: 'Search banks...',
-                      hintStyle: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textDisabled,
+                      hintStyle: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       prefixIcon: Icon(
                         Icons.search_rounded,
                         size: 20.r,
-                        color: AppColors.textDisabled,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       border: InputBorder.none,
                       contentPadding: REdgeInsets.symmetric(vertical: 14),
@@ -100,8 +93,8 @@ class FundUssdView extends StatelessWidget implements FundUssdViewContract {
                     ? Center(
                         child: Text(
                           'No banks found',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textDisabled,
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                       )
@@ -111,7 +104,7 @@ class FundUssdView extends StatelessWidget implements FundUssdViewContract {
                         separatorBuilder: (_, __) => SizedBox(height: 10.h),
                         itemBuilder: (context, index) {
                           if (index == banks.length) {
-                            return _UssdProTip();
+                            return const _UssdProTip();
                           }
                           return _UssdBankTile(
                             bank: banks[index],
@@ -129,14 +122,19 @@ class FundUssdView extends StatelessWidget implements FundUssdViewContract {
 }
 
 class _UssdProTip extends StatelessWidget {
+  const _UssdProTip();
+
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: REdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.beigePink.withOpacity(0.4),
+        color: colorScheme.secondary.withOpacity(0.4),
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.beigePink),
+        border: Border.all(color: colorScheme.secondary),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +142,7 @@ class _UssdProTip extends StatelessWidget {
           Icon(
             Icons.lightbulb_outline_rounded,
             size: 16.r,
-            color: AppColors.primary,
+            color: colorScheme.onSecondary,
           ),
           SizedBox(width: 10.w),
           Expanded(
@@ -153,8 +151,8 @@ class _UssdProTip extends StatelessWidget {
               children: [
                 Text(
                   'PRO TIP',
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.primary,
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colorScheme.onSecondary,
                     letterSpacing: 1.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -162,8 +160,8 @@ class _UssdProTip extends StatelessWidget {
                 SizedBox(height: 4.h),
                 Text(
                   'Dialing the code will automatically open your phone dialer with the pre-filled code.',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.primary,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSecondary,
                     height: 1.5,
                   ),
                 ),

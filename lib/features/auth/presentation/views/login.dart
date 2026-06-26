@@ -7,8 +7,10 @@ class LoginView extends StatelessWidget implements LoginViewContract {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -30,7 +32,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                         child: Icon(
                           Icons.arrow_back_rounded,
                           size: 24.r,
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -41,8 +43,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                     Text(
                       'Welcome Back',
                       style: AppTextStyles.headlineLarge.copyWith(
-                        fontFamily: 'BWGradual',
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                       ),
                     ),
 
@@ -52,8 +53,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                     Text(
                       'Log in to manage your investments and grow\nyour wealth.',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                        height: 1.5,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
 
@@ -77,7 +77,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                               child: Icon(
                                 Icons.mail_outline_rounded,
                                 size: 20.r,
-                                color: AppColors.textSecondary,
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ),
@@ -86,33 +86,35 @@ class LoginView extends StatelessWidget implements LoginViewContract {
 
                           // Password field
                           ValueListenableBuilder<bool>(
-  valueListenable: controller.obscurePassword,
-  builder: (context, obscure, _) {
-    return RegistrationInputField(
-      label: 'PASSWORD',
-      controller: controller.passwordCtrl,
-      hint: '••••••••',
-      obscureText: obscure,
-      helperText: 'Must be at least 8 characters with a symbol.',
-      validatorType: ValidatorType.password,
-      suffixIcon: GestureDetector(
-        onTap: () {
-          controller.obscurePassword.value = !controller.obscurePassword.value;
-        },
-        child: Padding(
-          padding: REdgeInsets.only(right: 12),
-          child: Icon(
-            obscure
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined,
-            size: 20.r,
-            color: AppColors.textSecondary,
-          ),
-        ),
-      ),
-    );
-  },
-),
+                            valueListenable: controller.obscurePassword,
+                            builder: (context, obscure, _) {
+                              return RegistrationInputField(
+                                label: 'PASSWORD',
+                                controller: controller.passwordCtrl,
+                                hint: '••••••••',
+                                obscureText: obscure,
+                                helperText:
+                                    'Must be at least 8 characters with a symbol.',
+                                validatorType: ValidatorType.password,
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    controller.obscurePassword.value =
+                                        !controller.obscurePassword.value;
+                                  },
+                                  child: Padding(
+                                    padding: REdgeInsets.only(right: 12),
+                                    child: Icon(
+                                      obscure
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      size: 20.r,
+                                      color: colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
 
                           SizedBox(height: 16.h),
 
@@ -124,7 +126,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                               child: Text(
                                 'Forgot Password?',
                                 style: AppTextStyles.bodyMedium.copyWith(
-                                  color: AppColors.primary,
+                                  color: colorScheme.primary,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -133,14 +135,14 @@ class LoginView extends StatelessWidget implements LoginViewContract {
 
                           SizedBox(height: 28.h),
 
-                          // Login button
+                          // Login button — always-brand surface, not adaptive
                           GestureDetector(
                             onTap: controller.submit,
                             child: Container(
                               width: double.infinity,
                               height: 56.h,
                               decoration: BoxDecoration(
-                                color: AppColors.primary,
+                                color: AppColors.africanGreen,
                                 borderRadius: BorderRadius.circular(14.r),
                               ),
                               alignment: Alignment.center,
@@ -150,7 +152,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                                   Text(
                                     'Log In',
                                     style: AppTextStyles.labelLarge.copyWith(
-                                      color: AppColors.textOnDark,
+                                      color: AppColors.beigePink,
                                       letterSpacing: 0.2,
                                     ),
                                   ),
@@ -158,7 +160,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                                   Icon(
                                     Icons.arrow_forward_rounded,
                                     size: 20.r,
-                                    color: AppColors.textOnDark,
+                                    color: AppColors.beigePink,
                                   ),
                                 ],
                               ),
@@ -167,29 +169,30 @@ class LoginView extends StatelessWidget implements LoginViewContract {
 
                           SizedBox(height: 20.h),
 
-                          // Divider
+                          // OR divider
                           Row(
                             children: [
-                             const Expanded(
+                              Expanded(
                                 child: Divider(
-                                  color: AppColors.divider,
+                                  color: colorScheme.outline,
                                   height: 1,
                                   thickness: 1,
                                 ),
                               ),
                               Padding(
-                                padding: REdgeInsets.symmetric(horizontal: 12),
+                                padding:
+                                    REdgeInsets.symmetric(horizontal: 12),
                                 child: Text(
                                   'OR',
                                   style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.textSecondary,
+                                    color: colorScheme.onSurfaceVariant,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
-                             const Expanded(
+                              Expanded(
                                 child: Divider(
-                                  color: AppColors.divider,
+                                  color: colorScheme.outline,
                                   height: 1,
                                   thickness: 1,
                                 ),
@@ -199,7 +202,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
 
                           SizedBox(height: 20.h),
 
-                          // Biometrics button
+                          // Biometrics button — always-brand surface, not adaptive
                           GestureDetector(
                             onTap: controller.onBiometrics,
                             child: Container(
@@ -216,13 +219,13 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                                   Icon(
                                     Icons.fingerprint_rounded,
                                     size: 20.r,
-                                    color: AppColors.primary,
+                                    color: AppColors.africanGreen,
                                   ),
                                   SizedBox(width: 8.w),
                                   Text(
                                     'Use Biometrics',
                                     style: AppTextStyles.labelLarge.copyWith(
-                                      color: AppColors.textPrimary,
+                                      color: AppColors.africanGreen,
                                       letterSpacing: 0.2,
                                     ),
                                   ),
@@ -243,19 +246,19 @@ class LoginView extends StatelessWidget implements LoginViewContract {
             // ── Sign up section ─────────────────────────────────────────
             Container(
               padding: REdgeInsets.fromLTRB(24, 16, 24, 32),
-              decoration: const BoxDecoration(
-                color: AppColors.background,
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
                 border: Border(
-                  top: BorderSide(color: AppColors.divider),
+                  top: BorderSide(color: colorScheme.outline),
                 ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Don\'t have an account? ',
+                    "Don't have an account? ",
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.textSecondary,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                   GestureDetector(
@@ -263,7 +266,7 @@ class LoginView extends StatelessWidget implements LoginViewContract {
                     child: Text(
                       'Create an account',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

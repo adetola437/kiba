@@ -10,14 +10,14 @@ class WithdrawReviewView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: AppColors.background,
           appBar: AppBar(
-            backgroundColor: AppColors.background,
-            elevation: 0,
-            scrolledUnderElevation: 0,
             centerTitle: true,
             leading: GestureDetector(
               onTap: () => context.pop(),
@@ -25,20 +25,18 @@ class WithdrawReviewView extends StatelessWidget
                 margin: REdgeInsets.all(10),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.border),
+                  border: Border.all(color: colorScheme.outline),
                 ),
                 child: Icon(
                   Icons.arrow_back_ios_new_rounded,
                   size: 16.r,
-                  color: AppColors.textPrimary,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ),
             title: Text(
               'Review Withdrawal',
-              style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimary,
-              ),
+              style: textTheme.titleMedium,
             ),
           ),
           body: Column(
@@ -53,41 +51,39 @@ class WithdrawReviewView extends StatelessWidget
                         width: double.infinity,
                         padding: REdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceVariant,
+                          color: colorScheme.surfaceVariant,
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Column(
                           children: [
-                            // Icon
                             Container(
                               width: 60.r,
                               height: 60.r,
                               decoration: BoxDecoration(
-                                color: AppColors.primary,
+                                color: colorScheme.primary,
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
                                 Icons.account_balance_wallet_rounded,
                                 size: 28.r,
-                                color: AppColors.white,
+                                color: colorScheme.onPrimary,
                               ),
                             ),
                             SizedBox(height: 14.h),
                             Text(
                               'WITHDRAWAL AMOUNT',
-                              style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.textSecondary,
+                              style: textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
                                 letterSpacing: 1.2,
                               ),
                             ),
                             SizedBox(height: 6.h),
                             Text(
                               _fmt(controller.amount),
-                              style: TextStyle(
-                                fontFamily: 'EuclidCircularA',
+                              style: textTheme.titleLarge?.copyWith(
                                 fontSize: 32.sp,
                                 fontWeight: FontWeight.w800,
-                                color: AppColors.textPrimary,
+                                color: colorScheme.onSurface,
                                 letterSpacing: -0.5,
                               ),
                             ),
@@ -101,9 +97,9 @@ class WithdrawReviewView extends StatelessWidget
                       Container(
                         padding: REdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: AppColors.surface,
+                          color: colorScheme.surface,
                           borderRadius: BorderRadius.circular(16.r),
-                          border: Border.all(color: AppColors.border),
+                          border: Border.all(color: colorScheme.outline),
                         ),
                         child: Column(
                           children: [
@@ -115,14 +111,13 @@ class WithdrawReviewView extends StatelessWidget
                             _WithdrawSummaryRow(
                               label: 'Destination',
                               value: controller.account.bankName,
-                              subValue:
-                                  controller.account.maskedNumber,
+                              subValue: controller.account.maskedNumber,
                             ),
                             _divider(),
                             _WithdrawSummaryRow(
                               label: 'Transaction Fee',
                               value: _fmt(controller.fee),
-                              valueColor: AppColors.textSecondary,
+                              valueColor: colorScheme.onSurfaceVariant,
                             ),
                             _divider(),
                             _WithdrawSummaryRow(
@@ -141,23 +136,23 @@ class WithdrawReviewView extends StatelessWidget
                       Container(
                         padding: REdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: AppColors.beigePink.withOpacity(0.35),
+                          color: colorScheme.secondary.withOpacity(0.35),
                           borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(color: AppColors.beigePink),
+                          border: Border.all(color: colorScheme.secondary),
                         ),
                         child: Row(
                           children: [
                             Icon(
                               Icons.shield_rounded,
                               size: 16.r,
-                              color: AppColors.primary,
+                              color: colorScheme.onSecondary,
                             ),
                             SizedBox(width: 10.w),
                             Expanded(
                               child: Text(
                                 'Your transaction is secured with 256-bit encryption for your safety.',
-                                style: AppTextStyles.bodySmall.copyWith(
-                                  color: AppColors.primary,
+                                style: textTheme.bodySmall?.copyWith(
+                                  color: colorScheme.onSecondary,
                                   height: 1.5,
                                 ),
                               ),
@@ -172,8 +167,8 @@ class WithdrawReviewView extends StatelessWidget
                       RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textSecondary,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
                             height: 1.5,
                           ),
                           children: [
@@ -181,8 +176,8 @@ class WithdrawReviewView extends StatelessWidget
                                 text: 'By confirming, you agree to our '),
                             TextSpan(
                               text: 'withdrawal terms and conditions.',
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.textPrimary,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: colorScheme.onSurface,
                                 fontWeight: FontWeight.w700,
                                 decoration: TextDecoration.underline,
                               ),
@@ -199,9 +194,8 @@ class WithdrawReviewView extends StatelessWidget
               Container(
                 padding: REdgeInsets.fromLTRB(20, 12, 20, 32),
                 decoration: BoxDecoration(
-                  color: AppColors.background,
-                  border:
-                      Border(top: BorderSide(color: AppColors.divider)),
+                  color: colorScheme.background,
+                  border: Border(top: BorderSide(color: colorScheme.outline)),
                 ),
                 child: GestureDetector(
                   onTap: controller.onConfirm,
@@ -210,7 +204,7 @@ class WithdrawReviewView extends StatelessWidget
                     height: 56.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: AppColors.primary,
+                      color: colorScheme.primary,
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     child: Row(
@@ -218,8 +212,8 @@ class WithdrawReviewView extends StatelessWidget
                       children: [
                         Text(
                           'Confirm Withdrawal',
-                          style: AppTextStyles.labelLarge.copyWith(
-                            color: AppColors.white,
+                          style: textTheme.labelLarge?.copyWith(
+                            color: colorScheme.onPrimary,
                             fontSize: 16.sp,
                           ),
                         ),
@@ -227,7 +221,7 @@ class WithdrawReviewView extends StatelessWidget
                         Icon(
                           Icons.arrow_forward_rounded,
                           size: 18.r,
-                          color: AppColors.white,
+                          color: colorScheme.onPrimary,
                         ),
                       ],
                     ),
@@ -247,7 +241,7 @@ class WithdrawReviewView extends StatelessWidget
                 width: 220.w,
                 padding: REdgeInsets.all(28),
                 decoration: BoxDecoration(
-                  color: AppColors.surface,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Column(
@@ -257,7 +251,7 @@ class WithdrawReviewView extends StatelessWidget
                       width: 40.r,
                       height: 40.r,
                       child: CircularProgressIndicator(
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                         strokeWidth: 3,
                       ),
                     ),
@@ -265,16 +259,16 @@ class WithdrawReviewView extends StatelessWidget
                     Text(
                       'Processing your\nwithdrawal...',
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.titleSmall.copyWith(
-                        color: AppColors.textPrimary,
+                      style: textTheme.titleSmall?.copyWith(
+                        color: colorScheme.onSurface,
                         height: 1.4,
                       ),
                     ),
                     SizedBox(height: 6.h),
                     Text(
                       'Please do not close the app',
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textDisabled,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -288,7 +282,7 @@ class WithdrawReviewView extends StatelessWidget
 
   Widget _divider() => Padding(
         padding: REdgeInsets.symmetric(vertical: 12),
-        child: Divider(color: AppColors.divider, height: 1),
+        child: const Divider(),
       );
 }
 
@@ -324,8 +318,6 @@ class _WithdrawPinSheetState extends State<_WithdrawPinSheet> {
   }
 
   void _validate() {
-    // TODO: validate PIN against secure storage / API
-    // Simulate correct PIN = 1234 for now
     final pin = _digits.join();
     if (pin == '1234') {
       Navigator.pop(context);
@@ -340,9 +332,12 @@ class _WithdrawPinSheetState extends State<_WithdrawPinSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: colorScheme.background,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
       padding: REdgeInsets.fromLTRB(24, 12, 24, 40),
@@ -354,7 +349,7 @@ class _WithdrawPinSheetState extends State<_WithdrawPinSheet> {
             width: 40.w,
             height: 4.h,
             decoration: BoxDecoration(
-              color: AppColors.border,
+              color: colorScheme.outline,
               borderRadius: BorderRadius.circular(2.r),
             ),
           ),
@@ -366,13 +361,13 @@ class _WithdrawPinSheetState extends State<_WithdrawPinSheet> {
             width: 56.r,
             height: 56.r,
             decoration: BoxDecoration(
-              color: AppColors.primary,
+              color: colorScheme.primary,
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.lock_rounded,
               size: 26.r,
-              color: AppColors.white,
+              color: colorScheme.onPrimary,
             ),
           ),
 
@@ -380,10 +375,7 @@ class _WithdrawPinSheetState extends State<_WithdrawPinSheet> {
 
           Text(
             'Enter your PIN',
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontFamily: 'BWGradual',
-              color: AppColors.textPrimary,
-            ),
+            style: textTheme.headlineSmall,
           ),
 
           SizedBox(height: 6.h),
@@ -391,10 +383,7 @@ class _WithdrawPinSheetState extends State<_WithdrawPinSheet> {
           Text(
             'Confirm your identity to complete\nthis withdrawal',
             textAlign: TextAlign.center,
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
-              height: 1.5,
-            ),
+            style: textTheme.bodySmall,
           ),
 
           SizedBox(height: 28.h),
@@ -412,16 +401,16 @@ class _WithdrawPinSheetState extends State<_WithdrawPinSheet> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _hasError
-                      ? AppColors.error
+                      ? colorScheme.error
                       : filled
-                          ? AppColors.primary
+                          ? colorScheme.primary
                           : Colors.transparent,
                   border: Border.all(
                     color: _hasError
-                        ? AppColors.error
+                        ? colorScheme.error
                         : filled
-                            ? AppColors.primary
-                            : AppColors.border,
+                            ? colorScheme.primary
+                            : colorScheme.outline,
                     width: 2,
                   ),
                 ),
@@ -433,8 +422,8 @@ class _WithdrawPinSheetState extends State<_WithdrawPinSheet> {
             SizedBox(height: 10.h),
             Text(
               'Incorrect PIN. Please try again.',
-              style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.error,
+              style: textTheme.bodySmall?.copyWith(
+                color: colorScheme.error,
               ),
             ),
           ],
@@ -457,6 +446,9 @@ class _Numpad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     final rows = [
       ['1', '2', '3'],
       ['4', '5', '6'],
@@ -482,21 +474,20 @@ class _Numpad extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.surfaceVariant,
+                      color: colorScheme.surfaceVariant,
                     ),
                     child: key == 'del'
                         ? Icon(
                             Icons.backspace_outlined,
                             size: 22.r,
-                            color: AppColors.textPrimary,
+                            color: colorScheme.onSurface,
                           )
                         : Text(
                             key,
-                            style: TextStyle(
-                              fontFamily: 'EuclidCircularA',
+                            style: textTheme.titleLarge?.copyWith(
                               fontSize: 24.sp,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.textPrimary,
+                              color: colorScheme.onSurface,
                             ),
                           ),
                   ),

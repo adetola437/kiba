@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/api/exception/failure.dart';
 import '../models/auth_models.dart';
@@ -20,4 +21,9 @@ abstract class IAuthRepository {
 
   /// Wipe all session data (token, expiry, user).
   Future<void> logout();
+    /// Returns the persisted [ThemeMode], defaulting to [ThemeMode.light].
+  Future<ThemeMode> getSavedTheme();
+
+  /// Persists [mode] to local storage.
+  Future<void> saveTheme(ThemeMode mode);
 }

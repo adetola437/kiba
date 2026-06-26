@@ -13,16 +13,18 @@ class _TenorChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
         padding: REdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.surface,
+          color: isSelected ? colorScheme.primary : colorScheme.surface,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.buttonBorder,
+            color: isSelected ? colorScheme.primary : colorScheme.outline,
             width: isSelected ? 2 : 1.5,
           ),
         ),
@@ -33,8 +35,8 @@ class _TenorChip extends StatelessWidget {
               tenor.label,
               style: AppTextStyles.labelSmall.copyWith(
                 color: isSelected
-                    ? AppColors.white.withOpacity(0.75)
-                    : AppColors.textSecondary,
+                    ? colorScheme.onPrimary.withValues(alpha: 0.75)
+                    : colorScheme.onSurfaceVariant,
                 letterSpacing: 0.4,
                 fontSize: 10.sp,
               ),
@@ -43,7 +45,9 @@ class _TenorChip extends StatelessWidget {
             Text(
               '+${tenor.rate}%',
               style: AppTextStyles.titleSmall.copyWith(
-                color: isSelected ? AppColors.limeGreen : AppColors.primary,
+                color: isSelected
+                    ? colorScheme.primaryContainer
+                    : colorScheme.primary,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -51,8 +55,8 @@ class _TenorChip extends StatelessWidget {
               'p.a.',
               style: AppTextStyles.labelSmall.copyWith(
                 color: isSelected
-                    ? AppColors.white.withOpacity(0.55)
-                    : AppColors.textDisabled,
+                    ? colorScheme.onPrimary.withValues(alpha: 0.55)
+                    : colorScheme.onSurface.withValues(alpha: 0.38),
                 fontSize: 9.sp,
               ),
             ),

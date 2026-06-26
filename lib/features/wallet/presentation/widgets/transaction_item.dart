@@ -11,7 +11,7 @@ class _TransactionItem extends StatelessWidget {
   final VoidCallback onTap;
   final bool isLast;
 
-  Color get _iconBg {
+  Color _iconBg(ColorScheme cs) {
     switch (data.type) {
       case TransactionFilter.fundings:
         return AppColors.cloudyBlue;
@@ -20,24 +20,24 @@ class _TransactionItem extends StatelessWidget {
       case TransactionFilter.withdrawals:
         return AppColors.beigePink.withOpacity(0.5);
       case TransactionFilter.all:
-        return AppColors.surfaceVariant;
+        return cs.surfaceVariant;
     }
   }
 
-  Color get _iconColor {
+  Color _iconColor(ColorScheme cs) {
     switch (data.type) {
       case TransactionFilter.fundings:
         return AppColors.moodyBlue;
       case TransactionFilter.investments:
-        return AppColors.primary;
+        return cs.primary;
       case TransactionFilter.withdrawals:
-        return AppColors.charcoalGrey;
+        return cs.onSurface;
       case TransactionFilter.all:
-        return AppColors.textSecondary;
+        return cs.onSurfaceVariant;
     }
   }
 
-  Color get _statusBg {
+  Color _statusBg(ColorScheme cs) {
     switch (data.status) {
       case TransactionStatus.successful:
         return AppColors.limeGreen.withOpacity(0.35);
@@ -50,23 +50,23 @@ class _TransactionItem extends StatelessWidget {
       case TransactionStatus.pending:
         return AppColors.beigePink.withOpacity(0.4);
       case TransactionStatus.failed:
-        return Colors.red.withOpacity(0.12);
+        return cs.error.withOpacity(0.12);
     }
   }
 
-  Color get _statusColor {
+  Color _statusColor(ColorScheme cs) {
     switch (data.status) {
       case TransactionStatus.successful:
       case TransactionStatus.accrued:
-        return AppColors.primary;
+        return cs.primary;
       case TransactionStatus.completed:
         return AppColors.moodyBlue;
       case TransactionStatus.locked:
-        return AppColors.charcoalGrey;
+        return cs.onSurface;
       case TransactionStatus.pending:
-        return AppColors.charcoalGrey;
+        return cs.onSurface;
       case TransactionStatus.failed:
-        return Colors.red;
+        return cs.error;
     }
   }
 
@@ -94,13 +94,16 @@ class _TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
-            splashColor: AppColors.primary.withOpacity(0.04),
+            splashColor: colorScheme.primary.withOpacity(0.04),
             child: Padding(
               padding: REdgeInsets.symmetric(horizontal: 16, vertical: 14),
               child: Row(
@@ -110,10 +113,14 @@ class _TransactionItem extends StatelessWidget {
                     width: 44.r,
                     height: 44.r,
                     decoration: BoxDecoration(
-                      color: _iconBg,
+                      color: _iconBg(colorScheme),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(data.icon, size: 18.r, color: _iconColor),
+                    child: Icon(
+                      data.icon,
+                      size: 18.r,
+                      color: _iconColor(colorScheme),
+                    ),
                   ),
 
                   SizedBox(width: 12.w),
@@ -125,16 +132,12 @@ class _TransactionItem extends StatelessWidget {
                       children: [
                         Text(
                           data.title,
-                          style: AppTextStyles.titleSmall.copyWith(
-                            color: AppColors.textPrimary,
-                          ),
+                          style: textTheme.titleSmall,
                         ),
                         SizedBox(height: 3.h),
                         Text(
                           data.subtitle,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textDisabled,
-                          ),
+                          style: textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -148,10 +151,10 @@ class _TransactionItem extends StatelessWidget {
                     children: [
                       Text(
                         _fmtAmount(),
-                        style: AppTextStyles.titleSmall.copyWith(
+                        style: textTheme.titleSmall?.copyWith(
                           color: data.isCredit
-                              ? AppColors.primary
-                              : AppColors.charcoalGrey,
+                              ? colorScheme.primary
+                              : colorScheme.onSurface,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -160,13 +163,13 @@ class _TransactionItem extends StatelessWidget {
                         padding: REdgeInsets.symmetric(
                             horizontal: 7, vertical: 2),
                         decoration: BoxDecoration(
-                          color: _statusBg,
+                          color: _statusBg(colorScheme),
                           borderRadius: BorderRadius.circular(6.r),
                         ),
                         child: Text(
                           _statusLabel,
-                          style: AppTextStyles.labelSmall.copyWith(
-                            color: _statusColor,
+                          style: textTheme.labelSmall?.copyWith(
+                            color: _statusColor(colorScheme),
                             fontSize: 9.sp,
                             letterSpacing: 0.3,
                           ),
@@ -182,7 +185,7 @@ class _TransactionItem extends StatelessWidget {
         if (!isLast)
           Divider(
             height: 1,
-            color: AppColors.divider,
+            color: colorScheme.outline.withOpacity(0.5),
             indent: 72.w,
           ),
       ],

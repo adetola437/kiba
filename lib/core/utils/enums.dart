@@ -29,3 +29,9 @@ enum ClubGroupStatus { open, active, completed }
 enum ClubMemberStatus { paid, pending, defaulted, upcoming }
  
 enum ContributionStatus { successful, pending, failed }
+
+enum StockSector { technology, finance, energy, consumer, health, telecoms, all }
+
+enum StockOrderType { buy, sell }
+
+enum StockOrderMode { market, limit }

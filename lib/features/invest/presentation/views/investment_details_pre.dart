@@ -1,4 +1,3 @@
-
 part of '../controllers/investment_details_controller.dart';
 
 class InvestmentDetailPreView extends StatelessWidget
@@ -21,24 +20,30 @@ class InvestmentDetailPreView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-
+    final colorScheme = Theme.of(context).colorScheme;
     final product = controller.product;
     final dateFormat = DateFormat('MMM d, y');
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: colorScheme.background,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: GestureDetector(
           onTap: controller.onBack,
-          child: Icon(Icons.arrow_back_rounded,
-              size: 22.r, color: AppColors.textPrimary),
+          child: Icon(
+            Icons.arrow_back_rounded,
+            size: 22.r,
+            color: colorScheme.onBackground,
+          ),
         ),
-        title: Text(product.name,
-            style: AppTextStyles.titleLarge
-                .copyWith(color: AppColors.textPrimary)),
+        title: Text(
+          product.name,
+          style: AppTextStyles.titleLarge.copyWith(
+            color: colorScheme.onBackground,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -49,25 +54,26 @@ class InvestmentDetailPreView extends StatelessWidget
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   // ── Hero section ─────────────────────────────────
                   Container(
                     width: double.infinity,
                     padding: REdgeInsets.all(22),
                     decoration: BoxDecoration(
-                      color: AppColors.primary,
+                      color: colorScheme.primary,
                       borderRadius: BorderRadius.circular(20.r),
                     ),
                     child: Stack(
                       children: [
                         // Decorative circle
                         Positioned(
-                          top: -20.r, right: -20.r,
+                          top: -20.r,
+                          right: -20.r,
                           child: Container(
-                            width: 100.r, height: 100.r,
+                            width: 100.r,
+                            height: 100.r,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.white.withOpacity(0.05),
+                              color: colorScheme.onPrimary.withValues(alpha: 0.05),
                             ),
                           ),
                         ),
@@ -79,13 +85,14 @@ class InvestmentDetailPreView extends StatelessWidget
                               padding: REdgeInsets.symmetric(
                                   horizontal: 10, vertical: 4),
                               decoration: BoxDecoration(
-                                color: AppColors.limeGreen.withOpacity(0.2),
+                                color: colorScheme.primaryContainer
+                                    .withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(20.r),
                               ),
                               child: Text(
                                 product.category,
                                 style: AppTextStyles.labelSmall.copyWith(
-                                  color: AppColors.limeGreen,
+                                  color: colorScheme.primaryContainer,
                                   letterSpacing: 0.5,
                                 ),
                               ),
@@ -94,8 +101,7 @@ class InvestmentDetailPreView extends StatelessWidget
                             Text(
                               product.tagline,
                               style: AppTextStyles.headlineSmall.copyWith(
-                                fontFamily: 'BWGradual',
-                                color: AppColors.white,
+                                color: colorScheme.onPrimary,
                                 height: 1.25,
                               ),
                             ),
@@ -103,7 +109,7 @@ class InvestmentDetailPreView extends StatelessWidget
                             Text(
                               product.description,
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.white.withOpacity(0.65),
+                                color: colorScheme.onPrimary.withValues(alpha: 0.65),
                                 height: 1.5,
                               ),
                             ),
@@ -121,9 +127,9 @@ class InvestmentDetailPreView extends StatelessWidget
                     width: double.infinity,
                     padding: REdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.surface,
+                      color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(color: AppColors.border),
+                      border: Border.all(color: colorScheme.outline),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,30 +137,37 @@ class InvestmentDetailPreView extends StatelessWidget
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('ANNUAL YIELD',
-                                style: AppTextStyles.labelSmall.copyWith(
-                                  color: AppColors.textDisabled,
-                                  letterSpacing: 0.5,
-                                  fontSize: 9.sp,
-                                )),
+                            Text(
+                              'ANNUAL YIELD',
+                              style: AppTextStyles.labelSmall.copyWith(
+                                color: colorScheme.onSurface.withValues(alpha: 0.38),
+                                letterSpacing: 0.5,
+                                fontSize: 9.sp,
+                              ),
+                            ),
                             SizedBox(height: 6.h),
                             Text(
                               '${product.annualYield}%',
                               style: AppTextStyles.displaySmall.copyWith(
-                                color: AppColors.primary,
+                                color: colorScheme.primary,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
                           ],
                         ),
                         Container(
-                          width: 44.r, height: 44.r,
+                          width: 44.r,
+                          height: 44.r,
                           decoration: BoxDecoration(
-                            color: AppColors.limeGreen.withOpacity(0.15),
+                            color: colorScheme.primaryContainer
+                                .withValues(alpha: 0.15),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(Icons.trending_up_rounded,
-                              size: 20.r, color: AppColors.primary),
+                          child: Icon(
+                            Icons.trending_up_rounded,
+                            size: 20.r,
+                            color: colorScheme.primary,
+                          ),
                         ),
                       ],
                     ),
@@ -183,16 +196,16 @@ class InvestmentDetailPreView extends StatelessWidget
                   SizedBox(height: 24.h),
 
                   // ── Why choose ───────────────────────────────────
-                  Text('Why choose ${product.name.split(' ').first}?',
-                      style: AppTextStyles.titleLarge
-                          .copyWith(color: AppColors.textPrimary)),
+                  Text(
+                    'Why choose ${product.name.split(' ').first}?',
+                    style: AppTextStyles.titleLarge.copyWith(
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
                   SizedBox(height: 16.h),
-                  ...product.features
-                      .map((f) => _FeatureRow(feature: f)),
+                  ...product.features.map((f) => _FeatureRow(feature: f)),
 
                   SizedBox(height: 24.h),
-
-                
 
                   SizedBox(height: 24.h),
 
@@ -200,7 +213,7 @@ class InvestmentDetailPreView extends StatelessWidget
                   Container(
                     padding: REdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceVariant,
+                      color: colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     child: Row(
@@ -210,12 +223,12 @@ class InvestmentDetailPreView extends StatelessWidget
                           icon: Icons.verified_user_outlined,
                           label: 'SEC\nRegulated',
                         ),
-                        _vDivider(),
+                        _vDivider(colorScheme.outline),
                         _TrustItem(
                           icon: Icons.security_outlined,
                           label: 'NDIC\nInsured',
                         ),
-                        _vDivider(),
+                        _vDivider(colorScheme.outline),
                         _TrustItem(
                           icon: Icons.people_outline_rounded,
                           label: '10,000+\nInvestors',
@@ -234,31 +247,37 @@ class InvestmentDetailPreView extends StatelessWidget
           Container(
             padding: REdgeInsets.fromLTRB(20, 12, 20, 32),
             decoration: BoxDecoration(
-              color: AppColors.background,
-              border: Border(top: BorderSide(color: AppColors.divider)),
+              color: colorScheme.background,
+              border: Border(top: BorderSide(color: colorScheme.outline)),
             ),
             child: AnimatedOpacity(
               duration: const Duration(milliseconds: 200),
-              opacity: 1.0 ,
+              opacity: 1.0,
               child: GestureDetector(
-                onTap: controller.onInvestNow ,
+                onTap: controller.onInvestNow,
                 child: Container(
                   width: double.infinity,
                   height: 56.h,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(14.r),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Invest Now',
-                          style: AppTextStyles.labelLarge
-                              .copyWith(color: AppColors.white)),
+                      Text(
+                        'Invest Now',
+                        style: AppTextStyles.labelLarge.copyWith(
+                          color: colorScheme.onPrimary,
+                        ),
+                      ),
                       SizedBox(width: 6.w),
-                      Icon(Icons.arrow_forward_rounded,
-                          size: 18.r, color: AppColors.white),
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 18.r,
+                        color: colorScheme.onPrimary,
+                      ),
                     ],
                   ),
                 ),
@@ -270,29 +289,38 @@ class InvestmentDetailPreView extends StatelessWidget
     );
   }
 
-  Widget _vDivider() => Container(
-      width: 1, height: 32.h, color: AppColors.divider);
+  Widget _vDivider(Color color) => Container(
+      width: 1, height: 32.h, color: color);
 }
 
 // ── Trust item ─────────────────────────────────────────────────────────────────
 class _TrustItem extends StatelessWidget {
   const _TrustItem({required this.icon, required this.label});
+
   final IconData icon;
   final String label;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
-        Icon(icon, size: 20.r, color: AppColors.primary),
+        Icon(
+          icon,
+          size: 20.r,
+          color: colorScheme.primary,
+        ),
         SizedBox(height: 6.h),
-        Text(label,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.labelSmall.copyWith(
-              color: AppColors.textSecondary,
-              height: 1.4,
-              fontSize: 10.sp,
-            )),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.labelSmall.copyWith(
+            color: colorScheme.onSurfaceVariant,
+            height: 1.4,
+            fontSize: 10.sp,
+          ),
+        ),
       ],
     );
   }

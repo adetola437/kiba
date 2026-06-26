@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+ 
 import 'app_colors.dart';
 import 'app_text_styles.dart';
-
+ 
 abstract class AppTheme {
   static ThemeData get light => ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
-
+ 
         // ── Colour scheme ───────────────────────────────────────────────────────
         colorScheme: const ColorScheme.light(
           primary: AppColors.africanGreen,
@@ -20,7 +20,7 @@ abstract class AppTheme {
           secondaryContainer: AppColors.cloudyBlue,
           onSecondaryContainer: AppColors.charcoalGrey,
           tertiary: AppColors.moodyBlue,
-          onTertiary: AppColors.white,
+          onTertiary: AppColors.black,
           background: AppColors.background,
           onBackground: AppColors.onBackground,
           surface: AppColors.surface,
@@ -31,24 +31,24 @@ abstract class AppTheme {
           onError: AppColors.onError,
           outline: AppColors.border,
         ),
-
+ 
         scaffoldBackgroundColor: AppColors.background,
         fontFamily: 'EuclidCircularA',
-
+ 
         // ── AppBar ──────────────────────────────────────────────────────────────
         appBarTheme: AppBarTheme(
           backgroundColor: AppColors.background,
           foregroundColor: AppColors.charcoalGrey,
           elevation: 0,
           scrolledUnderElevation: 0,
-          centerTitle: false, // brand: left-aligned
+          centerTitle: false,
           titleTextStyle: AppTextStyles.titleLarge,
           iconTheme: const IconThemeData(color: AppColors.charcoalGrey),
           systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
             statusBarColor: Colors.transparent,
           ),
         ),
-
+ 
         // ── Elevated Button ─────────────────────────────────────────────────────
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -62,7 +62,7 @@ abstract class AppTheme {
             elevation: 0,
           ),
         ),
-
+ 
         // ── Outlined Button ─────────────────────────────────────────────────────
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
@@ -75,7 +75,7 @@ abstract class AppTheme {
             textStyle: AppTextStyles.labelLarge,
           ),
         ),
-
+ 
         // ── Text Button ─────────────────────────────────────────────────────────
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
@@ -83,7 +83,7 @@ abstract class AppTheme {
             textStyle: AppTextStyles.labelLarge,
           ),
         ),
-
+ 
         // ── Input / TextField ───────────────────────────────────────────────────
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
@@ -111,14 +111,14 @@ abstract class AppTheme {
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: AppColors.error, width: 1.5),
           ),
-          labelStyle: AppTextStyles.bodyMedium
-              .copyWith(color: AppColors.textSecondary),
-          hintStyle: AppTextStyles.bodyMedium
-              .copyWith(color: AppColors.textDisabled),
-          errorStyle: AppTextStyles.bodySmall
-              .copyWith(color: AppColors.error),
+          labelStyle:
+              AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+          hintStyle:
+              AppTextStyles.bodyMedium.copyWith(color: AppColors.textDisabled),
+          errorStyle:
+              AppTextStyles.bodySmall.copyWith(color: AppColors.error),
         ),
-
+ 
         // ── Card ────────────────────────────────────────────────────────────────
         cardTheme: CardThemeData(
           color: AppColors.surface,
@@ -129,7 +129,7 @@ abstract class AppTheme {
           ),
           margin: EdgeInsets.zero,
         ),
-
+ 
         // ── Bottom Navigation Bar ───────────────────────────────────────────────
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: AppColors.surface,
@@ -139,7 +139,7 @@ abstract class AppTheme {
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: true,
         ),
-
+ 
         // ── NavigationBar (M3) ──────────────────────────────────────────────────
         navigationBarTheme: NavigationBarThemeData(
           backgroundColor: AppColors.surface,
@@ -158,7 +158,7 @@ abstract class AppTheme {
             return AppTextStyles.labelSmall;
           }),
         ),
-
+ 
         // ── Chip ────────────────────────────────────────────────────────────────
         chipTheme: ChipThemeData(
           backgroundColor: AppColors.surfaceVariant,
@@ -169,14 +169,14 @@ abstract class AppTheme {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-
+ 
         // ── Divider ─────────────────────────────────────────────────────────────
         dividerTheme: const DividerThemeData(
           color: AppColors.divider,
           thickness: 1,
           space: 1,
         ),
-
+ 
         // ── Text ────────────────────────────────────────────────────────────────
         textTheme: TextTheme(
           displayLarge: AppTextStyles.displayLarge,
@@ -196,46 +196,68 @@ abstract class AppTheme {
           labelSmall: AppTextStyles.labelSmall,
         ),
       );
-
-  // ── Dark theme (African Green as background) ──────────────────────────────────
+ 
+  // ── Dark theme ────────────────────────────────────────────────────────────────
   static ThemeData get dark => ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
+ 
+        // ── Colour scheme ───────────────────────────────────────────────────────
         colorScheme: const ColorScheme.dark(
-          primary: AppColors.beigePink,
-          onPrimary: AppColors.africanGreen,
+          // Primary — lightened African Green so it's legible on dark surfaces
+          primary: AppColors.darkPrimary,
+          onPrimary: AppColors.darkBackground,
           primaryContainer: AppColors.africanGreen,
           onPrimaryContainer: AppColors.beigePink,
-          secondary: AppColors.limeGreen,
+ 
+          // Secondary — Beige Pink pops on dark green-tinted surfaces
+          secondary: AppColors.beigePink,
           onSecondary: AppColors.africanGreen,
-          background: AppColors.charcoalGrey,
-          onBackground: AppColors.white,
-          surface: AppColors.charcoalGrey,
-          onSurface: AppColors.white,
-          surfaceVariant: Color(0xFF2C2A2B),
-          onSurfaceVariant: Color(0xFFCAC7C8),
+          secondaryContainer: AppColors.darkSurfaceVar,
+          onSecondaryContainer: AppColors.beigePink,
+ 
+          // Tertiary — Lime Green as a soft accent
+          tertiary: AppColors.limeGreen,
+          onTertiary: AppColors.white,
+ 
+          // Backgrounds & surfaces — dark green-tinted palette
+          background: AppColors.darkBackground,
+          onBackground: AppColors.darkTextPrimary,
+          surface: AppColors.darkSurface,
+          onSurface: AppColors.darkTextPrimary,
+          surfaceVariant: AppColors.darkSurfaceVar,
+          onSurfaceVariant: AppColors.darkTextSecondary,
+ 
+          // Borders & errors
+          outline: AppColors.darkBorder,
           error: AppColors.error,
           onError: AppColors.white,
-          outline: Color(0xFF3D3B3C),
         ),
-        scaffoldBackgroundColor: AppColors.charcoalGrey,
+ 
+        scaffoldBackgroundColor: AppColors.darkBackground,
         fontFamily: 'EuclidCircularA',
+ 
+        // ── AppBar ──────────────────────────────────────────────────────────────
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.charcoalGrey,
-          foregroundColor: AppColors.white,
+          backgroundColor: AppColors.darkBackground,
+          foregroundColor: AppColors.darkTextPrimary,
           elevation: 0,
           scrolledUnderElevation: 0,
           centerTitle: false,
-          titleTextStyle:
-              AppTextStyles.titleLarge.copyWith(color: AppColors.white),
+          titleTextStyle: AppTextStyles.titleLarge
+              .copyWith(color: AppColors.darkTextPrimary),
+          iconTheme: const IconThemeData(color: AppColors.darkTextPrimary),
           systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
             statusBarColor: Colors.transparent,
           ),
         ),
+ 
+        // ── Elevated Button ─────────────────────────────────────────────────────
+        // Keeps the brand feel — Beige Pink on African Green reads well in dark
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.beigePink,
-            foregroundColor: AppColors.africanGreen,
+            backgroundColor: AppColors.africanGreen,
+            foregroundColor: AppColors.beigePink,
             minimumSize: const Size(double.infinity, 52),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -243,6 +265,143 @@ abstract class AppTheme {
             textStyle: AppTextStyles.labelLarge,
             elevation: 0,
           ),
+        ),
+ 
+        // ── Outlined Button ─────────────────────────────────────────────────────
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.darkPrimary,
+            minimumSize: const Size(double.infinity, 52),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            side: const BorderSide(color: AppColors.darkPrimary, width: 1.5),
+            textStyle: AppTextStyles.labelLarge,
+          ),
+        ),
+ 
+        // ── Text Button ─────────────────────────────────────────────────────────
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: AppColors.darkPrimary,
+            textStyle: AppTextStyles.labelLarge,
+          ),
+        ),
+ 
+        // ── Input / TextField ───────────────────────────────────────────────────
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: AppColors.darkSurface,
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                const BorderSide(color: AppColors.darkPrimary, width: 1.5),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+          ),
+          labelStyle: AppTextStyles.bodyMedium
+              .copyWith(color: AppColors.darkTextSecondary),
+          hintStyle: AppTextStyles.bodyMedium
+              .copyWith(color: AppColors.darkTextSecondary),
+          errorStyle:
+              AppTextStyles.bodySmall.copyWith(color: AppColors.error),
+        ),
+ 
+        // ── Card ────────────────────────────────────────────────────────────────
+        cardTheme: CardThemeData(
+          color: AppColors.darkSurface,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: AppColors.darkBorder),
+          ),
+          margin: EdgeInsets.zero,
+        ),
+ 
+        // ── Bottom Navigation Bar ───────────────────────────────────────────────
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: AppColors.darkSurface,
+          selectedItemColor: AppColors.darkPrimary,
+          unselectedItemColor: AppColors.darkTextSecondary,
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          showUnselectedLabels: true,
+        ),
+ 
+        // ── NavigationBar (M3) ──────────────────────────────────────────────────
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: AppColors.darkSurface,
+          indicatorColor: AppColors.africanGreen,
+          iconTheme: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return const IconThemeData(color: AppColors.beigePink);
+            }
+            return const IconThemeData(color: AppColors.darkTextSecondary);
+          }),
+          labelTextStyle: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return AppTextStyles.labelSmall
+                  .copyWith(color: AppColors.darkPrimary);
+            }
+            return AppTextStyles.labelSmall
+                .copyWith(color: AppColors.darkTextSecondary);
+          }),
+        ),
+ 
+        // ── Chip ────────────────────────────────────────────────────────────────
+        chipTheme: ChipThemeData(
+          backgroundColor: AppColors.darkSurfaceVar,
+          selectedColor: AppColors.africanGreen,
+          labelStyle:
+              AppTextStyles.labelMedium.copyWith(color: AppColors.darkTextPrimary),
+          side: const BorderSide(color: AppColors.darkBorder),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+ 
+        // ── Divider ─────────────────────────────────────────────────────────────
+        dividerTheme: const DividerThemeData(
+          color: AppColors.darkBorder,
+          thickness: 1,
+          space: 1,
+        ),
+ 
+        // ── Text ────────────────────────────────────────────────────────────────
+        // AppTextStyles has no colors — Flutter merges onSurface from the
+        // ColorScheme above automatically, so no overrides needed here.
+        textTheme: TextTheme(
+          displayLarge: AppTextStyles.displayLarge,
+          displayMedium: AppTextStyles.displayMedium,
+          displaySmall: AppTextStyles.displaySmall,
+          headlineLarge: AppTextStyles.headlineLarge,
+          headlineMedium: AppTextStyles.headlineMedium,
+          headlineSmall: AppTextStyles.headlineSmall,
+          titleLarge: AppTextStyles.titleLarge,
+          titleMedium: AppTextStyles.titleMedium,
+          titleSmall: AppTextStyles.titleSmall,
+          bodyLarge: AppTextStyles.bodyLarge,
+          bodyMedium: AppTextStyles.bodyMedium,
+          bodySmall: AppTextStyles.bodySmall,
+          labelLarge: AppTextStyles.labelLarge,
+          labelMedium: AppTextStyles.labelMedium,
+          labelSmall: AppTextStyles.labelSmall,
         ),
       );
 }

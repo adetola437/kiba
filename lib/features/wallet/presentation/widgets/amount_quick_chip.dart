@@ -1,13 +1,17 @@
-part of '../controllers/withdraw_amount_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class _AmountQuickChip extends StatelessWidget {
-  const _AmountQuickChip({required this.label, required this.onTap});
+class AmountQuickChip extends StatelessWidget {
+  const AmountQuickChip({required this.label, required this.onTap});
 
   final String label;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -15,14 +19,13 @@ class _AmountQuickChip extends StatelessWidget {
           height: 40.h,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColors.surfaceVariant,
+            color: colorScheme.surfaceVariant,
             borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: colorScheme.outline),
           ),
           child: Text(
             label,
-            style: AppTextStyles.labelMedium.copyWith(
-              color: AppColors.textPrimary,
+            style: textTheme.labelMedium?.copyWith(
               fontWeight: FontWeight.w600,
             ),
           ),

@@ -13,6 +13,9 @@ class _BankAccountTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -20,11 +23,11 @@ class _BankAccountTile extends StatelessWidget {
         padding: REdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary.withOpacity(0.04)
-              : AppColors.surface,
+              ? colorScheme.primary.withOpacity(0.04)
+              : colorScheme.surface,
           borderRadius: BorderRadius.circular(14.r),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.border,
+            color: isSelected ? colorScheme.primary : colorScheme.outline,
             width: isSelected ? 1.5 : 1.0,
           ),
         ),
@@ -53,27 +56,21 @@ class _BankAccountTile extends StatelessWidget {
                 children: [
                   Text(
                     account.bankName,
-                    style: AppTextStyles.titleSmall.copyWith(
-                      color: AppColors.textPrimary,
+                    style: textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   SizedBox(height: 3.h),
                   Text(
                     account.maskedNumber,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
-                      fontFamily: 'EuclidCircularA',
+                    style: textTheme.bodySmall?.copyWith(
                       letterSpacing: 1.0,
                     ),
                   ),
                   SizedBox(height: 2.h),
                   Text(
                     account.accountName,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.textDisabled,
-                      letterSpacing: 0.5,
-                    ),
+                    style: textTheme.labelSmall,
                   ),
                 ],
               ),
@@ -86,14 +83,18 @@ class _BankAccountTile extends StatelessWidget {
               height: 22.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isSelected ? AppColors.primary : Colors.transparent,
+                color: isSelected ? colorScheme.primary : Colors.transparent,
                 border: Border.all(
-                  color: isSelected ? AppColors.primary : AppColors.border,
+                  color: isSelected ? colorScheme.primary : colorScheme.outline,
                   width: 2,
                 ),
               ),
               child: isSelected
-                  ? Icon(Icons.check_rounded, size: 12.r, color: AppColors.white)
+                  ? Icon(
+                      Icons.check_rounded,
+                      size: 12.r,
+                      color: colorScheme.onPrimary,
+                    )
                   : null,
             ),
           ],

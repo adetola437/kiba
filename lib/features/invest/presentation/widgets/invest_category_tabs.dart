@@ -10,14 +10,16 @@ class _InvestCategoryTabs extends StatelessWidget {
   final ValueChanged<InvestCategory> onChanged;
 
   static const _tabs = [
-    (category: InvestCategory.all,          label: 'All'),
-    (category: InvestCategory.savings,      label: 'Savings'),
-    (category: InvestCategory.fixedIncome,  label: 'Fixed Income'),
-    (category: InvestCategory.government,   label: 'Government'),
+    (category: InvestCategory.all, label: 'All'),
+    (category: InvestCategory.savings, label: 'Savings'),
+    (category: InvestCategory.fixedIncome, label: 'Fixed Income'),
+    (category: InvestCategory.government, label: 'Government'),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -31,12 +33,12 @@ class _InvestCategoryTabs extends StatelessWidget {
                 duration: const Duration(milliseconds: 220),
                 padding: REdgeInsets.symmetric(horizontal: 18, vertical: 9),
                 decoration: BoxDecoration(
-                  color: isActive ? AppColors.primary : Colors.transparent,
+                  color: isActive ? colorScheme.primary : Colors.transparent,
                   borderRadius: BorderRadius.circular(20.r),
                   border: Border.all(
                     color: isActive
-                        ? AppColors.primary
-                        : AppColors.buttonBorder,
+                        ? colorScheme.primary
+                        : colorScheme.outline,
                     width: 1.5,
                   ),
                 ),
@@ -44,8 +46,8 @@ class _InvestCategoryTabs extends StatelessWidget {
                   t.label,
                   style: AppTextStyles.labelMedium.copyWith(
                     color: isActive
-                        ? AppColors.white
-                        : AppColors.textSecondary,
+                        ? colorScheme.onPrimary
+                        : colorScheme.onSurfaceVariant,
                     fontWeight: isActive
                         ? FontWeight.w600
                         : FontWeight.w400,

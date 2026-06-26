@@ -11,6 +11,9 @@ class _ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -18,15 +21,15 @@ class _ProfileAvatar extends StatelessWidget {
         Container(
           width: 80.r,
           height: 80.r,
-          decoration: const BoxDecoration(
-            color: AppColors.primary,
+          decoration: BoxDecoration(
+            color: colorScheme.primary,
             shape: BoxShape.circle,
           ),
           child: Center(
             child: Text(
               initials,
-              style: AppTextStyles.headlineSmall.copyWith(
-                color: AppColors.white,
+              style: textTheme.headlineSmall?.copyWith(
+                color: colorScheme.onPrimary,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -42,12 +45,12 @@ class _ProfileAvatar extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.limeGreen,
               borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(color: AppColors.white, width: 1.5),
+              border: Border.all(color: colorScheme.surface, width: 1.5),
             ),
             child: Text(
               'T1',
-              style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.primary,
+              style: textTheme.labelSmall?.copyWith(
+                color: colorScheme.primary,
                 fontWeight: FontWeight.w700,
                 fontSize: 9.sp,
               ),
@@ -65,12 +68,12 @@ class _ProfileAvatar extends StatelessWidget {
               width: 26.r,
               height: 26.r,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: colorScheme.surface,
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.border, width: 1),
+                border: Border.all(color: colorScheme.outline, width: 1),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: colorScheme.shadow.withOpacity(0.08),
                     blurRadius: 6,
                     offset: const Offset(0, 2),
                   ),
@@ -79,7 +82,7 @@ class _ProfileAvatar extends StatelessWidget {
               child: Icon(
                 Icons.camera_alt_outlined,
                 size: 13.r,
-                color: AppColors.textSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ),

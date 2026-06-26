@@ -13,10 +13,13 @@ class _PortfolioStatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: colorScheme.primary,
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Stack(
@@ -30,7 +33,7 @@ class _PortfolioStatsCard extends StatelessWidget {
               height: 130.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.04),
+                color: colorScheme.onPrimary.withOpacity(0.04),
               ),
             ),
           ),
@@ -40,7 +43,6 @@ class _PortfolioStatsCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 // ── Top stats row ─────────────────────────────────────
                 IntrinsicHeight(
                   child: Row(
@@ -50,7 +52,7 @@ class _PortfolioStatsCard extends StatelessWidget {
                         label: 'INVESTED',
                       ),
                       VerticalDivider(
-                        color: AppColors.white.withOpacity(0.15),
+                        color: colorScheme.onPrimary.withOpacity(0.15),
                         width: 1,
                         thickness: 1,
                       ),
@@ -59,7 +61,7 @@ class _PortfolioStatsCard extends StatelessWidget {
                         label: 'ACCRUED',
                       ),
                       VerticalDivider(
-                        color: AppColors.white.withOpacity(0.15),
+                        color: colorScheme.onPrimary.withOpacity(0.15),
                         width: 1,
                         thickness: 1,
                       ),
@@ -72,7 +74,10 @@ class _PortfolioStatsCard extends StatelessWidget {
                 ),
 
                 SizedBox(height: 16.h),
-                Divider(color: AppColors.white.withOpacity(0.1), height: 1),
+                Divider(
+                  color: colorScheme.onPrimary.withOpacity(0.1),
+                  height: 1,
+                ),
                 SizedBox(height: 16.h),
 
                 // ── Bottom row: daily accrual + next maturity ─────────
@@ -86,16 +91,16 @@ class _PortfolioStatsCard extends StatelessWidget {
                       children: [
                         Text(
                           _mask('+₦1,900 today'),
-                          style: AppTextStyles.titleMedium.copyWith(
-                            color: AppColors.limeGreen,
+                          style: textTheme.titleMedium?.copyWith(
+                            color: colorScheme.primaryContainer,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         SizedBox(height: 2.h),
                         Text(
                           'DAILY ACCRUAL',
-                          style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.white.withOpacity(0.5),
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colorScheme.onPrimary.withOpacity(0.5),
                             letterSpacing: 1.0,
                             fontSize: 9.sp,
                           ),
@@ -108,13 +113,13 @@ class _PortfolioStatsCard extends StatelessWidget {
                       padding: REdgeInsets.symmetric(
                           horizontal: 14, vertical: 8),
                       decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.12),
+                        color: colorScheme.onPrimary.withOpacity(0.12),
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Text(
                         'Next maturity: 10 Jan',
-                        style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.white,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onPrimary,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -127,7 +132,7 @@ class _PortfolioStatsCard extends StatelessWidget {
                         balanceVisible
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
-                        color: AppColors.white.withOpacity(0.55),
+                        color: colorScheme.onPrimary.withOpacity(0.55),
                         size: 18.r,
                       ),
                     ),
@@ -149,6 +154,9 @@ class _StatsCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Expanded(
       child: Padding(
         padding: REdgeInsets.symmetric(horizontal: 4),
@@ -157,16 +165,16 @@ class _StatsCell extends StatelessWidget {
           children: [
             Text(
               value,
-              style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.white,
+              style: textTheme.titleMedium?.copyWith(
+                color: colorScheme.onPrimary,
                 fontWeight: FontWeight.w700,
               ),
             ),
             SizedBox(height: 4.h),
             Text(
               label,
-              style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.white.withOpacity(0.5),
+              style: textTheme.labelSmall?.copyWith(
+                color: colorScheme.onPrimary.withOpacity(0.5),
                 letterSpacing: 0.8,
                 fontSize: 9.sp,
               ),

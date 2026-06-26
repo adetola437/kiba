@@ -1,16 +1,18 @@
 part of '../controllers/profile.dart';
-
+ 
 class _ProfileMenuSectionWidget extends StatelessWidget {
   const _ProfileMenuSectionWidget({
     required this.section,
     required this.onTap,
   });
-
+ 
   final ProfileMenuSection section;
   final ValueChanged<ProfileMenuItem> onTap;
-
+ 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+ 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -20,26 +22,25 @@ class _ProfileMenuSectionWidget extends StatelessWidget {
           child: Text(
             section.title,
             style: AppTextStyles.labelSmall.copyWith(
-              color: AppColors.textDisabled,
+              color: colorScheme.onSurfaceVariant.withOpacity(0.5),
               letterSpacing: 1.1,
               fontSize: 10.sp,
             ),
           ),
         ),
-
-        // Items card
+ 
         Container(
           decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(16.r),
-            border: Border.all(color: AppColors.border),
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(18.r),
+            border: Border.all(color: colorScheme.outline),
           ),
           child: Column(
             children: section.items.asMap().entries.map((entry) {
               final i = entry.key;
               final item = entry.value;
               final isLast = i == section.items.length - 1;
-
+ 
               return Column(
                 children: [
                   Material(
@@ -47,52 +48,44 @@ class _ProfileMenuSectionWidget extends StatelessWidget {
                     child: InkWell(
                       onTap: () => onTap(item),
                       borderRadius: BorderRadius.vertical(
-                        top: i == 0
-                            ? Radius.circular(16.r)
-                            : Radius.zero,
-                        bottom: isLast
-                            ? Radius.circular(16.r)
-                            : Radius.zero,
+                        top: i == 0 ? Radius.circular(16.r) : Radius.zero,
+                        bottom: isLast ? Radius.circular(16.r) : Radius.zero,
                       ),
-                      splashColor: AppColors.primary.withOpacity(0.04),
-                      highlightColor: AppColors.primary.withOpacity(0.02),
+                      splashColor: colorScheme.primary.withValues(alpha: 0.04),
+                      highlightColor: colorScheme.primary.withValues(alpha: 0.02),
                       child: Padding(
                         padding: REdgeInsets.symmetric(
-                            horizontal: 16, vertical: 14),
+                          horizontal: 18,
+                          vertical: 16,
+                        ),
                         child: Row(
                           children: [
-                            // Icon container
                             Container(
-                              width: 36.r,
-                              height: 36.r,
+                              width: 46.r,
+                              height: 46.r,
                               decoration: BoxDecoration(
-                                color: AppColors.surfaceVariant,
-                                borderRadius: BorderRadius.circular(10.r),
+                                color: colorScheme.surfaceVariant,
+                                borderRadius: BorderRadius.circular(12.r),
                               ),
                               child: Icon(
                                 item.icon,
-                                size: 18.r,
-                                color: AppColors.primary,
+                                size: 22.r,
+                                color: colorScheme.primary,
                               ),
                             ),
-
-                            SizedBox(width: 14.w),
-
-                            // Label
+                            SizedBox(width: 18.w),
                             Expanded(
                               child: Text(
                                 item.label,
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  color: AppColors.textPrimary,
+                                style: AppTextStyles.titleMedium.copyWith(
+                                  color: colorScheme.onSurface,
                                 ),
                               ),
                             ),
-
-                            // Chevron
                             Icon(
                               Icons.chevron_right_rounded,
-                              size: 18.r,
-                              color: AppColors.textDisabled,
+                              size: 22.r,
+                              color: colorScheme.onSurfaceVariant.withOpacity(0.5),
                             ),
                           ],
                         ),
@@ -102,8 +95,8 @@ class _ProfileMenuSectionWidget extends StatelessWidget {
                   if (!isLast)
                     Divider(
                       height: 1,
-                      color: AppColors.divider,
-                      indent: 66.w,
+                      color: colorScheme.outline,
+                      indent: 86.w,
                     ),
                 ],
               );

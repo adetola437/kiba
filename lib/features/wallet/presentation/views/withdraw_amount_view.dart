@@ -10,9 +10,12 @@ class WithdrawAmountView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar:  const CustomAppBar(title: 'Withdraw Funds'),
+      appBar: const CustomAppBar(title: 'Withdraw Funds'),
       body: Column(
         children: [
           Expanded(
@@ -25,9 +28,8 @@ class WithdrawAmountView extends StatelessWidget
                   Text(
                     'How much would you\nlike to withdraw?',
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.headlineMedium.copyWith(
+                    style: textTheme.headlineMedium?.copyWith(
                       fontFamily: 'BWGradual',
-                      color: AppColors.textPrimary,
                     ),
                   ),
 
@@ -38,23 +40,21 @@ class WithdrawAmountView extends StatelessWidget
                     padding:
                         REdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceVariant,
+                      color: colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(20.r),
-                      border: Border.all(color: AppColors.border),
+                      border: Border.all(color: colorScheme.outline),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           'Available Balance: ',
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
+                          style: textTheme.bodySmall,
                         ),
                         Text(
                           _fmt(controller.availableBalance),
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.primary,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colorScheme.primary,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -65,14 +65,14 @@ class WithdrawAmountView extends StatelessWidget
                   SizedBox(height: 28.h),
 
                   // ── Amount input box ─────────────────────────────
-                Row(
+                  Row(
                     children: [
                       SizedBox(width: 20.w),
                       Text(
                         '₦',
-                        style: AppTextStyles.headlineMedium.copyWith(
+                        style: textTheme.headlineMedium?.copyWith(
                           fontFamily: 'EuclidCircularA',
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -82,34 +82,28 @@ class WithdrawAmountView extends StatelessWidget
                           controller: controller.amountCtrl,
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: true),
-                          style: TextStyle(
+                          style: textTheme.headlineSmall?.copyWith(
                             fontFamily: 'EuclidCircularA',
-                            fontSize: 28.sp,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
                           ),
                           decoration: InputDecoration(
                             hintText: '0.00',
-                            hintStyle: TextStyle(
+                            hintStyle: textTheme.headlineSmall?.copyWith(
                               fontFamily: 'EuclidCircularA',
-                              fontSize: 28.sp,
                               fontWeight: FontWeight.w300,
-                              color: AppColors.textDisabled,
+                              color: colorScheme.onSurfaceVariant,
                             ),
                             border: InputBorder.none,
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12.r),
-                              borderSide: BorderSide(color: AppColors.border),
+                              borderSide:
+                                  BorderSide(color: colorScheme.outline),
                             ),
-                            errorStyle: TextStyle(
-                              color: AppColors.error,
-                              fontSize: 12.sp,
+                            errorStyle: textTheme.bodySmall?.copyWith(
+                              color: colorScheme.error,
                             ),
                           ),
-                          validator: (value) {
-                            // Call your validation logic here
-                            return controller.validateAmount(value);
-                          },
+                          validator: (value) => controller.validateAmount(value),
                         ),
                       ),
                     ],
@@ -120,22 +114,22 @@ class WithdrawAmountView extends StatelessWidget
                   // ── Quick select chips ───────────────────────────
                   Row(
                     children: [
-                      _AmountQuickChip(
+                      AmountQuickChip(
                         label: '25%',
                         onTap: () => controller.onQuickSelect(0.25),
                       ),
                       SizedBox(width: 10.w),
-                      _AmountQuickChip(
+                      AmountQuickChip(
                         label: '50%',
                         onTap: () => controller.onQuickSelect(0.50),
                       ),
                       SizedBox(width: 10.w),
-                      _AmountQuickChip(
+                      AmountQuickChip(
                         label: '75%',
                         onTap: () => controller.onQuickSelect(0.75),
                       ),
                       SizedBox(width: 10.w),
-                      _AmountQuickChip(
+                      AmountQuickChip(
                         label: '100%',
                         onTap: () => controller.onQuickSelect(1.0),
                       ),
@@ -148,24 +142,26 @@ class WithdrawAmountView extends StatelessWidget
                   Container(
                     padding: REdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.surface,
+                      color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(color: AppColors.border),
+                      border: Border.all(color: colorScheme.outline),
                     ),
                     child: Column(
                       children: [
                         _InfoRow(
                           label: 'Fee',
                           value: '₦0.00',
-                          valueColor: AppColors.textPrimary,
                         ),
                         SizedBox(height: 10.h),
-                        Divider(color: AppColors.divider, height: 1),
+                        Divider(
+                          color: colorScheme.outline.withOpacity(0.5),
+                          height: 1,
+                        ),
                         SizedBox(height: 10.h),
                         _InfoRow(
                           label: 'Expected Arrival',
                           value: 'Instant (2-5 mins)',
-                          valueColor: AppColors.primary,
+                          isPrimary: true,
                           valueBold: true,
                         ),
                       ],
@@ -178,7 +174,7 @@ class WithdrawAmountView extends StatelessWidget
                   Container(
                     padding: REdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceVariant,
+                      color: colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Row(
@@ -187,7 +183,7 @@ class WithdrawAmountView extends StatelessWidget
                         Icon(
                           Icons.shield_outlined,
                           size: 32.r,
-                          color: AppColors.primary.withOpacity(0.3),
+                          color: colorScheme.primary.withOpacity(0.3),
                         ),
                         SizedBox(width: 12.w),
                         Expanded(
@@ -196,16 +192,12 @@ class WithdrawAmountView extends StatelessWidget
                             children: [
                               Text(
                                 'SECURITY FIRST',
-                                style: AppTextStyles.labelSmall.copyWith(
-                                  color: AppColors.textSecondary,
-                                  letterSpacing: 1.0,
-                                ),
+                                style: textTheme.labelSmall,
                               ),
                               SizedBox(height: 4.h),
                               Text(
                                 'All withdrawals are secured with bank-grade encryption and 2FA protection.',
-                                style: AppTextStyles.bodySmall.copyWith(
-                                  color: AppColors.textSecondary,
+                                style: textTheme.bodySmall?.copyWith(
                                   height: 1.5,
                                 ),
                               ),
@@ -224,8 +216,12 @@ class WithdrawAmountView extends StatelessWidget
           Container(
             padding: REdgeInsets.fromLTRB(20, 12, 20, 32),
             decoration: BoxDecoration(
-              color: AppColors.background,
-              border: Border(top: BorderSide(color: AppColors.divider)),
+              color: theme.scaffoldBackgroundColor,
+              border: Border(
+                top: BorderSide(
+                  color: colorScheme.outline.withOpacity(0.5),
+                ),
+              ),
             ),
             child: ValueListenableBuilder<double?>(
               valueListenable: controller.parsedAmount,
@@ -234,23 +230,11 @@ class WithdrawAmountView extends StatelessWidget
                 return AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
                   opacity: enabled ? 1.0 : 0.45,
-                  child: GestureDetector(
-                    onTap: enabled ? controller.onContinue : null,
-                    child: Container(
-                      width: double.infinity,
-                      height: 56.h,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(14.r),
-                      ),
-                      child: Text(
-                        'Continue',
-                        style: AppTextStyles.labelLarge.copyWith(
-                          color: AppColors.white,
-                          fontSize: 16.sp,
-                        ),
-                      ),
+                  child: IgnorePointer(
+                    ignoring: !enabled,
+                    child: ElevatedButton(
+                      onPressed: enabled ? controller.onContinue : null,
+                      child: const Text('Continue'),
                     ),
                   ),
                 );
@@ -268,30 +252,31 @@ class _InfoRow extends StatelessWidget {
   const _InfoRow({
     required this.label,
     required this.value,
-    required this.valueColor,
+    this.isPrimary = false,
     this.valueBold = false,
   });
 
   final String label;
   final String value;
-  final Color valueColor;
+  final bool isPrimary;
   final bool valueBold;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           label,
-          style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.textSecondary,
-          ),
+          style: textTheme.bodySmall,
         ),
         Text(
           value,
-          style: AppTextStyles.bodySmall.copyWith(
-            color: valueColor,
+          style: textTheme.bodySmall?.copyWith(
+            color: isPrimary ? colorScheme.primary : null,
             fontWeight: valueBold ? FontWeight.w700 : FontWeight.w500,
           ),
         ),

@@ -8,14 +8,17 @@ class _UssdBankTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: REdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(14.r),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: colorScheme.outline),
         ),
         child: Row(
           children: [
@@ -30,8 +33,7 @@ class _UssdBankTile extends StatelessWidget {
               child: Center(
                 child: Text(
                   bank.name[0],
-                  style: TextStyle(
-                    fontFamily: 'BWGradual',
+                  style: textTheme.headlineSmall?.copyWith(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,
                     color: bank.color,
@@ -44,8 +46,7 @@ class _UssdBankTile extends StatelessWidget {
             Expanded(
               child: Text(
                 bank.name,
-                style: AppTextStyles.titleSmall.copyWith(
-                  color: AppColors.textPrimary,
+                style: textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -54,7 +55,7 @@ class _UssdBankTile extends StatelessWidget {
             Icon(
               Icons.arrow_forward_ios_rounded,
               size: 14.r,
-              color: AppColors.textDisabled,
+              color: colorScheme.onSurfaceVariant,
             ),
           ],
         ),

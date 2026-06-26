@@ -19,14 +19,17 @@ class _WithdrawSummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+          style: textTheme.bodyMedium?.copyWith(
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         Column(
@@ -35,10 +38,10 @@ class _WithdrawSummaryRow extends StatelessWidget {
             Text(
               value,
               style: (valueLarge
-                      ? AppTextStyles.titleMedium
-                      : AppTextStyles.bodyMedium)
-                  .copyWith(
-                color: valueColor ?? AppColors.textPrimary,
+                      ? textTheme.titleMedium
+                      : textTheme.bodyMedium)
+                  ?.copyWith(
+                color: valueColor ?? colorScheme.onSurface,
                 fontWeight: isBold ? FontWeight.w800 : FontWeight.w600,
               ),
             ),
@@ -46,9 +49,8 @@ class _WithdrawSummaryRow extends StatelessWidget {
               SizedBox(height: 2.h),
               Text(
                 subValue!,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textDisabled,
-                  fontFamily: 'EuclidCircularA',
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
                   letterSpacing: 0.5,
                 ),
               ),

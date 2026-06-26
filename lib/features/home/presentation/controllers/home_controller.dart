@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:kiba/features/beige_club/presentation/controllers/beige_club_intro_controller.dart';
+import 'package:kiba/features/kyc/presentation/controllers/kyc_hub_controller.dart';
+// import 'package:kiba/features/beige_club/presentation/controllers/beige_club_intro_controller.dart';
 import 'package:kiba/features/wallet/presentation/controllers/transactions_controller.dart';
 import 'package:kiba/features/wallet/presentation/controllers/withdraw_amount_controller.dart';
 
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen>
       case QuickAction.fund:
         context.pushNamed('fund_wallet');
       case QuickAction.withdraw:
-        context.pushNamed('withdraw');
+        context.pushNamed(WithdrawAmountScreen.route);
       case QuickAction.invest:
         context.goNamed('invest');
       case QuickAction.history:
@@ -84,8 +85,13 @@ class _HomeScreenState extends State<HomeScreen>
   void onViewHistory() => context.pushNamed('history');
 
   @override
-  void onEnterBeigeClub() => context.pushNamed(BeigeClubIntroScreen.route);
+  void onEnterBeigeClub() => context.pushNamed('beige_clubs');
 
   @override
   Widget build(BuildContext context) => view.build(context);
+  
+  @override
+  void onUpgradeTier() {
+  context.pushNamed(KycHubScreen.route);
+  }
 }

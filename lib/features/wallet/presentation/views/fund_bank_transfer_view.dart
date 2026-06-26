@@ -8,12 +8,12 @@ class FundBankTransferView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        scrolledUnderElevation: 0,
         centerTitle: true,
         leading: GestureDetector(
           onTap: () => context.pop(),
@@ -21,20 +21,18 @@ class FundBankTransferView extends StatelessWidget
             margin: REdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.border),
+              border: Border.all(color: colorScheme.outline),
             ),
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 16.r,
-              color: AppColors.textPrimary,
+              color: colorScheme.onSurface,
             ),
           ),
         ),
         title: Text(
           'Fund Wallet',
-          style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimary,
-          ),
+          style: textTheme.titleMedium,
         ),
       ),
       body: SingleChildScrollView(
@@ -44,17 +42,12 @@ class FundBankTransferView extends StatelessWidget
           children: [
             Text(
               'Bank Transfer',
-              style: AppTextStyles.headlineSmall.copyWith(
-                fontFamily: 'BWGradual',
-                color: AppColors.textPrimary,
-              ),
+              style: textTheme.headlineSmall,
             ),
             SizedBox(height: 6.h),
             Text(
               'Transfer money to your dedicated virtual account to fund your Beige wallet.',
-              style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textSecondary,
-              ),
+              style: textTheme.bodySmall,
             ),
 
             SizedBox(height: 24.h),
@@ -70,7 +63,7 @@ class FundBankTransferView extends StatelessWidget
             Container(
               padding: REdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.cloudyBlue,
+                color: colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Row(
@@ -79,14 +72,14 @@ class FundBankTransferView extends StatelessWidget
                   Icon(
                     Icons.info_outline_rounded,
                     size: 16.r,
-                    color: AppColors.moodyBlue,
+                    color: colorScheme.tertiary,
                   ),
                   SizedBox(width: 10.w),
                   Expanded(
                     child: Text(
                       'Funds typically reflect within 2 minutes. Please ensure you transfer the exact amount you wish to see in your wallet.',
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.moodyBlue,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.tertiary,
                         height: 1.5,
                       ),
                     ),
@@ -102,7 +95,7 @@ class FundBankTransferView extends StatelessWidget
               width: double.infinity,
               height: 140.h,
               decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
+                color: colorScheme.surfaceVariant,
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: Column(
@@ -111,13 +104,13 @@ class FundBankTransferView extends StatelessWidget
                   Icon(
                     Icons.shield_outlined,
                     size: 40.r,
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                   ),
                   SizedBox(height: 10.h),
                   Text(
                     'Secure End-to-End Encryption',
-                    style: AppTextStyles.labelMedium.copyWith(
-                      color: AppColors.primary,
+                    style: textTheme.labelMedium?.copyWith(
+                      color: colorScheme.primary,
                     ),
                   ),
                 ],

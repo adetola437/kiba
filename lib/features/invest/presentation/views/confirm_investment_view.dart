@@ -1,8 +1,5 @@
 part of '../controllers/confirm_investment_controller.dart';
 
-// forward declaration — defined in investment_success.dart
-
-
 class ConfirmInvestmentView extends StatelessWidget
     implements ConfirmInvestmentViewContract {
   const ConfirmInvestmentView({super.key, required this.controller});
@@ -14,25 +11,30 @@ class ConfirmInvestmentView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final dateFormat = DateFormat('MMM d, y');
 
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: colorScheme.background,
           appBar: AppBar(
-            backgroundColor: AppColors.background,
+            backgroundColor: colorScheme.background,
             elevation: 0,
             scrolledUnderElevation: 0,
             leading: GestureDetector(
               onTap: controller.onBack,
-              child: Icon(Icons.arrow_back_rounded,
-                  size: 22.r, color: AppColors.textPrimary),
+              child: Icon(
+                Icons.arrow_back_rounded,
+                size: 22.r,
+                color: colorScheme.onBackground,
+              ),
             ),
             title: Text(
               'New Investment',
-              style: AppTextStyles.titleLarge
-                  .copyWith(color: AppColors.textPrimary),
+              style: AppTextStyles.titleLarge.copyWith(
+                color: colorScheme.onBackground,
+              ),
             ),
             centerTitle: true,
           ),
@@ -48,7 +50,7 @@ class ConfirmInvestmentView extends StatelessWidget
                       child: Container(
                         height: 3.h,
                         decoration: BoxDecoration(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           borderRadius: BorderRadius.circular(2.r),
                         ),
                       ),
@@ -58,7 +60,7 @@ class ConfirmInvestmentView extends StatelessWidget
                       child: Container(
                         height: 3.h,
                         decoration: BoxDecoration(
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                           borderRadius: BorderRadius.circular(2.r),
                         ),
                       ),
@@ -73,8 +75,9 @@ class ConfirmInvestmentView extends StatelessWidget
                   padding: REdgeInsets.only(right: 20),
                   child: Text(
                     'Step 2 of 2',
-                    style: AppTextStyles.labelSmall
-                        .copyWith(color: AppColors.textDisabled),
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: colorScheme.onBackground.withValues(alpha: 0.38),
+                    ),
                   ),
                 ),
               ),
@@ -85,19 +88,17 @@ class ConfirmInvestmentView extends StatelessWidget
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Text(
                         'Review & Confirm',
                         style: AppTextStyles.headlineSmall.copyWith(
-                          fontFamily: 'BWGradual',
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onBackground,
                         ),
                       ),
                       SizedBox(height: 4.h),
                       Text(
                         'Please review your investment details before confirming.',
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                           height: 1.5,
                         ),
                       ),
@@ -107,9 +108,9 @@ class ConfirmInvestmentView extends StatelessWidget
                       // ── Investment summary card ─────────────────────
                       Container(
                         decoration: BoxDecoration(
-                          color: AppColors.surface,
+                          color: colorScheme.surface,
                           borderRadius: BorderRadius.circular(16.r),
-                          border: Border.all(color: AppColors.border),
+                          border: Border.all(color: colorScheme.outline),
                         ),
                         child: Column(
                           children: [
@@ -117,7 +118,7 @@ class ConfirmInvestmentView extends StatelessWidget
                             Container(
                               padding: REdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: AppColors.primary,
+                                color: colorScheme.primary,
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(16.r),
                                 ),
@@ -128,14 +129,15 @@ class ConfirmInvestmentView extends StatelessWidget
                                     width: 40.r,
                                     height: 40.r,
                                     decoration: BoxDecoration(
-                                      color: AppColors.white.withOpacity(0.12),
+                                      color: colorScheme.onPrimary
+                                          .withValues(alpha: 0.12),
                                       borderRadius:
                                           BorderRadius.circular(10.r),
                                     ),
                                     child: Icon(
                                       Icons.trending_up_rounded,
                                       size: 18.r,
-                                      color: AppColors.limeGreen,
+                                      color: colorScheme.primaryContainer,
                                     ),
                                   ),
                                   SizedBox(width: 12.w),
@@ -146,18 +148,18 @@ class ConfirmInvestmentView extends StatelessWidget
                                       children: [
                                         Text(
                                           controller.productName,
-                                          style:
-                                              AppTextStyles.titleMedium.copyWith(
-                                            color: AppColors.white,
+                                          style: AppTextStyles.titleMedium
+                                              .copyWith(
+                                            color: colorScheme.onPrimary,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                         Text(
                                           '${controller.tenorDays}-day tenor · ${controller.annualRate}% p.a.',
-                                          style:
-                                              AppTextStyles.bodySmall.copyWith(
-                                            color: AppColors.white
-                                                .withOpacity(0.65),
+                                          style: AppTextStyles.bodySmall
+                                              .copyWith(
+                                            color: colorScheme.onPrimary
+                                                .withValues(alpha: 0.65),
                                           ),
                                         ),
                                       ],
@@ -177,27 +179,25 @@ class ConfirmInvestmentView extends StatelessWidget
                                     value: _fmt(controller.amount),
                                     isBold: true,
                                   ),
-                                  _divider(),
+                                  _divider(colorScheme),
                                   _SummaryRow(
                                     label: 'Tenor',
-                                    value:
-                                        '${controller.tenorDays} Days',
+                                    value: '${controller.tenorDays} Days',
                                   ),
-                                  _divider(),
+                                  _divider(colorScheme),
                                   _SummaryRow(
                                     label: 'Annual Rate',
-                                    value:
-                                        '+${controller.annualRate}%',
-                                    valueColor: AppColors.primary,
+                                    value: '+${controller.annualRate}%',
+                                    valueColor: colorScheme.primary,
                                   ),
-                                  _divider(),
+                                  _divider(colorScheme),
                                   _SummaryRow(
                                     label: 'Projected Interest',
                                     value: _fmt(
                                         controller.projectedInterest),
-                                    valueColor: AppColors.primary,
+                                    valueColor: colorScheme.primary,
                                   ),
-                                  _divider(),
+                                  _divider(colorScheme),
                                   _SummaryRow(
                                     label: 'Maturity Date',
                                     value: dateFormat
@@ -212,13 +212,14 @@ class ConfirmInvestmentView extends StatelessWidget
                             Container(
                               padding: REdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: AppColors.limeGreen.withOpacity(0.12),
+                                color: colorScheme.primaryContainer
+                                    .withValues(alpha: 0.12),
                                 borderRadius: BorderRadius.vertical(
                                   bottom: Radius.circular(16.r),
                                 ),
                                 border: Border(
                                   top: BorderSide(
-                                      color: AppColors.divider),
+                                      color: colorScheme.outline),
                                 ),
                               ),
                               child: Row(
@@ -229,7 +230,7 @@ class ConfirmInvestmentView extends StatelessWidget
                                     'Total at Maturity',
                                     style: AppTextStyles.titleSmall
                                         .copyWith(
-                                      color: AppColors.textPrimary,
+                                      color: colorScheme.onSurface,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -237,7 +238,7 @@ class ConfirmInvestmentView extends StatelessWidget
                                     _fmt(controller.totalAtMaturity),
                                     style: AppTextStyles.titleMedium
                                         .copyWith(
-                                      color: AppColors.primary,
+                                      color: colorScheme.primary,
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
@@ -254,10 +255,12 @@ class ConfirmInvestmentView extends StatelessWidget
                       Container(
                         padding: REdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: AppColors.cloudyBlue.withOpacity(0.4),
+                          color: colorScheme.secondaryContainer
+                              .withValues(alpha: 0.4),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
-                            color: AppColors.moodyBlue.withOpacity(0.15),
+                            color: colorScheme.tertiary
+                                .withValues(alpha: 0.15),
                           ),
                         ),
                         child: Row(
@@ -265,7 +268,7 @@ class ConfirmInvestmentView extends StatelessWidget
                             Icon(
                               Icons.account_balance_wallet_outlined,
                               size: 16.r,
-                              color: AppColors.moodyBlue,
+                              color: colorScheme.tertiary,
                             ),
                             SizedBox(width: 10.w),
                             Expanded(
@@ -273,18 +276,17 @@ class ConfirmInvestmentView extends StatelessWidget
                                 text: TextSpan(
                                   style: AppTextStyles.bodySmall
                                       .copyWith(
-                                    color: AppColors.moodyBlue,
+                                    color: colorScheme.tertiary,
                                     height: 1.5,
                                   ),
                                   children: [
                                     const TextSpan(
-                                        text:
-                                            'By confirming, '),
+                                        text: 'By confirming, '),
                                     TextSpan(
                                       text: _fmt(controller.amount),
                                       style: AppTextStyles.bodySmall
                                           .copyWith(
-                                        color: AppColors.moodyBlue,
+                                        color: colorScheme.tertiary,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -314,13 +316,13 @@ class ConfirmInvestmentView extends StatelessWidget
                               height: 22.r,
                               decoration: BoxDecoration(
                                 color: controller.termsAccepted
-                                    ? AppColors.primary
+                                    ? colorScheme.primary
                                     : Colors.transparent,
                                 borderRadius: BorderRadius.circular(6.r),
                                 border: Border.all(
                                   color: controller.termsAccepted
-                                      ? AppColors.primary
-                                      : AppColors.buttonBorder,
+                                      ? colorScheme.primary
+                                      : colorScheme.outline,
                                   width: 1.5,
                                 ),
                               ),
@@ -328,7 +330,7 @@ class ConfirmInvestmentView extends StatelessWidget
                                   ? Icon(
                                       Icons.check_rounded,
                                       size: 14.r,
-                                      color: AppColors.white,
+                                      color: colorScheme.onPrimary,
                                     )
                                   : null,
                             ),
@@ -338,7 +340,7 @@ class ConfirmInvestmentView extends StatelessWidget
                                 text: TextSpan(
                                   style: AppTextStyles.bodySmall
                                       .copyWith(
-                                    color: AppColors.textSecondary,
+                                    color: colorScheme.onSurfaceVariant,
                                     height: 1.5,
                                   ),
                                   children: [
@@ -350,7 +352,7 @@ class ConfirmInvestmentView extends StatelessWidget
                                           'non-withdrawable before maturity',
                                       style: AppTextStyles.bodySmall
                                           .copyWith(
-                                        color: AppColors.textPrimary,
+                                        color: colorScheme.onSurface,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -361,7 +363,7 @@ class ConfirmInvestmentView extends StatelessWidget
                                       text: 'Terms & Conditions',
                                       style: AppTextStyles.bodySmall
                                           .copyWith(
-                                        color: AppColors.primary,
+                                        color: colorScheme.primary,
                                         fontWeight: FontWeight.w600,
                                         decoration:
                                             TextDecoration.underline,
@@ -386,9 +388,9 @@ class ConfirmInvestmentView extends StatelessWidget
               Container(
                 padding: REdgeInsets.fromLTRB(20, 12, 20, 32),
                 decoration: BoxDecoration(
-                  color: AppColors.background,
+                  color: colorScheme.background,
                   border:
-                      Border(top: BorderSide(color: AppColors.divider)),
+                      Border(top: BorderSide(color: colorScheme.outline)),
                 ),
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
@@ -402,13 +404,13 @@ class ConfirmInvestmentView extends StatelessWidget
                       height: 56.h,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                         borderRadius: BorderRadius.circular(14.r),
                       ),
                       child: Text(
                         'Confirm Investment',
                         style: AppTextStyles.labelLarge.copyWith(
-                          color: AppColors.white,
+                          color: colorScheme.onPrimary,
                         ),
                       ),
                     ),
@@ -422,13 +424,13 @@ class ConfirmInvestmentView extends StatelessWidget
         // ── Full-screen loading overlay ────────────────────────────────
         if (controller.isLoading)
           Container(
-            color: Colors.black.withOpacity(0.55),
+            color: Colors.black.withValues(alpha: 0.55),
             child: Center(
               child: Container(
                 width: 220.w,
                 padding: REdgeInsets.all(28),
                 decoration: BoxDecoration(
-                  color: AppColors.surface,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Column(
@@ -438,7 +440,7 @@ class ConfirmInvestmentView extends StatelessWidget
                       width: 40.r,
                       height: 40.r,
                       child: CircularProgressIndicator(
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                         strokeWidth: 3,
                       ),
                     ),
@@ -447,7 +449,7 @@ class ConfirmInvestmentView extends StatelessWidget
                       'Processing your\ninvestment...',
                       textAlign: TextAlign.center,
                       style: AppTextStyles.titleSmall.copyWith(
-                        color: AppColors.textPrimary,
+                        color: colorScheme.onSurface,
                         height: 1.4,
                       ),
                     ),
@@ -455,7 +457,7 @@ class ConfirmInvestmentView extends StatelessWidget
                     Text(
                       'Please do not close the app',
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textDisabled,
+                        color: colorScheme.onSurface.withValues(alpha: 0.38),
                       ),
                     ),
                   ],
@@ -467,9 +469,9 @@ class ConfirmInvestmentView extends StatelessWidget
     );
   }
 
-  Widget _divider() => Padding(
+  Widget _divider(ColorScheme colorScheme) => Padding(
         padding: REdgeInsets.symmetric(vertical: 10),
-        child: Divider(color: AppColors.divider, height: 1),
+        child: Divider(color: colorScheme.outline, height: 1),
       );
 }
 
@@ -491,25 +493,31 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           label,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         Row(
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 12.r, color: AppColors.textDisabled),
+              Icon(
+                icon,
+                size: 12.r,
+                color: colorScheme.onSurface.withValues(alpha: 0.38),
+              ),
               SizedBox(width: 4.w),
             ],
             Text(
               value,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: valueColor ?? AppColors.textPrimary,
+                color: valueColor ?? colorScheme.onSurface,
                 fontWeight:
                     isBold ? FontWeight.w700 : FontWeight.w500,
               ),

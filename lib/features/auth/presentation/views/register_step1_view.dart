@@ -8,8 +8,9 @@ class RegisterStep1View extends StatelessWidget
  
   @override
   Widget build(BuildContext context) {
+     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -31,7 +32,7 @@ class RegisterStep1View extends StatelessWidget
                         child: Icon(
                           Icons.arrow_back_rounded,
                           size: 24.r,
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onTertiary,
                         ),
                       ),
                     ),
@@ -51,7 +52,7 @@ class RegisterStep1View extends StatelessWidget
                       'Join KIBA',
                       style: AppTextStyles.headlineLarge.copyWith(
                         fontFamily: 'BWGradual',
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                       ),
                     ),
  
@@ -61,7 +62,7 @@ class RegisterStep1View extends StatelessWidget
                     Text(
                       'Step 1 of 3: Choose your investor type to get started.',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                        color: colorScheme.onSurfaceVariant,
                         height: 1.5,
                       ),
                     ),
@@ -98,10 +99,10 @@ class RegisterStep1View extends StatelessWidget
             Container(
               padding: REdgeInsets.fromLTRB(24, 16, 24, 32),
               decoration: BoxDecoration(
-                color: AppColors.background,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 border: Border(
                   top: BorderSide(
-                    color: AppColors.divider,
+                    color: Theme.of(context).dividerColor,
                     width: 1,
                   ),
                 ),
@@ -145,7 +146,7 @@ class RegisterStep1View extends StatelessWidget
                       Text(
                         'Already have an account? ',
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                       GestureDetector(
@@ -153,7 +154,7 @@ class RegisterStep1View extends StatelessWidget
                         child: Text(
                           'Log In',
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

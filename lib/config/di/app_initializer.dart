@@ -17,6 +17,8 @@ import '../../core/storage/secure_storage.dart';
 import '../../core/storage/secure_storage_impl.dart';
 
 // Auth
+
+import '../../features/auth/cubit/theme/theme_cubit.dart';
 import '../../features/auth/data/datasources/remote/auth_remote_datasource.dart';
 import '../../features/auth/data/datasources/remote/auth_remote_datasource_impl.dart';
 import '../../features/auth/data/repository/auth_repository.dart';
@@ -89,6 +91,8 @@ class AppInitializer {
 
   static void _registerCubits() {
     sl.registerLazySingleton<AuthCubit>(() => AuthCubit(repository: sl()));
+        sl.registerLazySingleton<ThemeCubit>(                    // ← new
+        () => ThemeCubit(repository: sl()));
 
   }
 }

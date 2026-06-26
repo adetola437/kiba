@@ -15,38 +15,41 @@ class TransactionsView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final grouped = controller.groupedTransactions;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        scrolledUnderElevation: 0,
+        backgroundColor: colorScheme.surface,
         leading: GestureDetector(
           onTap: controller.onBack,
-          child: Icon(Icons.arrow_back_rounded,
-              size: 22.r, color: AppColors.textPrimary),
+          child: Icon(
+            Icons.arrow_back_rounded,
+            size: 22.r,
+            color: colorScheme.tertiary,
+          ),
         ),
         title: controller.isSearching
             ? TextField(
                 controller: controller.searchController,
                 onChanged: controller.onSearchChanged,
                 autofocus: true,
-                style: AppTextStyles.bodyMedium
-                    .copyWith(color: AppColors.textPrimary),
+                style: textTheme.bodyMedium,
                 decoration: InputDecoration(
                   hintText: 'Search transactions...',
-                  hintStyle: AppTextStyles.bodyMedium
-                      .copyWith(color: AppColors.textDisabled),
+                  hintStyle: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.zero,
                 ),
               )
             : Text(
                 'Transactions',
-                style: AppTextStyles.titleLarge
-                    .copyWith(color: AppColors.textPrimary),
+                style: textTheme.titleLarge,
               ),
         centerTitle: !controller.isSearching,
         actions: [
@@ -55,15 +58,16 @@ class TransactionsView extends StatelessWidget
             child: Padding(
               padding: REdgeInsets.only(right: 16),
               child: Icon(
-                controller.isSearching ? Icons.close_rounded : Icons.search_rounded,
+                controller.isSearching
+                    ? Icons.close_rounded
+                    : Icons.search_rounded,
                 size: 22.r,
-                color: AppColors.textPrimary,
+                color: colorScheme.onSurface,
               ),
             ),
           ),
         ],
       ),
-
       body: Column(
         children: [
           // ── Filter chips ────────────────────────────────────────────
@@ -85,22 +89,22 @@ class TransactionsView extends StatelessWidget
                               horizontal: 16, vertical: 8),
                           decoration: BoxDecoration(
                             color: isActive
-                                ? AppColors.primary
+                                ? colorScheme.primary
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(20.r),
                             border: Border.all(
                               color: isActive
-                                  ? AppColors.primary
-                                  : AppColors.buttonBorder,
+                                  ? colorScheme.primary
+                                  : colorScheme.outline.withOpacity(0.5),
                               width: 1.5,
                             ),
                           ),
                           child: Text(
                             _filterLabels[f]!,
-                            style: AppTextStyles.labelMedium.copyWith(
+                            style: textTheme.labelMedium?.copyWith(
                               color: isActive
-                                  ? AppColors.white
-                                  : AppColors.textSecondary,
+                                  ? colorScheme.onPrimary
+                                  : colorScheme.onSurfaceVariant,
                               fontWeight: isActive
                                   ? FontWeight.w600
                                   : FontWeight.w400,
@@ -138,8 +142,7 @@ class TransactionsView extends StatelessWidget
                             padding: REdgeInsets.symmetric(vertical: 12),
                             child: Text(
                               label,
-                              style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.textDisabled,
+                              style: textTheme.labelSmall?.copyWith(
                                 letterSpacing: 1.1,
                                 fontSize: 10.sp,
                               ),
@@ -149,9 +152,9 @@ class TransactionsView extends StatelessWidget
                           // Transactions card
                           Container(
                             decoration: BoxDecoration(
-                              color: AppColors.surface,
+                              color: colorScheme.surface,
                               borderRadius: BorderRadius.circular(16.r),
-                              border: Border.all(color: AppColors.border),
+                              border: Border.all(color: colorScheme.outline),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16.r),
@@ -196,6 +199,9 @@ class _EmptyTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     final message = isSearching
         ? 'No results for "$query"'
         : 'No ${filter == TransactionFilter.all ? '' : filter.name} transactions yet.';
@@ -211,15 +217,13 @@ class _EmptyTransactions extends StatelessWidget {
                   ? Icons.search_off_rounded
                   : Icons.receipt_long_outlined,
               size: 48.r,
-              color: AppColors.primary.withOpacity(0.2),
+              color: colorScheme.primary.withOpacity(0.2),
             ),
             SizedBox(height: 12.h),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
+              style: textTheme.bodyMedium,
             ),
           ],
         ),

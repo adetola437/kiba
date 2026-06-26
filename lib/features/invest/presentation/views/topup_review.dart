@@ -1,7 +1,5 @@
 part of '../controllers/topup_investment_controller.dart';
 
-
-
 class TopUpReviewScreen extends StatefulWidget {
   static const String route = 'topup_review';
 
@@ -61,24 +59,31 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final dateFormat = DateFormat('MMM d, y');
 
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: colorScheme.background,
           appBar: AppBar(
-            backgroundColor: AppColors.background,
+            backgroundColor: colorScheme.background,
             elevation: 0,
             scrolledUnderElevation: 0,
             leading: GestureDetector(
               onTap: () => context.pop(),
-              child: Icon(Icons.arrow_back_rounded,
-                  size: 22.r, color: AppColors.textPrimary),
+              child: Icon(
+                Icons.arrow_back_rounded,
+                size: 22.r,
+                color: colorScheme.onBackground,
+              ),
             ),
-            title: Text('Review Top Up',
-                style: AppTextStyles.titleLarge
-                    .copyWith(color: AppColors.textPrimary)),
+            title: Text(
+              'Review Top Up',
+              style: AppTextStyles.titleLarge.copyWith(
+                color: colorScheme.onBackground,
+              ),
+            ),
             centerTitle: true,
           ),
           body: Column(
@@ -89,28 +94,29 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-                      Text('Confirm Top Up',
-                          style: AppTextStyles.headlineSmall.copyWith(
-                            fontFamily: 'BWGradual',
-                            color: AppColors.textPrimary,
-                          )),
+                      Text(
+                        'Confirm Top Up',
+                        style: AppTextStyles.headlineSmall.copyWith(
+                          color: colorScheme.onBackground,
+                        ),
+                      ),
                       SizedBox(height: 4.h),
                       Text(
-                          'Review the changes to your investment before confirming.',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textSecondary,
-                            height: 1.5,
-                          )),
+                        'Review the changes to your investment before confirming.',
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                          height: 1.5,
+                        ),
+                      ),
 
                       SizedBox(height: 24.h),
 
                       // ── Summary card ────────────────────────────
                       Container(
                         decoration: BoxDecoration(
-                          color: AppColors.surface,
+                          color: colorScheme.surface,
                           borderRadius: BorderRadius.circular(16.r),
-                          border: Border.all(color: AppColors.border),
+                          border: Border.all(color: colorScheme.outline),
                         ),
                         child: Column(
                           children: [
@@ -118,24 +124,27 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                             Container(
                               padding: REdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: AppColors.primary,
+                                color: colorScheme.primary,
                                 borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(16.r)),
+                                  top: Radius.circular(16.r),
+                                ),
                               ),
                               child: Row(
                                 children: [
                                   Container(
-                                    width: 40.r, height: 40.r,
+                                    width: 40.r,
+                                    height: 40.r,
                                     decoration: BoxDecoration(
-                                      color: AppColors.white
-                                          .withOpacity(0.12),
+                                      color: colorScheme.onPrimary
+                                          .withValues(alpha: 0.12),
                                       borderRadius:
                                           BorderRadius.circular(10.r),
                                     ),
                                     child: Icon(
-                                        Icons.trending_up_rounded,
-                                        size: 18.r,
-                                        color: AppColors.limeGreen),
+                                      Icons.trending_up_rounded,
+                                      size: 18.r,
+                                      color: colorScheme.primaryContainer,
+                                    ),
                                   ),
                                   SizedBox(width: 12.w),
                                   Expanded(
@@ -143,22 +152,22 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(widget.productName,
-                                            style: AppTextStyles
-                                                .titleMedium
-                                                .copyWith(
-                                              color: AppColors.white,
-                                              fontWeight:
-                                                  FontWeight.w700,
-                                            )),
                                         Text(
-                                            '${widget.annualRate}% p.a. · ${widget.daysRemaining} days remaining',
-                                            style: AppTextStyles
-                                                .bodySmall
-                                                .copyWith(
-                                              color: AppColors.white
-                                                  .withOpacity(0.65),
-                                            )),
+                                          widget.productName,
+                                          style: AppTextStyles.titleMedium
+                                              .copyWith(
+                                            color: colorScheme.onPrimary,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${widget.annualRate}% p.a. · ${widget.daysRemaining} days remaining',
+                                          style: AppTextStyles.bodySmall
+                                              .copyWith(
+                                            color: colorScheme.onPrimary
+                                                .withValues(alpha: 0.65),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -173,33 +182,30 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                                 children: [
                                   _ReviewLine(
                                     label: 'Current Principal',
-                                    value: _fmt(
-                                        widget.currentPrincipal),
+                                    value: _fmt(widget.currentPrincipal),
                                   ),
-                                  _divider(),
+                                  _divider(colorScheme),
                                   _ReviewLine(
                                     label: 'Top Up Amount',
-                                    value:
-                                        '+ ${_fmt(widget.topUpAmount)}',
-                                    valueColor: AppColors.primary,
+                                    value: '+ ${_fmt(widget.topUpAmount)}',
+                                    valueColor: colorScheme.primary,
                                     isBold: true,
                                   ),
-                                  _divider(),
+                                  _divider(colorScheme),
                                   _ReviewLine(
                                     label: 'New Principal',
-                                    value: _fmt(
-                                        widget.revisedPrincipal),
+                                    value: _fmt(widget.revisedPrincipal),
                                     isBold: true,
                                   ),
-                                  _divider(),
+                                  _divider(colorScheme),
                                   _ReviewLine(
                                     label:
                                         'Additional Interest (${widget.daysRemaining}d)',
                                     value:
                                         '+${_fmt(widget.additionalInterest)}',
-                                    valueColor: AppColors.primary,
+                                    valueColor: colorScheme.primary,
                                   ),
-                                  _divider(),
+                                  _divider(colorScheme),
                                   _ReviewLine(
                                     label: 'Maturity Date',
                                     value: dateFormat
@@ -214,30 +220,33 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                             Container(
                               padding: REdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: AppColors.limeGreen
-                                    .withOpacity(0.1),
+                                color: colorScheme.primaryContainer
+                                    .withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.vertical(
-                                    bottom: Radius.circular(16.r)),
+                                  bottom: Radius.circular(16.r),
+                                ),
                                 border: Border(
-                                    top: BorderSide(
-                                        color: AppColors.divider)),
+                                  top: BorderSide(
+                                      color: colorScheme.outline),
+                                ),
                               ),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Revised Total at Maturity',
-                                      style: AppTextStyles.titleSmall
-                                          .copyWith(
-                                        color: AppColors.textPrimary,
-                                        fontWeight: FontWeight.w700,
-                                      )),
                                   Text(
-                                    _fmt(widget
-                                        .revisedTotalAtMaturity),
+                                    'Revised Total at Maturity',
+                                    style: AppTextStyles.titleSmall
+                                        .copyWith(
+                                      color: colorScheme.onSurface,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  Text(
+                                    _fmt(widget.revisedTotalAtMaturity),
                                     style: AppTextStyles.titleMedium
                                         .copyWith(
-                                      color: AppColors.primary,
+                                      color: colorScheme.primary,
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
@@ -254,37 +263,38 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                       Container(
                         padding: REdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: AppColors.cloudyBlue.withOpacity(0.4),
+                          color: colorScheme.secondaryContainer
+                              .withValues(alpha: 0.4),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
-                              color: AppColors.moodyBlue
-                                  .withOpacity(0.15)),
+                            color: colorScheme.tertiary
+                                .withValues(alpha: 0.15),
+                          ),
                         ),
                         child: Row(
                           children: [
                             Icon(
-                                Icons
-                                    .account_balance_wallet_outlined,
-                                size: 16.r,
-                                color: AppColors.moodyBlue),
+                              Icons.account_balance_wallet_outlined,
+                              size: 16.r,
+                              color: colorScheme.tertiary,
+                            ),
                             SizedBox(width: 10.w),
                             Expanded(
                               child: RichText(
                                 text: TextSpan(
                                   style: AppTextStyles.bodySmall
                                       .copyWith(
-                                    color: AppColors.moodyBlue,
+                                    color: colorScheme.tertiary,
                                     height: 1.5,
                                   ),
                                   children: [
                                     const TextSpan(
-                                        text:
-                                            'By confirming, '),
+                                        text: 'By confirming, '),
                                     TextSpan(
                                       text: _fmt(widget.topUpAmount),
                                       style: AppTextStyles.bodySmall
                                           .copyWith(
-                                        color: AppColors.moodyBlue,
+                                        color: colorScheme.tertiary,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -307,30 +317,30 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                             () => _termsAccepted = !_termsAccepted),
                         behavior: HitTestBehavior.opaque,
                         child: Row(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AnimatedContainer(
-                              duration:
-                                  const Duration(milliseconds: 200),
-                              width: 22.r, height: 22.r,
+                              duration: const Duration(milliseconds: 200),
+                              width: 22.r,
+                              height: 22.r,
                               decoration: BoxDecoration(
                                 color: _termsAccepted
-                                    ? AppColors.primary
+                                    ? colorScheme.primary
                                     : Colors.transparent,
-                                borderRadius:
-                                    BorderRadius.circular(6.r),
+                                borderRadius: BorderRadius.circular(6.r),
                                 border: Border.all(
                                   color: _termsAccepted
-                                      ? AppColors.primary
-                                      : AppColors.buttonBorder,
+                                      ? colorScheme.primary
+                                      : colorScheme.outline,
                                   width: 1.5,
                                 ),
                               ),
                               child: _termsAccepted
-                                  ? Icon(Icons.check_rounded,
+                                  ? Icon(
+                                      Icons.check_rounded,
                                       size: 14.r,
-                                      color: AppColors.white)
+                                      color: colorScheme.onPrimary,
+                                    )
                                   : null,
                             ),
                             SizedBox(width: 12.w),
@@ -339,7 +349,7 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                                 text: TextSpan(
                                   style: AppTextStyles.bodySmall
                                       .copyWith(
-                                    color: AppColors.textSecondary,
+                                    color: colorScheme.onSurfaceVariant,
                                     height: 1.5,
                                   ),
                                   children: [
@@ -350,7 +360,7 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                                       text: 'original maturity date',
                                       style: AppTextStyles.bodySmall
                                           .copyWith(
-                                        color: AppColors.textPrimary,
+                                        color: colorScheme.onSurface,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -360,7 +370,7 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                                       text: 'Terms & Conditions',
                                       style: AppTextStyles.bodySmall
                                           .copyWith(
-                                        color: AppColors.primary,
+                                        color: colorScheme.primary,
                                         fontWeight: FontWeight.w600,
                                         decoration:
                                             TextDecoration.underline,
@@ -385,9 +395,10 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
               Container(
                 padding: REdgeInsets.fromLTRB(20, 12, 20, 32),
                 decoration: BoxDecoration(
-                  color: AppColors.background,
+                  color: colorScheme.background,
                   border: Border(
-                      top: BorderSide(color: AppColors.divider)),
+                    top: BorderSide(color: colorScheme.outline),
+                  ),
                 ),
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
@@ -399,12 +410,15 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
                       height: 56.h,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                         borderRadius: BorderRadius.circular(14.r),
                       ),
-                      child: Text('Confirm Top Up',
-                          style: AppTextStyles.labelLarge
-                              .copyWith(color: AppColors.white)),
+                      child: Text(
+                        'Confirm Top Up',
+                        style: AppTextStyles.labelLarge.copyWith(
+                          color: colorScheme.onPrimary,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -416,32 +430,42 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
         // Loading overlay
         if (_isLoading)
           Container(
-            color: Colors.black.withOpacity(0.55),
+            color: Colors.black.withValues(alpha: 0.55),
             child: Center(
               child: Container(
                 width: 220.w,
                 padding: REdgeInsets.all(28),
                 decoration: BoxDecoration(
-                  color: AppColors.surface,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      width: 40.r, height: 40.r,
+                      width: 40.r,
+                      height: 40.r,
                       child: CircularProgressIndicator(
-                          color: AppColors.primary, strokeWidth: 3),
+                        color: colorScheme.primary,
+                        strokeWidth: 3,
+                      ),
                     ),
                     SizedBox(height: 16.h),
-                    Text('Processing top up...',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.titleSmall.copyWith(
-                            color: AppColors.textPrimary, height: 1.4)),
+                    Text(
+                      'Processing top up...',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.titleSmall.copyWith(
+                        color: colorScheme.onSurface,
+                        height: 1.4,
+                      ),
+                    ),
                     SizedBox(height: 6.h),
-                    Text('Please do not close the app',
-                        style: AppTextStyles.bodySmall
-                            .copyWith(color: AppColors.textDisabled)),
+                    Text(
+                      'Please do not close the app',
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.38),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -451,9 +475,10 @@ class _TopUpReviewScreenState extends State<TopUpReviewScreen> {
     );
   }
 
-  Widget _divider() => Padding(
-      padding: REdgeInsets.symmetric(vertical: 10),
-      child: Divider(color: AppColors.divider, height: 1));
+  Widget _divider(ColorScheme colorScheme) => Padding(
+        padding: REdgeInsets.symmetric(vertical: 10),
+        child: Divider(color: colorScheme.outline, height: 1),
+      );
 }
 
 class _ReviewLine extends StatelessWidget {
@@ -464,6 +489,7 @@ class _ReviewLine extends StatelessWidget {
     this.isBold = false,
     this.icon,
   });
+
   final String label;
   final String value;
   final Color? valueColor;
@@ -472,24 +498,34 @@ class _ReviewLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label,
-            style: AppTextStyles.bodyMedium
-                .copyWith(color: AppColors.textSecondary)),
+        Text(
+          label,
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: colorScheme.onSurfaceVariant,
+          ),
+        ),
         Row(
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 12.r, color: AppColors.textDisabled),
+              Icon(
+                icon,
+                size: 12.r,
+                color: colorScheme.onSurface.withValues(alpha: 0.38),
+              ),
               SizedBox(width: 4.w),
             ],
-            Text(value,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: valueColor ?? AppColors.textPrimary,
-                  fontWeight:
-                      isBold ? FontWeight.w700 : FontWeight.w500,
-                )),
+            Text(
+              value,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: valueColor ?? colorScheme.onSurface,
+                fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
+              ),
+            ),
           ],
         ),
       ],

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/api/exception/failure.dart';
 import '../../../../core/storage/local_storage.dart';
@@ -46,4 +47,10 @@ class AuthRepositoryImpl implements IAuthRepository {
 
   @override
   Future<void> logout() => localStorage.clearAll();
+    @override
+  Future<ThemeMode> getSavedTheme() => localStorage.getSavedTheme();
+
+  @override
+  Future<void> saveTheme(ThemeMode mode) => localStorage.saveTheme(mode);
+  
 }

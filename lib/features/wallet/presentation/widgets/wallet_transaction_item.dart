@@ -15,7 +15,7 @@ class _WalletTransactionItem extends StatelessWidget {
   final String amount;
   final _TxType type;
 
-  Color get _iconBg {
+  Color _iconBg(ColorScheme cs) {
     switch (type) {
       case _TxType.credit:
         return AppColors.cloudyBlue;
@@ -37,30 +37,33 @@ class _WalletTransactionItem extends StatelessWidget {
     }
   }
 
-  Color get _iconColor {
+  Color _iconColor(ColorScheme cs) {
     switch (type) {
       case _TxType.credit:
         return AppColors.moodyBlue;
       case _TxType.debit:
-        return AppColors.charcoalGrey;
+        return cs.onSurface;
       case _TxType.neutral:
-        return AppColors.primary;
+        return cs.primary;
     }
   }
 
-  Color get _amountColor {
+  Color _amountColor(ColorScheme cs) {
     switch (type) {
       case _TxType.credit:
-        return AppColors.primary;
+        return cs.primary;
       case _TxType.debit:
-        return AppColors.charcoalGrey;
+        return cs.onSurface;
       case _TxType.neutral:
-        return AppColors.charcoalGrey;
+        return cs.onSurface;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Padding(
       padding: REdgeInsets.symmetric(vertical: 14),
       child: Row(
@@ -70,10 +73,14 @@ class _WalletTransactionItem extends StatelessWidget {
             width: 44.r,
             height: 44.r,
             decoration: BoxDecoration(
-              color: _iconBg,
+              color: _iconBg(colorScheme),
               shape: BoxShape.circle,
             ),
-            child: Icon(_icon, size: 18.r, color: _iconColor),
+            child: Icon(
+              _icon,
+              size: 18.r,
+              color: _iconColor(colorScheme),
+            ),
           ),
 
           SizedBox(width: 14.w),
@@ -85,16 +92,12 @@ class _WalletTransactionItem extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.titleSmall.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
+                  style: textTheme.titleSmall,
                 ),
                 SizedBox(height: 3.h),
                 Text(
                   subtitle,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textDisabled,
-                  ),
+                  style: textTheme.bodySmall,
                 ),
               ],
             ),
@@ -103,8 +106,8 @@ class _WalletTransactionItem extends StatelessWidget {
           // Amount
           Text(
             amount,
-            style: AppTextStyles.titleSmall.copyWith(
-              color: _amountColor,
+            style: textTheme.titleSmall?.copyWith(
+              color: _amountColor(colorScheme),
               fontWeight: FontWeight.w700,
             ),
           ),

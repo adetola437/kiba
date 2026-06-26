@@ -14,8 +14,11 @@ class ForgotPasswordOtpView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -34,23 +37,19 @@ class ForgotPasswordOtpView extends StatelessWidget
                         child: Icon(
                           Icons.arrow_back_rounded,
                           size: 24.r,
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ),
                     SizedBox(height: 40.h),
                     Text(
                       'Check your\nEmail',
-                      style: AppTextStyles.headlineLarge.copyWith(
-                        fontFamily: 'BWGradual',
-                        color: AppColors.primary,
-                      ),
+                      style: textTheme.headlineLarge,
                     ),
                     SizedBox(height: 10.h),
                     RichText(
                       text: TextSpan(
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
+                        style: textTheme.bodyMedium?.copyWith(
                           height: 1.5,
                         ),
                         children: [
@@ -59,8 +58,7 @@ class ForgotPasswordOtpView extends StatelessWidget
                           ),
                           TextSpan(
                             text: controller.maskedEmail,
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.textPrimary,
+                            style: textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -79,12 +77,12 @@ class ForgotPasswordOtpView extends StatelessWidget
                       defaultPinTheme: PinTheme(
                         width: 46.r,
                         height: 56.r,
-                        textStyle: AppTextStyles.titleLarge.copyWith(
-                          color: AppColors.primary,
+                        textStyle: textTheme.titleLarge?.copyWith(
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceVariant,
+                          color: colorScheme.surfaceVariant,
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(color: Colors.transparent),
                         ),
@@ -92,15 +90,15 @@ class ForgotPasswordOtpView extends StatelessWidget
                       focusedPinTheme: PinTheme(
                         width: 46.r,
                         height: 56.r,
-                        textStyle: AppTextStyles.titleLarge.copyWith(
-                          color: AppColors.primary,
+                        textStyle: textTheme.titleLarge?.copyWith(
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.06),
+                          color: colorScheme.primary.withOpacity(0.06),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
-                            color: AppColors.primary.withOpacity(0.4),
+                            color: colorScheme.primary.withOpacity(0.4),
                             width: 1.5,
                           ),
                         ),
@@ -108,15 +106,15 @@ class ForgotPasswordOtpView extends StatelessWidget
                       submittedPinTheme: PinTheme(
                         width: 46.r,
                         height: 56.r,
-                        textStyle: AppTextStyles.titleLarge.copyWith(
-                          color: AppColors.primary,
+                        textStyle: textTheme.titleLarge?.copyWith(
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.06),
+                          color: colorScheme.primary.withOpacity(0.06),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
-                            color: AppColors.primary,
+                            color: colorScheme.primary,
                             width: 2,
                           ),
                         ),
@@ -130,8 +128,8 @@ class ForgotPasswordOtpView extends StatelessWidget
                           Icons.access_time_rounded,
                           size: 16.r,
                           color: controller.canResend
-                              ? AppColors.primary
-                              : AppColors.textDisabled,
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
                         ),
                         SizedBox(width: 6.w),
                         GestureDetector(
@@ -139,10 +137,10 @@ class ForgotPasswordOtpView extends StatelessWidget
                               controller.canResend ? controller.onResend : null,
                           child: AnimatedDefaultTextStyle(
                             duration: const Duration(milliseconds: 200),
-                            style: AppTextStyles.bodyMedium.copyWith(
+                            style: textTheme.bodyMedium!.copyWith(
                               color: controller.canResend
-                                  ? AppColors.primary
-                                  : AppColors.textDisabled,
+                                  ? colorScheme.primary
+                                  : colorScheme.onSurfaceVariant,
                               fontWeight: controller.canResend
                                   ? FontWeight.w600
                                   : FontWeight.w400,
@@ -163,9 +161,9 @@ class ForgotPasswordOtpView extends StatelessWidget
             Container(
               padding: REdgeInsets.fromLTRB(24, 16, 24, 32),
               decoration: BoxDecoration(
-                color: AppColors.background,
+                color: colorScheme.surface,
                 border: Border(
-                  top: BorderSide(color: AppColors.divider),
+                  top: BorderSide(color: colorScheme.outline),
                 ),
               ),
               child: AnimatedOpacity(
@@ -177,7 +175,7 @@ class ForgotPasswordOtpView extends StatelessWidget
                     width: double.infinity,
                     height: 56.h,
                     decoration: BoxDecoration(
-                      color: AppColors.primary,
+                      color: colorScheme.primary,
                       borderRadius: BorderRadius.circular(14.r),
                     ),
                     alignment: Alignment.center,
@@ -186,15 +184,15 @@ class ForgotPasswordOtpView extends StatelessWidget
                       children: [
                         Text(
                           'Verify Code',
-                          style: AppTextStyles.labelLarge.copyWith(
-                            color: AppColors.textOnDark,
+                          style: textTheme.labelLarge?.copyWith(
+                            color: colorScheme.onPrimary,
                           ),
                         ),
                         SizedBox(width: 8.w),
                         Icon(
                           Icons.arrow_forward_rounded,
                           size: 18.r,
-                          color: AppColors.textOnDark,
+                          color: colorScheme.onPrimary,
                         ),
                       ],
                     ),
